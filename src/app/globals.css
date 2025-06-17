@@ -1,13 +1,19 @@
 @import "tailwindcss";
 
 :root {
+  --social-color: #a7a7a7;
   --background: #ffffff;
   --foreground: #171717;
+  --active-social-color: #f46b5b;
+  --input-background: rgb(208, 208, 210, 0.25);
 }
 
 @theme inline {
+  --color-social: var(--social-color);
+  --color-hover-social: var(--active-social-color);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-input-background: var(--input-background);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
