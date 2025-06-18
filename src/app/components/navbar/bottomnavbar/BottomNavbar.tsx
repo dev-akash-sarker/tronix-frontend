@@ -1,12 +1,18 @@
 "use client";
-
+import axios from "axios";
+import Outsideclick from "@/app/features/ClickOutSide";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CiMenuBurger } from "react-icons/ci";
 import { IoClose } from "react-icons/io5";
-
+import { slugify } from "@/app/utility/slugify";
+interface Category {
+  id: number;
+  name: string;
+}
 const BottomNavbar: React.FC = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
   const [isopen, setIsopen] = useState<boolean>(false);
   const [ismenu, setIsmenu] = useState<boolean>(false);
   const opensearch = () => {
@@ -18,6 +24,33 @@ const BottomNavbar: React.FC = () => {
   const closemenu = () => {
     setIsmenu(false);
   };
+
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:3000/api/categories")
+  //     .then((response) => {
+  //       setCategories(response.data);
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error.message);
+  //     });
+  // }, []);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get<Category[]>(
+          "http://localhost:3000/api/categories"
+        );
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Failed to fetch categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+  console.log("cat", categories);
   return (
     <>
       <div className="my-8 relative">
@@ -90,28 +123,30 @@ const BottomNavbar: React.FC = () => {
           </div>
         </div>
         <nav className="my-8 hidden md:block">
-          <ul className=" flex gap-x-8 py-2 px-2 transition-all">
-            <li>
+          <ul className=" flex gap-x-8 py-2 px-2 transition-all border-y-2 border-gray-300">
+            <li className="transition-all">
               <Link href="/" className=" hover:text-hover-social">
                 Home
               </Link>
             </li>
-            <li>
-              <Link href="/" className=" hover:text-hover-social">
-                About
-              </Link>
-            </li>
-            <li>
-              <Link href="/" className=" hover:text-hover-social">
-                Product
-              </Link>
-            </li>
-            <li className=" hover:text-hover-social">
-              <Link href="/">Blog</Link>
-            </li>
-            <li className=" hover:text-hover-social">
-              <Link href="/">Contact</Link>
-            </li>
+            {categories.map(
+              (
+                item,
+                index // <-- Changed to parentheses
+              ) => (
+                <>
+                  <li>
+                    <Link
+                      href={`/category/${slugify(item.name)}`}
+                      className=" hover:text-hover-social"
+                      key={index}
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                </>
+              )
+            )}
           </ul>
         </nav>
         {isopen && (
@@ -136,34 +171,38 @@ const BottomNavbar: React.FC = () => {
       </div>
       {ismenu && (
         <>
-          <div className="block md:hidden absolute top-0 left-0 w-1/2 bg-black text-white h-screen">
-            <nav className="my-8 block">
-              <ul className=" flex flex-col gap-y-8 py-2 px-8 transition-all relative">
-                <li className=" hover:ml-4 transition-all">
-                  <Link href="/" className=" hover:text-hover-social">
-                    Home
-                  </Link>
-                </li>
-                <li className=" hover:ml-4 transition-all">
-                  <Link href="/" className=" hover:text-hover-social">
-                    About
-                  </Link>
-                </li>
-                <li className=" hover:ml-4 transition-all">
-                  <Link href="/" className=" hover:text-hover-social">
-                    Product
-                  </Link>
-                </li>
-                <li className=" hover:ml-4 transition-all hover:text-hover-social">
-                  <Link href="/">Blog</Link>
-                </li>
-                <li className=" hover:text-hover-social">
-                  <Link href="/">Contact</Link>
-                </li>
-              </ul>
-              <div className=" absolute top-5 right-5" onClick={closemenu}>
-                <IoClose fontSize={25} />
-              </div>
+          <div className=" absolute top-15 left-0 bg-black w-1/2 h-screen z-20 text-white">
+            <nav className="my-8 block ">
+              <Outsideclick isOpen={ismenu} onClose={closemenu}>
+                <ul className=" flex flex-col gap-y-8 py-2 px-8 transition-all relative overflow-hidden">
+                  <li className=" hover:ml-4 transition-all">
+                    <Link href="/" className=" hover:text-hover-social">
+                      Home
+                    </Link>
+                  </li>
+                  {categories.map(
+                    (
+                      item,
+                      index // <-- Changed to parentheses
+                    ) => (
+                      <>
+                        <li className=" hover:ml-4 transition-all">
+                          <Link
+                            href={`/category/${item.name.trim()}`}
+                            className=" hover:text-hover-social"
+                            key={index}
+                          >
+                            {item.name}
+                          </Link>
+                        </li>
+                      </>
+                    )
+                  )}
+                </ul>
+                <div className=" absolute -top-5 right-5" onClick={closemenu}>
+                  <IoClose fontSize={25} />
+                </div>
+              </Outsideclick>
             </nav>
           </div>
         </>
