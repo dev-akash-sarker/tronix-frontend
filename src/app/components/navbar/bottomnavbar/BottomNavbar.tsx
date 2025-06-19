@@ -122,7 +122,7 @@ const BottomNavbar: React.FC = () => {
             </div>
           </div>
         </div>
-        <nav className="my-8 hidden md:block">
+        <nav className="my-8 mx-2 md:mx-0 hidden md:block">
           <ul className=" flex gap-x-8 py-2 px-2 transition-all border-y-2 border-gray-300">
             <li className="transition-all">
               <Link href="/" className=" hover:text-hover-social">
@@ -171,7 +171,7 @@ const BottomNavbar: React.FC = () => {
       </div>
       {ismenu && (
         <>
-          <div className=" absolute top-15 left-0 bg-black w-1/2 h-screen z-20 text-white">
+          <div className=" absolute top-0 left-0 bg-black w-3/4 sm:w-1/2 h-full z-20 text-white">
             <nav className="my-8 block ">
               <Outsideclick isOpen={ismenu} onClose={closemenu}>
                 <ul className=" flex flex-col gap-y-8 py-2 px-8 transition-all relative overflow-hidden">

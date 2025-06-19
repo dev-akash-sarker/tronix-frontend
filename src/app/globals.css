@@ -6,11 +6,13 @@
   --foreground: #171717;
   --active-social-color: #f46b5b;
   --input-background: rgb(208, 208, 210, 0.25);
+  --rating-color: #ffd687;
   --text-custom-xl: 56px;
 }
 
 @theme inline {
   --color-social: var(--social-color);
+  --color-rating: var(--rating-color);
   --color-hover-social: var(--active-social-color);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -18,6 +20,7 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-mont: var(--font-montserrat);
+  --font-pop: var(--font-poppins);
   --text-c1: var(--text-custom-xl);
 }
 

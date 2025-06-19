@@ -16,7 +16,7 @@ const HeroSlider: React.FC<CustomSwiperProps> = ({
   ...swiperProps
 }) => {
   return (
-    <Swiper {...swiperProps} modules={[Navigation, Pagination]}>
+    <Swiper {...swiperProps} modules={[Navigation, Pagination, Autoplay]}>
       {children.map((child, index) => (
         <SwiperSlide key={index} className="w-full h-full">
           {child}

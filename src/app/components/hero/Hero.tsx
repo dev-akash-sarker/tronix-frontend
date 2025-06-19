@@ -17,6 +17,29 @@ const Hero: React.FC = () => {
             }}
             pagination={{ clickable: true }}
           >
+            <div className="bg-black w-full h-full rounded-3xl relative">
+              <Link href="#">
+                <video
+                  src="/slider/xlarge_2x.mp4"
+                  width={100}
+                  height={100}
+                  className="w-full h-full"
+                  autoPlay
+                  muted
+                  loop // optional, if you want it to repeat
+                  playsInline // good for mobile support
+                ></video>
+              </Link>
+              <div className=" absolute top-1/2 -translate-y-1/2 left-10 hidden">
+                <h1 className=" sm:text-4xl md:text-4xl lg:text-5xl xl:text-c1 font-mont font-bold">
+                  Better Devices for Better Life
+                </h1>
+                <p className=" text-social font-normal, text-2xl">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor.
+                </p>
+              </div>
+            </div>
             <div className="bg-amber-300 w-full h-full rounded-3xl relative">
               <Link href="#">
                 <Image
@@ -71,29 +94,6 @@ const Hero: React.FC = () => {
                 />
               </Link>
               <div className=" absolute top-1/2 -translate-y-1/2 left-10">
-                <h1 className=" sm:text-4xl md:text-4xl lg:text-5xl xl:text-c1 font-mont font-bold">
-                  Better Devices for Better Life
-                </h1>
-                <p className=" text-social font-normal, text-2xl">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor.
-                </p>
-              </div>
-            </div>
-            <div className="bg-black w-full h-full rounded-3xl relative">
-              <Link href="#">
-                <video
-                  src="/slider/xlarge_2x.mp4"
-                  width={100}
-                  height={100}
-                  className="w-full h-full"
-                  autoPlay
-                  muted
-                  loop // optional, if you want it to repeat
-                  playsInline // good for mobile support
-                ></video>
-              </Link>
-              <div className=" absolute top-1/2 -translate-y-1/2 left-10 hidden">
                 <h1 className=" sm:text-4xl md:text-4xl lg:text-5xl xl:text-c1 font-mont font-bold">
                   Better Devices for Better Life
                 </h1>
