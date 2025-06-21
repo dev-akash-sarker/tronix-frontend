@@ -10,15 +10,17 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
 interface CustomSwiperProps extends SwiperProps {
   children: ReactNode[];
+  classNames: string;
 }
 const HeroSlider: React.FC<CustomSwiperProps> = ({
   children,
+  classNames,
   ...swiperProps
 }) => {
   return (
     <Swiper {...swiperProps} modules={[Navigation, Pagination, Autoplay]}>
       {children.map((child, index) => (
-        <SwiperSlide key={index} className="w-full h-full">
+        <SwiperSlide key={index} className={classNames}>
           {child}
         </SwiperSlide>
       ))}

@@ -80,7 +80,7 @@ const NewArrivel: React.FC = () => {
         <div className=" flex justify-between">
           <h3 className=" font-mont text-4xl font-bold">New Arrivel</h3>
           <Link
-            href="/new-arrivel"
+            href="/viewnewarrivel"
             className="block font-pop text-2xl text-hover-social hover:underline"
           >
             View All
@@ -109,7 +109,7 @@ const NewArrivel: React.FC = () => {
                   title={item.title}
                   className=" text-xl text-gray-500 font-bold"
                 >
-                  <Link href={`/newarrivel/${item.id}`}>
+                  <Link href={`/newarrivelproduct/${item.id}`}>
                     {item.title.slice(0, 10)}..
                   </Link>
                 </h5>

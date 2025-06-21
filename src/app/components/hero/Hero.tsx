@@ -10,6 +10,7 @@ const Hero: React.FC = () => {
           <HeroSlider
             spaceBetween={20}
             slidesPerView={1}
+            classNames="w-full h-full"
             loop={true}
             autoplay={{
               delay: 3000, // 3 seconds
