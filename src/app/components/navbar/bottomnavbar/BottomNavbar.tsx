@@ -134,17 +134,15 @@ const BottomNavbar: React.FC = () => {
                 item,
                 index // <-- Changed to parentheses
               ) => (
-                <>
-                  <li>
-                    <Link
-                      href={`/category/${slugify(item.name)}`}
-                      className=" hover:text-hover-social"
-                      key={index}
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                </>
+                <li key={index}>
+                  <Link
+                    href={`/category/${slugify(item.name)}`}
+                    className=" hover:text-hover-social"
+                    key={index}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
               )
             )}
           </ul>

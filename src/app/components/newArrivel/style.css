@@ -1,0 +1,15 @@
+.customnewarrivelwidth {
+  display: flex;
+}
+
+@media (min-width: 1024px) {
+  .customnewarrivelwidth {
+    width: 50% !important;
+  }
+}
+
+@media (min-width: 1365px) {
+  .customnewarrivelwidth {
+    width: 33.333333% !important;
+  }
+}

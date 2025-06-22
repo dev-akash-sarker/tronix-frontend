@@ -8,9 +8,11 @@
   --input-background: rgb(208, 208, 210, 0.25);
   --rating-color: #ffd687;
   --text-custom-xl: 56px;
+  --purple-color: #bb6bd9;
 }
 
 @theme inline {
+  --color-purple: var(--purple-color);
   --color-social: var(--social-color);
   --color-rating: var(--rating-color);
   --color-hover-social: var(--active-social-color);

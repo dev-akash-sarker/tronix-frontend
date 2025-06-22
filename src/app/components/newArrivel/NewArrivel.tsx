@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
+import "./style.css";
 export interface NewArrivalType {
   id: number;
   title: string;
@@ -74,6 +75,7 @@ const NewArrivel: React.FC = () => {
 
     fetchNewArrivel();
   }, []);
+
   return (
     <>
       <div>
@@ -86,25 +88,27 @@ const NewArrivel: React.FC = () => {
             View All
           </Link>
         </div>
-        <div className="products flex gap-10 mt-10">
+        <div className="products flex flex-wrap gap-y-8 mt-10 overflow-hidden">
           {newarrivel.map((item) => (
-            <div className="flex gap-x-8" key={item.id}>
-              <div className=" relative">
+            <div
+              className="w-1/2 flex gap-x-8 customnewarrivelwidth"
+              key={item.id}
+            >
+              <div className=" relative w-[46.875%]">
+                <Image
+                  src={item.images[0]}
+                  fill
+                  className=" w-full aspect-square"
+                  alt={item.title}
+                />
                 <div className="w-[185px] h-[255px] overflow-hidden">
-                  <Image
-                    src={item.images[0]}
-                    width={235}
-                    height={290}
-                    className=" w-full h-full aspect-square"
-                    alt={item.title}
-                  />
                   <div className="absolute inset-0 bg-black/25"></div>
                 </div>
                 <div className=" absolute z-20 top-5 left-5 xl:w-[64px] xl:h-[64px] rounded-full bg-hover-social text-white font-pop text-[18px] flex justify-center items-center">
                   New
                 </div>
               </div>
-              <div className=" flex flex-col justify-center gap-4">
+              <div className=" w-[53.125%] flex flex-col justify-center gap-4">
                 <h5
                   title={item.title}
                   className=" text-xl text-gray-500 font-bold"

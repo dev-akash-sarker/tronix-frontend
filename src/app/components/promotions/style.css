@@ -1,0 +1,21 @@
+progress {
+  /* Removes the default native style in some browsers */
+  -webkit-appearance: none;
+  appearance: none;
+}
+/* The background part of the bar */
+progress::-webkit-progress-bar {
+  background-color: #eee; /* Change this for the gray area */
+  border-radius: 10px;
+}
+
+/* The actual "value" part of the bar (the green part) */
+progress::-webkit-progress-value {
+  background-color: #ff6600; /* Change this for the active area */
+  border-radius: 10px;
+}
+
+/* For Firefox */
+progress::-moz-progress-bar {
+  background-color: #ff6600;
+}

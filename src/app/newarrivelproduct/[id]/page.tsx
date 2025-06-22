@@ -58,7 +58,7 @@ export default function NewArrivalProductPage({ params }: Props) {
 
     fetchProduct();
   }, [id]);
-  const abc = [1, 2, 3, 4];
+
   return (
     <div className="p-6">
       {product ? (
