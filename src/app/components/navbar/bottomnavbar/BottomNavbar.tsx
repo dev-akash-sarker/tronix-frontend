@@ -169,7 +169,7 @@ const BottomNavbar: React.FC = () => {
       </div>
       {ismenu && (
         <>
-          <div className=" absolute top-0 left-0 bg-black w-3/4 sm:w-1/2 h-full z-20 text-white">
+          <div className=" absolute top-0 left-0 bg-black w-3/4 sm:w-1/2 h-full z-50 text-white">
             <nav className="my-8 block ">
               <Outsideclick isOpen={ismenu} onClose={closemenu}>
                 <ul className=" flex flex-col gap-y-8 py-2 px-8 transition-all relative overflow-hidden">

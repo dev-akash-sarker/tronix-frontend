@@ -72,14 +72,6 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
                 src={imgSrc}
               />
             </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                fill
-                style={{ objectFit: "cover" }}
-                alt="product"
-                src="https://swiperjs.com/demos/images/nature-7.jpg"
-              />
-            </SwiperSlide>
           </>
         ))}
       </Swiper>

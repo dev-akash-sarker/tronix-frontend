@@ -1,12 +1,14 @@
 "use client";
 
+// import { slugify } from "@/app/utility/slugify";
+// import { slugify } from "@/app/utility/slugify";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 
-export interface NewArrivalType {
+export interface ProductInterface {
   id: number;
   title: string;
   description: string;
@@ -45,13 +47,9 @@ export interface NewArrivalType {
   images: string[];
   thumbnail: string;
 }
-
-const Viewnewarrivel: React.FC = () => {
-  const [newarrivel, setNewarrivel] = useState<NewArrivalType[]>([]);
-
+const TopRatedProducts: React.FC = () => {
+  const [toprated, setToprated] = useState<ProductInterface[]>([]);
   const [favorites, setFavorites] = useState<number[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const productsPerPage = 9;
   const handleHeartClick = (productId: number) => {
     setFavorites(
       (prev) =>
@@ -62,44 +60,59 @@ const Viewnewarrivel: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchNewArrivel = async () => {
+    const topRatedProducts = async () => {
       try {
         const response = await axios.get("https://dummyjson.com/products");
-        const products: NewArrivalType[] = response.data.products;
+        const products: ProductInterface[] = response.data.products;
 
-        // ✅ Sort by meta.createdAt (newest first)
-        const sortedProducts = products.sort((a, b) => {
-          return (
-            new Date(b.meta.createdAt).getTime() -
-            new Date(a.meta.createdAt).getTime()
+        // ✅ Add average rating to each product
+        const ratedProducts = products.map((product) => {
+          const reviewCount = product.reviews.length;
+          const totalReviewSum = product.reviews.reduce(
+            (sum, review) => sum + review.rating,
+            0
           );
+          const averageRating =
+            reviewCount > 0 ? totalReviewSum / reviewCount : 0;
+
+          return {
+            ...product,
+            averageRating,
+          };
         });
 
-        setNewarrivel(sortedProducts);
+        // ✅ Now sort by averageRating (highest first)
+        const sortedByRating = ratedProducts.sort(
+          (a, b) => b.averageRating - a.averageRating
+        );
+
+        const sortThree = sortedByRating.slice(0, 3);
+
+        setToprated(sortThree);
       } catch (error) {
         console.error("Failed to fetch new arrivel:", error);
       }
     };
 
-    fetchNewArrivel();
+    topRatedProducts();
   }, []);
-  // Get current page products
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = newarrivel.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
-  );
-
-  const totalPages = Math.ceil(newarrivel.length / productsPerPage);
-  console.log(newarrivel);
   return (
     <div>
-      <h3 className=" font-mont text-4xl font-bold mb-4">New Arrivel</h3>
-      {newarrivel ? (
+      <div className=" flex justify-between mt-20">
+        <h3 className=" font-mont text-4xl font-bold  mb-4">
+          Top Rated Products
+        </h3>
+        <Link
+          href={`/toprated`}
+          className=" font-pop font-normal text-2xl text-hover-social hover:underline"
+        >
+          View All
+        </Link>
+      </div>
+      {toprated ? (
         <div>
           <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {currentProducts.map((product, key) => (
+            {toprated.map((product, key) => (
               <div className="border border-gray-300 rounded-md" key={key}>
                 <div className="m-4 w-auto h-[313px] rounded-md bg-gray-400 overflow-hidden">
                   <Image
@@ -112,9 +125,7 @@ const Viewnewarrivel: React.FC = () => {
                 </div>
                 <div className=" text-center my-4">
                   <p className=" text-2xl font-pop font-normal">
-                    <Link
-                      href={`/viewnewarrivel/newarrivelproduct/${product.id}`}
-                    >
+                    <Link href={`/toprated/topratedproduct/${product.id}`}>
                       {product.title.slice(0, 20)}
                     </Link>
                     ...
@@ -153,36 +164,6 @@ const Viewnewarrivel: React.FC = () => {
               </div>
             ))}
           </div>
-          {/* Pagination Buttons */}
-          <div className="flex justify-center items-center gap-4 mt-6">
-            <button
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage((prev) => prev - 1)}
-              className="bg-gray-200 px-3 py-1 rounded disabled:opacity-50"
-            >
-              Prev
-            </button>
-            {[...Array(totalPages).keys()].map((_, pageIndex) => (
-              <button
-                key={pageIndex}
-                onClick={() => setCurrentPage(pageIndex + 1)}
-                className={`px-3 py-1 rounded ${
-                  currentPage === pageIndex + 1
-                    ? "bg-hover-social text-white"
-                    : "bg-gray-100"
-                }`}
-              >
-                {pageIndex + 1}
-              </button>
-            ))}
-            <button
-              disabled={currentPage === totalPages}
-              onClick={() => setCurrentPage((prev) => prev + 1)}
-              className="bg-gray-200 px-3 py-1 rounded disabled:opacity-50"
-            >
-              Next
-            </button>
-          </div>
         </div>
       ) : (
         "Loading"
@@ -191,4 +172,4 @@ const Viewnewarrivel: React.FC = () => {
   );
 };
 
-export default Viewnewarrivel;
+export default TopRatedProducts;

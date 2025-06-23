@@ -80,18 +80,20 @@ const NewArrivel: React.FC = () => {
     <>
       <div>
         <div className=" flex justify-between">
-          <h3 className=" font-mont text-4xl font-bold">New Arrivel</h3>
+          <h3 className=" font-mont md:text-2xl lg:text-3xl xl:text-4xl font-bold">
+            New Arrivel
+          </h3>
           <Link
             href="/viewnewarrivel"
-            className="block font-pop text-2xl text-hover-social hover:underline"
+            className="block font-pop text-lg lg:text-2xl text-hover-social hover:underline"
           >
             View All
           </Link>
         </div>
-        <div className="products flex flex-wrap gap-y-8 mt-10 overflow-hidden">
+        <div className="products flex flex-wrap lg:flex-nowrap gap-y-8 mt-10 overflow-hidden">
           {newarrivel.map((item) => (
             <div
-              className="w-1/2 flex gap-x-8 customnewarrivelwidth"
+              className="w-full md:w-1/2 lg:w-1/3 flex gap-x-8 customnewarrivelwidth"
               key={item.id}
             >
               <div className=" relative w-[46.875%]">
@@ -113,7 +115,7 @@ const NewArrivel: React.FC = () => {
                   title={item.title}
                   className=" text-xl text-gray-500 font-bold"
                 >
-                  <Link href={`/newarrivelproduct/${item.id}`}>
+                  <Link href={`/viewnewarrivel/newarrivelproduct/${item.id}`}>
                     {item.title.slice(0, 10)}..
                   </Link>
                 </h5>

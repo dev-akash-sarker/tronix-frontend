@@ -47,16 +47,16 @@ const Hero: React.FC = () => {
                   src="/slider/one.jpg"
                   width={100}
                   height={100}
-                  className="w-full h-full bg-cover"
+                  className="w-full h-full bg-cover brightness-75"
                   alt="one"
                   // Photo by Jakub Zerdzicki: https://www.pexels.com/photo/fall-devices-18523431/
                 />
               </Link>
-              <div className=" absolute top-1/2 -translate-y-1/2 left-10">
-                <h1 className=" sm:text-4xl md:text-4xl lg:text-5xl xl:text-c1 font-mont font-bold">
+              <div className=" absolute top-1/2 -translate-y-1/2 left-2 md:left-10">
+                <h1 className=" text-lg md:text-3xl lg:text-5xl xl:text-c1 font-mont font-bold">
                   Better Devices for Better Life
                 </h1>
-                <p className=" text-social font-normal, text-2xl">
+                <p className=" text-social font-normal text-xs md:text-2xl text-start">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor.
                 </p>
@@ -73,11 +73,11 @@ const Hero: React.FC = () => {
                   alt="one"
                 />
               </Link>
-              <div className=" absolute top-1/2 -translate-y-1/2 left-10 hidden">
-                <h1 className=" sm:text-4xl md:text-4xl lg:text-5xl xl:text-c1 font-mont font-bold">
+              <div className=" hidden absolute top-1/2 -translate-y-1/2 left-2 md:left-10">
+                <h1 className=" text-lg md:text-3xl lg:text-5xl xl:text-c1 font-mont font-bold">
                   Better Devices for Better Life
                 </h1>
-                <p className=" text-social font-normal, text-2xl">
+                <p className=" text-social font-normal text-xs md:text-2xl text-start">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor.
                 </p>
@@ -94,11 +94,11 @@ const Hero: React.FC = () => {
                   alt="one"
                 />
               </Link>
-              <div className=" absolute top-1/2 -translate-y-1/2 left-10">
-                <h1 className=" sm:text-4xl md:text-4xl lg:text-5xl xl:text-c1 font-mont font-bold">
+              <div className=" absolute top-1/2 -translate-y-1/2 left-2 md:left-10">
+                <h1 className=" text-lg md:text-3xl lg:text-5xl xl:text-c1 font-mont font-bold">
                   Better Devices for Better Life
                 </h1>
-                <p className=" text-social font-normal, text-2xl">
+                <p className=" text-social font-normal text-xs md:text-2xl text-start">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor.
                 </p>
@@ -108,17 +108,19 @@ const Hero: React.FC = () => {
         </div>
 
         <div className="bg-red-300 relative rounded-3xl overflow-hidden bg-[url('/slider/pcgaming.jpg')] bg-cover bg-center h-full ">
-          <Link href="#">
-            <h2 className=" text-[12px] lg:text-base block font-mont font-extrabold absolute top-1/2 left-1/2 -translate-1/2 bg-amber-300 py-4 px-5 text-center rounded-3xl ">
-              PC Gaming Collection
-            </h2>
+          <Link
+            href="#"
+            className="w-[100px] md:w-auto text-[8px] lg:text-base inline-block font-mont font-extrabold absolute top-1/2 left-1/2 -translate-1/2 bg-amber-300 py-2 px-[2px] md:px-4 md:py-3 lg:py-4 lg:px-5 text-center rounded-3xl "
+          >
+            PC Gaming Collection
           </Link>
         </div>
         <div className="bg-red-300 relative rounded-3xl overflow-hidden bg-[url('/slider/camera.jpg')] bg-cover bg-center h-full ">
-          <Link href="#">
-            <h2 className=" text-[12px] block lg:text-base font-mont font-extrabold absolute top-1/2 left-1/2 -translate-1/2 bg-black text-white py-4 px-5 text-center rounded-3xl ">
-              Camera Collection
-            </h2>
+          <Link
+            href="#"
+            className="w-[100px] md:w-auto text-[8px] lg:text-base inline-block font-mont font-extrabold absolute top-1/2 left-1/2 -translate-1/2 bg-black text-white py-2 px-[2px] md:px-4 md:py-3 lg:py-4 lg:px-5 text-center rounded-3xl "
+          >
+            Camera Collection
           </Link>
         </div>
       </div>

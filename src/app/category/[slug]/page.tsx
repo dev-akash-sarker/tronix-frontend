@@ -4,8 +4,8 @@ type Props = {
   params: { slug: string };
 };
 
-export default function CategoryPage({ params }: Props) {
-  const { slug } = params;
+export default async function CategoryPageSlug({ params }: Props) {
+  const { slug } = await params;
 
   return (
     <div>

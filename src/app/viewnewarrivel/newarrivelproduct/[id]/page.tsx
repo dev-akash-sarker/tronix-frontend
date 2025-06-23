@@ -71,10 +71,13 @@ export default function NewArrivalProductPage({ params }: Props) {
           {/* Product Info */}
           <div className="w-full lg:w-[45.45%] flex flex-col gap-y-4">
             <h3 className="flex gap-x-6 items-center -mt-4">
-              <Link href="/newarrivel">Newarrivel</Link>
+              <Link href="/viewnewarrivel">New Arrivel</Link>
               <RxCaretRight />
 
-              <Link href="#" className="text-hover-social font-bold">
+              <Link
+                href={`/viewnewarrivel/newarrivelproduct/${product.id}`}
+                className="text-hover-social font-bold"
+              >
                 {product.title}
               </Link>
             </h3>
