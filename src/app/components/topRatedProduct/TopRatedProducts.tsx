@@ -125,7 +125,7 @@ const TopRatedProducts: React.FC = () => {
                 </div>
                 <div className=" text-center my-4">
                   <p className=" text-2xl font-pop font-normal">
-                    <Link href={`/toprated/topratedproduct/${product.id}`}>
+                    <Link href={`/category/${product.category}/${product.id}`}>
                       {product.title.slice(0, 20)}
                     </Link>
                     ...

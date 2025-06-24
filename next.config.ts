@@ -3,7 +3,19 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ["cdn.dummyjson.com", "swiperjs.com"], // ✅ Add this line
+    remotePatterns: [
+      {
+        protocol: "https", // e.g. https or http
+        hostname: "swiperjs.com", // The domain name
+        port: "", // Optional (usually empty for default ports)
+        pathname: "/**", // Allow all paths
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.dummyjson.com",
+        pathname: "/**",
+      },
+    ],
   },
 };
 

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
+import { slugify } from "../utility/slugify";
 
 export interface NewArrivalType {
   id: number;
@@ -113,7 +114,9 @@ const Viewnewarrivel: React.FC = () => {
                 <div className=" text-center my-4">
                   <p className=" text-2xl font-pop font-normal">
                     <Link
-                      href={`/viewnewarrivel/newarrivelproduct/${product.id}`}
+                      href={`/category/${slugify(product.category)}/${
+                        product.id
+                      }`}
                     >
                       {product.title.slice(0, 20)}
                     </Link>

@@ -328,7 +328,11 @@ const PromotionCampaign: React.FC = () => {
                   </div>
                   <div className="bg-white w-[312px] mx-auto">
                     <h4 className=" text-center text-2xl font-pop font-normal mt-8 mb-2">
-                      {product.title}
+                      <Link
+                        href={`/category/${product.category}/${product.id}`}
+                      >
+                        {product.title}
+                      </Link>
                     </h4>
                     <div className=" font-pop text-2xl flex justify-center items-center gap-x-2">
                       <span className=" line-through font-normal text-social">

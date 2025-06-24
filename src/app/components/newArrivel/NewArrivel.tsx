@@ -84,7 +84,7 @@ const NewArrivel: React.FC = () => {
             New Arrivel
           </h3>
           <Link
-            href="/viewnewarrivel"
+            href="/newarrivel"
             className="block font-pop text-lg lg:text-2xl text-hover-social hover:underline"
           >
             View All
@@ -115,7 +115,7 @@ const NewArrivel: React.FC = () => {
                   title={item.title}
                   className=" text-xl text-gray-500 font-bold"
                 >
-                  <Link href={`/viewnewarrivel/newarrivelproduct/${item.id}`}>
+                  <Link href={`/category/${item.category}/${item.id}`}>
                     {item.title.slice(0, 10)}..
                   </Link>
                 </h5>

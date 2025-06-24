@@ -9,7 +9,7 @@ const mockCategories = [
   { id: 4, name: "TV & Smart Box" },
   { id: 5, name: "Home Appliance" },
   { id: 6, name: "Accessories" },
-  { id: 7, name: "Other Categories" },
+  { id: 7, name: "All Categories" },
 ];
 
 export async function GET() {
