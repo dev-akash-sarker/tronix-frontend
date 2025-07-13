@@ -181,7 +181,7 @@ const PromotionCampaign: React.FC = () => {
   };
   return (
     <>
-      <div>
+    {timeLeft.days !== 0 && timeLeft.hours !== 0 && timeLeft.minutes !== 0 && timeLeft.months !== 0 && timeLeft.seconds !== 0 ?  <div>
         {campaigns.map((item, i) => (
           <div key={i}>
             <div className=" flex gap-8 flex-col justify-center md:flex-row md:justify-between items-center mt-16 mb-14 ">
@@ -365,7 +365,8 @@ const PromotionCampaign: React.FC = () => {
             </div>
           </div>
         ))}
-      </div>
+      </div> : ""}
+     
     </>
   );
 };

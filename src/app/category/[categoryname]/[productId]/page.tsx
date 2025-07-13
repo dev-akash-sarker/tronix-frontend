@@ -3,16 +3,13 @@ import ProductGallery from "@/app/features/ProductGallery";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { RxCaretRight } from "react-icons/rx";
 
-interface Props {
-  params: {
-    categoryname: string;
-    productId: number;
-  };
-}
+type Props = {
+  params: Promise<{ categoryname: string; productId: number }>;
+};
 
 type ProductType = {
   id: number;
@@ -34,9 +31,10 @@ type ProductType = {
     reviewerEmail: string;
   }[];
 };
+
 // export default async function ProductPage({ params }: Props) {
 export default function ProductPage({ params }: Props) {
-  const { categoryname, productId } = params;
+  const { categoryname, productId } = React.use(params);
   const [product, setProduct] = useState<ProductType | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
   const plusquantity = () => {
@@ -78,21 +76,21 @@ export default function ProductPage({ params }: Props) {
 
             {/* Product Info */}
             <div className="w-full lg:w-[45.45%] flex flex-col gap-y-4">
-              <h3 className="flex gap-x-2 items-center -mt-4 text-social">
+              <h4 className=" -mt-4 text-social">
                 <Link
                   href="/"
-                  className=" hover:text-hover-social transition-all"
+                  className=" inline-block hover:text-hover-social transition-all"
                 >
                   Home
                 </Link>
-                <RxCaretRight />
+                <RxCaretRight className=" inline-block"/>
                 <Link
                   href={`/category/${categoryname}`}
-                  className=" hover:text-hover-social transition-all"
+                  className=" inline-block hover:text-hover-social transition-all"
                 >
                   {categoryname}
                 </Link>
-                <RxCaretRight />
+                <RxCaretRight className=" inline-block" />
 
                 <Link
                   href={`/viewnewarrivel/newarrivelproduct/${product.id}`}
@@ -100,7 +98,7 @@ export default function ProductPage({ params }: Props) {
                 >
                   {product.title}
                 </Link>
-              </h3>
+              </h4>
 
               <h2 className="text-2xl">{product.title}</h2>
 
@@ -171,7 +169,7 @@ export default function ProductPage({ params }: Props) {
                 {product.description}
               </p>
 
-              <div className="">
+              <div className="flex justify-between">
                 <div className=" flex flex-col gap-y-4 items-start md:flex-row md:items-center">
                   <p className="my-4 mr-2 text-xl font-pop text-social font-medium">
                     Quantity
@@ -193,12 +191,13 @@ export default function ProductPage({ params }: Props) {
                       <FaPlus />
                     </button>
                   </div>
-                  <div className=" flex ml-0  md:ml-8 gap-x-4">
-                    <button className=" text-base py-4 px-5 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all">
+                  
+                </div>
+                <div className="flex gap-x-4">
+                    <button className=" text-base py-3 px-5 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all">
                       Add to Cart
                     </button>
                   </div>
-                </div>
               </div>
             </div>
           </div>

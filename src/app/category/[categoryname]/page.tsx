@@ -1,11 +1,13 @@
 // app/categories/[slug]/page.tsx
 
+import React from "react";
+
 type Props = {
-  params: { categoryname: string };
+  params: Promise<{ categoryname: string }>;
 };
 
-export default async function CategoryNamePage({ params }: Props) {
-  const { categoryname } = await params;
+export default function CategoryNamePage({ params }: Props) {
+  const { categoryname } = React.use(params);
 
   return (
     <div>

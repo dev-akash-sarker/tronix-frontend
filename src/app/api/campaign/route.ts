@@ -215,7 +215,7 @@ const mockCampaign = [
     campaignId: "2",
     campaignName: "Mary cristmus Offer",
     OfferStartTime: "2025-06-22T19:30:00Z",
-    OfferEndTime: "2025-06-22T23:31:00Z",
+    OfferEndTime: "2025-06-28T23:31:00Z",
     products: [
       {
         id: 4,

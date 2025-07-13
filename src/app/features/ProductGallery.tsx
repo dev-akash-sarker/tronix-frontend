@@ -18,7 +18,7 @@ interface ProductGalleryProps {
 }
 const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
-  console.log("wow", images);
+
   return (
     <>
       <Swiper
@@ -28,23 +28,15 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
         modules={[FreeMode, Navigation, Thumbs]}
         className="mySwiper2"
       >
-        {images.map((imgSrc, key) => {
+        {images.map((imgSrc, index) => {
           return (
             <>
-              <SwiperSlide key={key}>
+              <SwiperSlide key={index}>
                 <Image
                   fill
                   style={{ objectFit: "cover" }}
                   alt="product"
                   src={imgSrc}
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <Image
-                  fill
-                  style={{ objectFit: "cover" }}
-                  alt="product"
-                  src="https://swiperjs.com/demos/images/nature-7.jpg"
                 />
               </SwiperSlide>
             </>
@@ -62,9 +54,9 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({ images }) => {
         modules={[FreeMode, Navigation, Thumbs]}
         className="mySwiper"
       >
-        {images.map((imgSrc, key) => (
+        {images.map((imgSrc, index) => (
           <>
-            <SwiperSlide key={key}>
+            <SwiperSlide key={index}>
               <Image
                 fill
                 style={{ objectFit: "cover" }}
