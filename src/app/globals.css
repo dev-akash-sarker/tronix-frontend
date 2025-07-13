@@ -10,9 +10,11 @@
   --text-custom-xl: 56px;
   --purple-color: #bb6bd9;
   --dark-black: #383838;
+  --old-gray: #615E5B;
 }
 
 @theme inline {
+  --color-old-gray: var(--old-gray);
   --color-purple: var(--purple-color);
   --color-social: var(--social-color);
   --color-rating: var(--rating-color);
@@ -91,3 +93,5 @@ body {
   display: flex;
   justify-content: start !important;
 }
+
+/* star based css */

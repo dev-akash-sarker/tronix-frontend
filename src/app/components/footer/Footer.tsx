@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
   return (
     <>
   <div>
-        <div className=" flex justify-center items-center flex-col md:flex-row md:justify-start py-[45px] flex-wrap">
+        <div className=" flex justify-center items-start flex-col md:flex-row md:justify-start py-[45px] flex-wrap">
         <div className="w-1/3 lg:w-1/2">
           <div className=" mb-4">
             <Image src={"/tronix.png"} width={112} height={54} alt="tronix" />

@@ -5,6 +5,7 @@ import TopNavbar from "./components/navbar/topnavbar/TopNavbar";
 import BottomNavbar from "./components/navbar/bottomnavbar/BottomNavbar";
 import "./globals.css";
 import Footer from "./components/footer/Footer";
+import '@smastrom/react-rating/style.css';
 // Fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
