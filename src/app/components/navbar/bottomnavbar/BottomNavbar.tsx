@@ -7,14 +7,26 @@ import { useEffect, useState } from "react";
 import { CiMenuBurger } from "react-icons/ci";
 import { IoClose } from "react-icons/io5";
 import { slugify } from "@/app/utility/slugify";
+import { TbBasketCancel } from "react-icons/tb";
+import { BsCrosshair } from "react-icons/bs";
+import { IoMdClose } from "react-icons/io";
 interface Category {
   id: number;
   name: string;
 }
+type Product = {
+  id: number;
+  title: string;
+  price: number;
+  thumbnail: string;
+  category?: string;
+};
 const BottomNavbar: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [isopen, setIsopen] = useState<boolean>(false);
   const [ismenu, setIsmenu] = useState<boolean>(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [query, setQuery] = useState<string>("");
   const opensearch = () => {
     setIsopen(!isopen);
   };
@@ -51,6 +63,22 @@ const BottomNavbar: React.FC = () => {
     fetchCategories();
   }, []);
   console.log("cat", categories);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const res = await fetch("https://dummyjson.com/products");
+      const data = await res.json();
+      setProducts(data.products);
+    };
+
+    fetchProducts();
+  }, []);
+
+  const filteredProducts =
+    query.trim().length < 3
+      ? []
+      : products.filter((product) =>
+          product.title.toLowerCase().includes(query.toLowerCase())
+        );
   return (
     <>
       <div className="my-8 relative">
@@ -82,11 +110,13 @@ const BottomNavbar: React.FC = () => {
                 />
               </button>
             </div>
-            <div className="mr-8 hidden md:flex">
+            <div className="mr-8 hidden md:flex relative">
               <input
                 className="md:w-xs py-3 indent-6 rounded-tl-md rounded-bl-md bg-input-background outline-none focus:bg-gray-200"
                 type="text"
                 placeholder="search here"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
               />
               <button className=" bg-hover-social py-2 px-4 -ml-2 rounded-tr-md rounded-br-md">
                 <Image
@@ -96,6 +126,52 @@ const BottomNavbar: React.FC = () => {
                   alt="searchicon"
                 />
               </button>
+              {query.length !== 0 &&
+                query.length !== 1 &&
+                query.length !== 2 && (
+                  <div className="absolute w-full bg-gray-200 max-h-[400px] z-20 top-14 rounded-[8px] px-2 overflow-y-scroll">
+                    <div className="py-2">
+                      {filteredProducts.map((product) => (
+                        <div className=" flex gap-x-2 items-center justify-between">
+                       <div className=" flex gap-x-2 items-center">
+                           <Link
+                            href={`/category/${product.category}/${product.id}`}
+                          >
+                            <div className=" w-10 h-10 rounded-[8px] bg-gray-500 relative">
+                              <Image
+                                src={product.thumbnail}
+                                fill
+                                className=" object-cover"
+                                alt={product.title}
+                              />
+                            </div>
+                          </Link>
+                          <Link
+                            href={`/category/${product.category}/${product.id}`}
+                          >
+                            <h6 className=" font-pop font-medium text-md">
+                              {product.title}
+                            </h6>
+                            <p>${product.price}</p>
+                          </Link>
+                       </div>
+                          <button onClick={()=> setQuery("")}>
+
+                       <IoMdClose/>
+                          </button>
+                        </div>
+                        // <li key={product.id} className="border p-4 rounded shadow-sm">
+                        //   <img src={product.thumbnail} alt={product.title} className="h-32 w-full object-cover rounded mb-2" />
+                        //   <h2 className="font-semibold">{product.title}</h2>
+                        //   <p className="text-sm text-gray-600">${product.price}</p>
+                        // </li>
+                      ))}
+                      {filteredProducts.length === 0 && (
+                        <p className="text-gray-500">No products found.</p>
+                      )}
+                    </div>
+                  </div>
+                )}
             </div>
             <div className=" flex gap-4">
               <button className=" relative">

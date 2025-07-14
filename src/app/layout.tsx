@@ -5,7 +5,12 @@ import TopNavbar from "./components/navbar/topnavbar/TopNavbar";
 import BottomNavbar from "./components/navbar/bottomnavbar/BottomNavbar";
 import "./globals.css";
 import Footer from "./components/footer/Footer";
-import '@smastrom/react-rating/style.css';
+import "@smastrom/react-rating/style.css";
+import NewsLetter from "./components/newsletter/Newsletter";
+import { Provider } from "react-redux";
+import { store } from "../../store";
+import ClientProvider from "../../store/ClientProvider";
+
 // Fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,15 +55,22 @@ export default function RootLayout({
           antialiased
         `}
       >
-        <div className=" w-full md:mx-0 lg:mx-auto">
-          <div className="lg:mx-40 relative">
-            <TopNavbar />
-            <hr className="text-gray-300" />
-            <BottomNavbar />
-            {children}
-            <Footer/>
+        <ClientProvider>
+          <div className="w-full md:mx-0 lg:mx-auto">
+            <div className="lg:mx-40 relative">
+              <TopNavbar />
+              <hr className="text-gray-300" />
+              <BottomNavbar />
+              {children}
+              <div className="lg:-mx-40 bg-hover-social mt-10 lg:mt-20">
+                <div className="lg:mx-40 py-[69px]">
+                  <NewsLetter />
+                </div>
+              </div>
+              <Footer />
+            </div>
           </div>
-        </div>
+        </ClientProvider>
       </body>
     </html>
   );

@@ -38,7 +38,7 @@ const Footer: React.FC = () => {
           <nav>
             <ul className=" flex flex-col gap-8 mt-4 footernav">
               <li className=" font-pop font-normal text-base xl:text-[18px] text-dark-black">
-                <Link href={"#"}>About</Link>
+                <Link href={"/about"}>About</Link>
               </li>
               <li className=" font-pop font-normal text-base xl:text-[18px] text-dark-black">
                 <Link href={"#"}>Products</Link>

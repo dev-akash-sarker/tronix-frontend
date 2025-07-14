@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../store/slices/cartSlice";
 
 export interface ProductInterface {
   id: number;
@@ -57,7 +59,7 @@ const TopRatedView: React.FC = () => {
           : [...prev, productId] // add
     );
   };
-
+const dispatch = useDispatch();
   useEffect(() => {
     const topRatedProducts = async () => {
       try {
@@ -138,7 +140,7 @@ const TopRatedView: React.FC = () => {
                     </p>
                   </div>
                   <div className=" flex justify-center items-center gap-7 mt-4">
-                    <button className=" text-sm py-3 px-4 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all">
+                    <button onClick={() => dispatch(addToCart(product))} className=" text-sm py-3 px-4 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all">
                       Add to Cart
                     </button>
                     <button onClick={() => handleHeartClick(product.id)}>

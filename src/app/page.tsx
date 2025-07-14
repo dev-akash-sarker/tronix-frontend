@@ -39,11 +39,7 @@ sed do eiusmod tempor. "
       <div>
         <TopRatedProducts />
       </div>
-      <div className=" lg:-mx-40 bg-hover-social mt-10 lg:mt-20">
-        <div className=" lg:mx-40 py-[69px]">
-          <NewsLetter/>
-        </div>
-      </div>
+ 
       
     </>
   );
