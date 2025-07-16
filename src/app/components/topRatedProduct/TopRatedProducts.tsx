@@ -1,5 +1,6 @@
 "use client";
 
+import { addcarts } from "@/service/RTK/features/add-cart/add_cart_Slice";
 // import { slugify } from "@/app/utility/slugify";
 // import { slugify } from "@/app/utility/slugify";
 import axios from "axios";
@@ -7,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
-
+import { useDispatch, useSelector } from "react-redux";
 export interface ProductInterface {
   id: number;
   title: string;
@@ -50,6 +51,12 @@ export interface ProductInterface {
 const TopRatedProducts: React.FC = () => {
   const [toprated, setToprated] = useState<ProductInterface[]>([]);
   const [favorites, setFavorites] = useState<number[]>([]);
+
+    // redux start
+  // const mycart = useSelector((state) => console.log(state));
+  const dispatch = useDispatch();
+  // console.log( "akash",mycart);
+  // redux end
   const handleHeartClick = (productId: number) => {
     setFavorites(
       (prev) =>
@@ -147,7 +154,8 @@ const TopRatedProducts: React.FC = () => {
                     </p>
                   </div>
                   <div className=" flex justify-center items-center gap-7 mt-4">
-                    <button className=" text-sm py-3 px-4 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all">
+                    {7 === product.id ? "" : ""}
+                    <button onClick={() => dispatch(addcarts(product))} className=" text-sm py-3 px-4 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all">
                       Add to Cart
                     </button>
                     <button onClick={() => handleHeartClick(product.id)}>

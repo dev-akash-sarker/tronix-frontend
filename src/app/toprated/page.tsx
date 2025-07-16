@@ -1,13 +1,12 @@
 "use client";
 
-// import { slugify } from "@/app/utility/slugify";
+import { addcarts } from "@/service/RTK/features/add-cart/add_cart_Slice";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../../../store/slices/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export interface ProductInterface {
   id: number;
@@ -51,6 +50,17 @@ export interface ProductInterface {
 const TopRatedView: React.FC = () => {
   const [toprated, setToprated] = useState<ProductInterface[]>([]);
   const [favorites, setFavorites] = useState<number[]>([]);
+
+  // redux start
+  // const mycart = useSelector((state) => console.log("myworld", state.cart.carts.some()));
+  const allproductcart = useSelector((state) => state.cart.carts);
+  const cartIDS = allproductcart.map((item) => item.id);
+  console.log(cartIDS.includes(4));
+  const dispatch = useDispatch();
+  const handleAddCart = (item: ProductInterface) => {
+    dispatch(addcarts(item));
+  };
+  // redux end
   const handleHeartClick = (productId: number) => {
     setFavorites(
       (prev) =>
@@ -59,7 +69,7 @@ const TopRatedView: React.FC = () => {
           : [...prev, productId] // add
     );
   };
-const dispatch = useDispatch();
+
   useEffect(() => {
     const topRatedProducts = async () => {
       try {
@@ -140,9 +150,22 @@ const dispatch = useDispatch();
                     </p>
                   </div>
                   <div className=" flex justify-center items-center gap-7 mt-4">
-                    <button onClick={() => dispatch(addToCart(product))} className=" text-sm py-3 px-4 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all">
-                      Add to Cart
-                    </button>
+                    {cartIDS.includes(product.id) ? (
+                      <button
+                       
+                        className=" text-sm py-3 px-4 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all"
+                      >
+                        Go to Cart
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleAddCart(product)}
+                        className=" text-sm py-3 px-4 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all"
+                      >
+                        Add to Cart
+                      </button>
+                    )}
+
                     <button onClick={() => handleHeartClick(product.id)}>
                       <FaHeart
                         className={

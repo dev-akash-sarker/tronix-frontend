@@ -8,8 +8,12 @@ import { CiMenuBurger } from "react-icons/ci";
 import { IoClose } from "react-icons/io5";
 import { slugify } from "@/app/utility/slugify";
 import { TbBasketCancel } from "react-icons/tb";
-import { BsCrosshair } from "react-icons/bs";
+import { BsCrosshair, BsPlus } from "react-icons/bs";
 import { IoMdClose } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
+import { FaMinus, FaPlus } from "react-icons/fa";
+import { RxCross2 } from "react-icons/rx";
+import { decreaseQuantity, increase_quantity, increaseQuantity, removecarts } from "@/service/RTK/features/add-cart/add_cart_Slice";
 interface Category {
   id: number;
   name: string;
@@ -21,12 +25,34 @@ type Product = {
   thumbnail: string;
   category?: string;
 };
+
 const BottomNavbar: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [isopen, setIsopen] = useState<boolean>(false);
   const [ismenu, setIsmenu] = useState<boolean>(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [query, setQuery] = useState<string>("");
+  const [iscartopen, setIscartopen] = useState<boolean>(false);
+
+  const handleCartOpen = () => {
+    setIscartopen(true);
+  };
+
+  const handleCloseCart = () => {
+    setIscartopen(false)
+  }
+  
+  // redux start
+  
+  const cartLength = useSelector((state) => state.cart.carts.length);
+  const cartAll = useSelector((state) => state.cart.carts);
+
+
+  const dispatch = useDispatch()
+const handleRemoveFromCart = (itemId: number) => {
+    dispatch(removecarts({ id: itemId }));
+  };
+  // redux end
   const opensearch = () => {
     setIsopen(!isopen);
   };
@@ -37,17 +63,7 @@ const BottomNavbar: React.FC = () => {
     setIsmenu(false);
   };
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:3000/api/categories")
-  //     .then((response) => {
-  //       setCategories(response.data);
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error.message);
-  //     });
-  // }, []);
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -79,6 +95,10 @@ const BottomNavbar: React.FC = () => {
       : products.filter((product) =>
           product.title.toLowerCase().includes(query.toLowerCase())
         );
+
+        const totalPrice = cartAll.reduce((sum, item) => {
+  return sum + item.price * item.quantity;
+}, 0);
   return (
     <>
       <div className="my-8 relative">
@@ -133,31 +153,30 @@ const BottomNavbar: React.FC = () => {
                     <div className="py-2">
                       {filteredProducts.map((product) => (
                         <div className=" flex gap-x-2 items-center justify-between">
-                       <div className=" flex gap-x-2 items-center">
-                           <Link
-                            href={`/category/${product.category}/${product.id}`}
-                          >
-                            <div className=" w-10 h-10 rounded-[8px] bg-gray-500 relative">
-                              <Image
-                                src={product.thumbnail}
-                                fill
-                                className=" object-cover"
-                                alt={product.title}
-                              />
-                            </div>
-                          </Link>
-                          <Link
-                            href={`/category/${product.category}/${product.id}`}
-                          >
-                            <h6 className=" font-pop font-medium text-md">
-                              {product.title}
-                            </h6>
-                            <p>${product.price}</p>
-                          </Link>
-                       </div>
-                          <button onClick={()=> setQuery("")}>
-
-                       <IoMdClose/>
+                          <div className=" flex gap-x-2 items-center">
+                            <Link
+                              href={`/category/${product.category}/${product.id}`}
+                            >
+                              <div className=" w-10 h-10 rounded-[8px] bg-gray-500 relative">
+                                <Image
+                                  src={product.thumbnail}
+                                  fill
+                                  className=" object-cover"
+                                  alt={product.title}
+                                />
+                              </div>
+                            </Link>
+                            <Link
+                              href={`/category/${product.category}/${product.id}`}
+                            >
+                              <h6 className=" font-pop font-medium text-md">
+                                {product.title}
+                              </h6>
+                              <p>${product.price}</p>
+                            </Link>
+                          </div>
+                          <button onClick={() => setQuery("")}>
+                            <IoMdClose />
                           </button>
                         </div>
                         // <li key={product.id} className="border p-4 rounded shadow-sm">
@@ -173,8 +192,11 @@ const BottomNavbar: React.FC = () => {
                   </div>
                 )}
             </div>
-            <div className=" flex gap-4">
-              <button className=" relative">
+            <div className=" flex gap-4 ">
+              <button
+                onClick={handleCartOpen}
+                className=" relative cursor-pointer"
+              >
                 <Image
                   src="/ShoppingBag.svg"
                   width={40}
@@ -182,9 +204,11 @@ const BottomNavbar: React.FC = () => {
                   alt="shopping"
                   className="w-7 h-7 md:w-10 md:h-10"
                 />
-                <div className=" bg-hover-social w-6 md:w-8 h-6 md:h-8 text-[10px] font-semibold flex justify-center items-center rounded-full text-white absolute -top-[12px] -right-[12px] md:-top-[15px] md:-right-[17px]">
-                  99
-                </div>
+                {cartLength !== 0 && (
+                  <div className=" bg-hover-social w-6 md:w-8 h-6 md:h-8 text-[10px] font-semibold flex justify-center items-center rounded-full text-white absolute -top-[12px] -right-[12px] md:-top-[15px] md:-right-[17px]">
+                    {cartLength}
+                  </div>
+                )}
               </button>
               <button>
                 <Image
@@ -195,6 +219,98 @@ const BottomNavbar: React.FC = () => {
                   className="w-7 h-7 md:w-10 md:h-10"
                 />
               </button>
+              {iscartopen && (
+                
+                <div className=" absolute w-[500px] h-[600px] z-50 overflow-y-scroll bg-white shadow-2xl top-20 right-0">
+                  <Outsideclick isOpen={iscartopen} onClose={handleCloseCart}>
+                       <center>
+                    <h3 className=" font-mont font-bold text-2xl pt-5">
+                      My Cart
+                    </h3>
+                  </center>
+                  <hr className=" text-gray-300 my-5" />
+
+                  <div className=" px-2 py-4">
+                    {cartAll.map((item, i) => (
+                      <>
+                        <div
+                          className=" flex items-center pb-4 gap-4 border-b-2 border-gray-300 mt-4 relative"
+                          key={i}
+                        >
+                       
+                          <div className=" w-25 h-25 rounded-sm bg-gray-500 relative">
+                            <Image
+                              src={item.thumbnail}
+                              width={100}
+                              height={100}
+                              alt={item.title}
+                            />
+                          </div>
+                          <div>
+                            <h3 className=" font-pop font-medium text-2xl text-black">
+                              {item.title}
+                            </h3>
+                            <p className=" font-pop font-normal text-lg text-hover-social">
+                              {item.price * item.quantity}
+                            </p>
+                            <div className="quantity flex items-center mt-2">
+                              {item.quantity > 1 ?                               <div className="minus plus w-8 h-8 rounded-sm bg-gray-400 text-white" >
+                                <center className="my-2"  onClick={()=> dispatch(decreaseQuantity({ id: item.id })) }>
+                                  <FaMinus className="text-base" />
+                                </center>
+                              </div> :                               <div className="minus plus w-8 h-8 rounded-sm bg-gray-400 text-white" >
+                                <center className="my-2"  aria-disabled>
+                                  <FaMinus className="text-base" />
+                                </center>
+                              </div>}
+
+
+                              <span className=" font-pop font-bold mx-2">
+                          {item.quantity}
+                              </span>
+                        
+                              <div className="plus w-8 h-8 rounded-sm bg-hover-social text-white" >
+                                <center className="my-2"  onClick={()=>dispatch(increaseQuantity({ id: item.id })) }>
+                                  <FaPlus className="text-base"  />
+                                </center>
+                              </div>
+                            </div>
+                          </div>
+                          <div className=" cursor-pointer  absolute top-1/2 -translate-y-1/2 right-0" onClick={()=>handleRemoveFromCart(item.id)}>
+                            <RxCross2 className=" text-4xl text-hover-social mr-0" />
+                          </div>
+                        </div>
+                      </>
+                    ))}
+                  </div>
+                  <div className=" p-8">
+                    <center className=" font-pop font-medium text-2xl text-old-gray">
+                      Summery
+                    </center>
+                    <div className=" flex justify-between my-4">
+                      <h4 className=" font-pop font-medium text-lg text-old-gray">
+                        Total
+                      </h4>
+                      <p className=" font-pop font-medium text-lg text-hover-social">
+                      ${totalPrice.toFixed(2)}
+                      </p>
+                    </div>
+                    <button className=" my-4 bloc w-full text-center py-4 bg-hover-social rounded-2xl text-white font-pop font-normal text-lg">
+                      Checkout
+                    </button>
+                    <center>
+                      <button
+                      onClick={()=> setIscartopen(false)}
+                        className="inline-block my-4 font-pop font-normal text-lg text-hover-social hover:text-old-gray"
+                      >
+                        Continue Shopping
+                      </button>
+                    </center>{" "}
+                  </div>
+                  </Outsideclick>
+               
+                </div>
+              )}
             </div>
           </div>
         </div>

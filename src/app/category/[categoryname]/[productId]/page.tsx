@@ -9,6 +9,7 @@ import { FaMinus, FaPlus } from "react-icons/fa";
 import { RxCaretRight } from "react-icons/rx";
 import styles from "../styles/Home.module.css";
 import { Rating } from "@smastrom/react-rating";
+import { IoHeartSharp } from "react-icons/io5";
 
 type Props = {
   params: Promise<{ categoryname: string; productId: number }>;
@@ -43,6 +44,7 @@ export default function ProductPage({ params }: Props) {
   const [isDescription, setIsDescription] = useState<boolean | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
   const [rating, setRating] = useState<number>(1);
+    const [favorites, setFavorites] = useState<number[]>([]);
 
   function onChange(newValue: number) {
     console.log(newValue);
@@ -87,17 +89,17 @@ export default function ProductPage({ params }: Props) {
   };
   return (
     <div>
-      <div className="p-6">
+      <div className="p-6 relative">
         {product ? (
           <>
             <div className="flex gap-[104px] flex-col lg:flex-row items-start">
               {/* Main Product Image */}
-              <div className="w-full lg:w-[54.55%] h-[517px] bg-gray-400">
+              <div className="w-full lg:w-2/5 h-[517px] bg-gray-400">
                 <ProductGallery images={product.images} />
               </div>
 
               {/* Product Info */}
-              <div className="w-full lg:w-[45.45%] flex flex-col gap-y-4">
+              <div className="w-full lg:w-3/5 flex flex-col gap-y-4">
                 <h4 className=" -mt-4 text-social">
                   <Link
                     href="/"
@@ -125,7 +127,8 @@ export default function ProductPage({ params }: Props) {
                 <h2 className="text-2xl">{product.title}</h2>
 
                 {/* Rating, Review, Sold */}
-                <div className="flex items-center gap-4">
+            <div className=" flex justify-between">
+                 <div className="flex items-center gap-4">
                   <p className="font-bold text-xl">
                     {product.rating.toFixed(1)}
                   </p>
@@ -140,6 +143,11 @@ export default function ProductPage({ params }: Props) {
                     Sold 199
                   </p>
                 </div>
+                <div className=" flex justify-start items-center gap-2">
+                  <IoHeartSharp className=" inline-block text-hover-social"/>
+                  <p className=" font-pop font-normal text-lg">Add to Wishlist</p>
+                </div>
+            </div>
 
                 {/* Price */}
                 <div className="flex items-center gap-4 mt-4 mb-12">
@@ -195,7 +203,7 @@ export default function ProductPage({ params }: Props) {
                   {product.description}
                 </p>
 
-                <div className="flex justify-between">
+                <div className="flex justify-start gap-x-10">
                   <div className=" flex flex-col gap-y-4 items-start md:flex-row md:items-center">
                     <p className="my-4 mr-2 text-xl font-pop text-social font-medium">
                       Quantity
@@ -219,7 +227,7 @@ export default function ProductPage({ params }: Props) {
                     </div>
                   </div>
                   <div className="flex gap-x-4">
-                    <button className=" text-base py-3 px-5 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all">
+                    <button className=" text-base py-3 px-4 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all">
                       Add to Cart
                     </button>
                   </div>
@@ -227,8 +235,8 @@ export default function ProductPage({ params }: Props) {
               </div>
             </div>
 
-            <div className=" flex gap-x-4">
-              <div className=" -ml-6 w-1/2">
+            <div className=" flex gap-x-[140px] items-start">
+              <div className=" w-2/5">
                 <ul className=" flex gap-x-4 font-pop text-2xl font-medium">
                   <li
                     onClick={() => clickReview()}
@@ -255,10 +263,10 @@ export default function ProductPage({ params }: Props) {
                   <div>
                     {isReview ? (
                       <div>
-                        <div>
-                          {" "}
-                          <div className=" mt-4 ">
-                            <div className="flex gap-x-4">
+                        <div className="w-full">
+                         
+                          <div className=" mt-4 relative">
+                            <div className="flex gap-x-4 w-full">
                               <div className=" w-14 h-14 rounded-[4px] bg-old-gray"></div>
                               <div className=" flex flex-col gap-x-4">
                                 <p className=" font-pop font-medium text-[18px] capitalize">
@@ -288,12 +296,12 @@ export default function ProductPage({ params }: Props) {
                         </div>
                       </div>
                     ) : (
-                      <div className=" w-[45%] mt-6">{product.description}</div>
+                      <div className=" w-full mt-6">{product.description}</div>
                     )}
                   </div>
                 </div>
               </div>
-              <div className=" w-1/2">
+              <div className=" w-3/5">
                 <div className=" font-pop text-[18px] font-bold text-dark-black my-4">
                   Add Your Review
                 </div>

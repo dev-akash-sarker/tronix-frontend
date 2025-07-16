@@ -7,9 +7,7 @@ import "./globals.css";
 import Footer from "./components/footer/Footer";
 import "@smastrom/react-rating/style.css";
 import NewsLetter from "./components/newsletter/Newsletter";
-import { Provider } from "react-redux";
-import { store } from "../../store";
-import ClientProvider from "../../store/ClientProvider";
+import ProviderStoreClient from "./features/ProvidorStoreClient.js"
 
 // Fonts
 const geistSans = Geist({
@@ -55,8 +53,8 @@ export default function RootLayout({
           antialiased
         `}
       >
-        <ClientProvider>
-          <div className="w-full md:mx-0 lg:mx-auto">
+        <ProviderStoreClient>
+             <div className="w-full md:mx-0 lg:mx-auto">
             <div className="lg:mx-40 relative">
               <TopNavbar />
               <hr className="text-gray-300" />
@@ -70,7 +68,8 @@ export default function RootLayout({
               <Footer />
             </div>
           </div>
-        </ClientProvider>
+        </ProviderStoreClient>
+      
       </body>
     </html>
   );
