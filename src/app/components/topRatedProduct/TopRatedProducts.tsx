@@ -55,6 +55,8 @@ const TopRatedProducts: React.FC = () => {
     // redux start
   // const mycart = useSelector((state) => console.log(state));
   const dispatch = useDispatch();
+  const allproductcart = useSelector((state) => state.cart.carts);
+  const cartIDS = allproductcart.map((item) => item.id);
   // console.log( "akash",mycart);
   // redux end
   const handleHeartClick = (productId: number) => {
@@ -154,10 +156,19 @@ const TopRatedProducts: React.FC = () => {
                     </p>
                   </div>
                   <div className=" flex justify-center items-center gap-7 mt-4">
-                    {7 === product.id ? "" : ""}
+                  {cartIDS.includes(product.id) ? (
+                      <button
+                       
+                        className=" text-sm py-3 px-4 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all"
+                      >
+                        Go to Cart
+                      </button>
+                    ) : (
                     <button onClick={() => dispatch(addcarts(product))} className=" text-sm py-3 px-4 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all">
                       Add to Cart
                     </button>
+                    )}
+                    
                     <button onClick={() => handleHeartClick(product.id)}>
                       <FaHeart
                         className={

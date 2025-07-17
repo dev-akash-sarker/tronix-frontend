@@ -12,14 +12,14 @@ export const Cart_Slicer = createSlice({
   initialState: initialState,
   reducers: {
     addcarts: (state, action) => {
-      const existingItem = state.carts.find(
-        (item) => item.id === action.payload.id
-      );
-      if (existingItem) {
-        existingItem.quantity += 1;
-      } else {
-        state.carts.push({ ...action.payload, quantity: 1 });
-      }
+  const newItem = action.payload;
+  const existingItem = state.carts.find(item => item.id === newItem.id);
+
+  if (existingItem) {
+    existingItem.quantity += newItem.quantity || 1;
+  } else {
+    state.carts.push({ ...newItem, quantity: newItem.quantity || 1 });
+  }
     },
     removecarts: (state, action) => {
       // Remove item from cart based on ID

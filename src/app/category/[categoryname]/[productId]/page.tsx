@@ -10,6 +10,8 @@ import { RxCaretRight } from "react-icons/rx";
 import styles from "../styles/Home.module.css";
 import { Rating } from "@smastrom/react-rating";
 import { IoHeartSharp } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import { addcarts } from "@/service/RTK/features/add-cart/add_cart_Slice";
 
 type Props = {
   params: Promise<{ categoryname: string; productId: number }>;
@@ -45,7 +47,12 @@ export default function ProductPage({ params }: Props) {
   const [quantity, setQuantity] = useState<number>(1);
   const [rating, setRating] = useState<number>(1);
     const [favorites, setFavorites] = useState<number[]>([]);
-
+  // const mycart = useSelector((state) => console.log(state));
+  const dispatch = useDispatch();
+  const allproductcart = useSelector((state) => state.cart.carts);
+  const cartIDS = allproductcart.map((item) => item.id);
+  // console.log( "akash",mycart);
+  // redux end
   function onChange(newValue: number) {
     console.log(newValue);
     setRating(newValue);
@@ -87,6 +94,10 @@ export default function ProductPage({ params }: Props) {
     setIsDescription(false);
     setIsReview(true);
   };
+
+  const handleAddToCart = () => {
+  dispatch(addcarts({ ...product, quantity: quantity }));
+};
   return (
     <div>
       <div className="p-6 relative">
@@ -227,9 +238,18 @@ export default function ProductPage({ params }: Props) {
                     </div>
                   </div>
                   <div className="flex gap-x-4">
-                    <button className=" text-base py-3 px-4 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all">
-                      Add to Cart
-                    </button>
+                       {cartIDS.includes(product.id) ? (
+                                         <button
+                                          
+                                           className=" text-sm py-3 px-4 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all"
+                                         >
+                                           Go to Cart
+                                         </button>
+                                       ) : (
+                                       <button onClick={handleAddToCart} className=" text-sm py-3 px-4 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all">
+                                         Add to Cart 
+                                       </button>
+                                       )}
                   </div>
                 </div>
               </div>

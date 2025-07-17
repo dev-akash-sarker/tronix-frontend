@@ -149,8 +149,14 @@ const handleRemoveFromCart = (itemId: number) => {
               {query.length !== 0 &&
                 query.length !== 1 &&
                 query.length !== 2 && (
+                  
                   <div className="absolute w-full bg-gray-200 max-h-[400px] z-20 top-14 rounded-[8px] px-2 overflow-y-scroll">
                     <div className="py-2">
+                     <div className=" text-right">
+                         <button  onClick={() => setQuery("")} className=" hover:text-hover-social transition-all">
+                            <IoMdClose />
+                          </button>
+                     </div>
                       {filteredProducts.map((product) => (
                         <div className=" flex gap-x-2 items-center justify-between">
                           <div className=" flex gap-x-2 items-center">
@@ -175,9 +181,7 @@ const handleRemoveFromCart = (itemId: number) => {
                               <p>${product.price}</p>
                             </Link>
                           </div>
-                          <button onClick={() => setQuery("")}>
-                            <IoMdClose />
-                          </button>
+                        
                         </div>
                         // <li key={product.id} className="border p-4 rounded shadow-sm">
                         //   <img src={product.thumbnail} alt={product.title} className="h-32 w-full object-cover rounded mb-2" />
@@ -221,16 +225,19 @@ const handleRemoveFromCart = (itemId: number) => {
               </button>
               {iscartopen && (
                 
-                <div className=" absolute w-[500px] h-[600px] z-50 overflow-y-scroll bg-white shadow-2xl top-20 right-0">
+                <div className={cartAll.length !== 0 ? " absolute w-[500px] h-[600px] z-50 overflow-y-scroll bg-white shadow-2xl top-20 right-0" : " absolute w-[500px] h-auto z-50 bg-old-white p-10 shadow-2xl top-13 right-0"}>
                   <Outsideclick isOpen={iscartopen} onClose={handleCloseCart}>
-                       <center>
+              {cartAll.length !== 0 && <>         <center>
                     <h3 className=" font-mont font-bold text-2xl pt-5">
                       My Cart
                     </h3>
                   </center>
                   <hr className=" text-gray-300 my-5" />
-
-                  <div className=" px-2 py-4">
+</>}
+                {
+                  cartAll.length !== 0 ? <>
+                  
+                    <div className=" px-2 py-4">
                     {cartAll.map((item, i) => (
                       <>
                         <div
@@ -306,7 +313,8 @@ const handleRemoveFromCart = (itemId: number) => {
                         Continue Shopping
                       </button>
                     </center>{" "}
-                  </div>
+                  </div></> : <p>You have no items in your shopping bag.</p>
+                }
                   </Outsideclick>
                
                 </div>

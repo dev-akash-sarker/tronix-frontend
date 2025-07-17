@@ -11,9 +11,11 @@
   --purple-color: #bb6bd9;
   --dark-black: #383838;
   --old-gray: #615E5B;
+  --old-white: #fafafa;
 }
 
 @theme inline {
+  --color-old-white: var(--old-white);
   --color-old-gray: var(--old-gray);
   --color-purple: var(--purple-color);
   --color-social: var(--social-color);
