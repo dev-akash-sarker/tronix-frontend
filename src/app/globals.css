@@ -12,9 +12,12 @@
   --dark-black: #383838;
   --old-gray: #615E5B;
   --old-white: #fafafa;
+  --stroke-one: #D0D0D2;
+
 }
 
 @theme inline {
+  --color-stroke-one: var(--stroke-one);
   --color-old-white: var(--old-white);
   --color-old-gray: var(--old-gray);
   --color-purple: var(--purple-color);
@@ -98,3 +101,6 @@ body {
 }
 
 /* star based css */
+
+/* checkbox */
+
