@@ -18,7 +18,7 @@ export const Cart_Slicer = createSlice({
   if (existingItem) {
     existingItem.quantity += newItem.quantity || 1;
   } else {
-    state.carts.push({ ...newItem, quantity: newItem.quantity || 1 });
+    state.carts.push({ ...newItem, quantity: newItem.quantity || 1 , selected: false });
   }
     },
     removecarts: (state, action) => {
@@ -47,10 +47,25 @@ export const Cart_Slicer = createSlice({
         state.carts.push({ ...action.payload, quantity: 1  });
       }
     },
+    toggleSelected: (state, action)=> {
+ const index = action.payload; // Index of the item to toggle
+      // Create a new array with the updated item
+      state.carts = state.carts.map((item, i) =>
+        i === index ? { ...item, selected: !item.selected } : item
+      );
+        
+    },
+       setAllSelected: (state, action) => {
+      const isSelected = action.payload;
+      state.carts = state.carts.map(item => ({
+        ...item,
+        selected: isSelected,
+      }));
+    },
   },
 });
 
-export const { addcarts, removecarts, increaseQuantity, decreaseQuantity } =
+export const { addcarts, removecarts, increaseQuantity, decreaseQuantity, toggleSelected , setAllSelected} =
   Cart_Slicer.actions;
 export const cartReducer = Cart_Slicer.reducer;
 export default Cart_Slicer.reducer;

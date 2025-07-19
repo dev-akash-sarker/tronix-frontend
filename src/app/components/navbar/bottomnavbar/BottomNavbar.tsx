@@ -13,7 +13,12 @@ import { IoMdClose } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
-import { decreaseQuantity, increase_quantity, increaseQuantity, removecarts } from "@/service/RTK/features/add-cart/add_cart_Slice";
+import {
+  decreaseQuantity,
+  increase_quantity,
+  increaseQuantity,
+  removecarts,
+} from "@/service/RTK/features/add-cart/add_cart_Slice";
 interface Category {
   id: number;
   name: string;
@@ -39,17 +44,16 @@ const BottomNavbar: React.FC = () => {
   };
 
   const handleCloseCart = () => {
-    setIscartopen(false)
-  }
-  
+    setIscartopen(false);
+  };
+
   // redux start
-  
+
   const cartLength = useSelector((state) => state.cart.carts.length);
   const cartAll = useSelector((state) => state.cart.carts);
 
-
-  const dispatch = useDispatch()
-const handleRemoveFromCart = (itemId: number) => {
+  const dispatch = useDispatch();
+  const handleRemoveFromCart = (itemId: number) => {
     dispatch(removecarts({ id: itemId }));
   };
   // redux end
@@ -62,7 +66,6 @@ const handleRemoveFromCart = (itemId: number) => {
   const closemenu = () => {
     setIsmenu(false);
   };
-
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -96,9 +99,9 @@ const handleRemoveFromCart = (itemId: number) => {
           product.title.toLowerCase().includes(query.toLowerCase())
         );
 
-        const totalPrice = cartAll.reduce((sum, item) => {
-  return sum + item.price * item.quantity;
-}, 0);
+  const totalPrice = cartAll.reduce((sum, item) => {
+    return sum + item.price * item.quantity;
+  }, 0);
   return (
     <>
       <div className="my-8 relative">
@@ -149,14 +152,16 @@ const handleRemoveFromCart = (itemId: number) => {
               {query.length !== 0 &&
                 query.length !== 1 &&
                 query.length !== 2 && (
-                  
                   <div className="absolute w-full bg-gray-200 max-h-[400px] z-20 top-14 rounded-[8px] px-2 overflow-y-scroll">
                     <div className="py-2">
-                     <div className=" text-right">
-                         <button  onClick={() => setQuery("")} className=" hover:text-hover-social transition-all">
-                            <IoMdClose />
-                          </button>
-                     </div>
+                      <div className=" text-right">
+                        <button
+                          onClick={() => setQuery("")}
+                          className=" hover:text-hover-social transition-all"
+                        >
+                          <IoMdClose />
+                        </button>
+                      </div>
                       {filteredProducts.map((product) => (
                         <div className=" flex gap-x-2 items-center justify-between">
                           <div className=" flex gap-x-2 items-center">
@@ -181,7 +186,6 @@ const handleRemoveFromCart = (itemId: number) => {
                               <p>${product.price}</p>
                             </Link>
                           </div>
-                        
                         </div>
                         // <li key={product.id} className="border p-4 rounded shadow-sm">
                         //   <img src={product.thumbnail} alt={product.title} className="h-32 w-full object-cover rounded mb-2" />
@@ -224,99 +228,128 @@ const handleRemoveFromCart = (itemId: number) => {
                 />
               </button>
               {iscartopen && (
-                
-                <div className={cartAll.length !== 0 ? " absolute w-[500px] h-[600px] z-50 overflow-y-scroll bg-white shadow-2xl top-20 right-0" : " absolute w-[500px] h-auto z-50 bg-old-white p-10 shadow-2xl top-13 right-0"}>
+                <div
+                  className={
+                    cartAll.length !== 0
+                      ? " absolute w-[500px] h-[600px] z-50 overflow-y-scroll bg-white shadow-2xl top-20 right-0"
+                      : " absolute w-[500px] h-auto z-50 bg-old-white p-10 shadow-2xl top-13 right-0"
+                  }
+                >
                   <Outsideclick isOpen={iscartopen} onClose={handleCloseCart}>
-              {cartAll.length !== 0 && <>         <center>
-                    <h3 className=" font-mont font-bold text-2xl pt-5">
-                      My Cart
-                    </h3>
-                  </center>
-                  <hr className=" text-gray-300 my-5" />
-</>}
-                {
-                  cartAll.length !== 0 ? <>
-                  
-                    <div className=" px-2 py-4">
-                    {cartAll.map((item, i) => (
+                    {cartAll.length !== 0 && (
                       <>
-                        <div
-                          className=" flex items-center pb-4 gap-4 border-b-2 border-gray-300 mt-4 relative"
-                          key={i}
-                        >
-                       
-                          <div className=" w-25 h-25 rounded-sm bg-gray-500 relative">
-                            <Image
-                              src={item.thumbnail}
-                              width={100}
-                              height={100}
-                              alt={item.title}
-                            />
-                          </div>
-                          <div>
-                            <h3 className=" font-pop font-medium text-2xl text-black">
-                              {item.title}
-                            </h3>
-                            <p className=" font-pop font-normal text-lg text-hover-social">
-                              {item.price * item.quantity}
-                            </p>
-                            <div className="quantity flex items-center mt-2">
-                              {item.quantity > 1 ?                               <div className="minus plus w-8 h-8 rounded-sm bg-gray-400 text-white" >
-                                <center className="my-2"  onClick={()=> dispatch(decreaseQuantity({ id: item.id })) }>
-                                  <FaMinus className="text-base" />
-                                </center>
-                              </div> :                               <div className="minus plus w-8 h-8 rounded-sm bg-gray-400 text-white" >
-                                <center className="my-2"  aria-disabled>
-                                  <FaMinus className="text-base" />
-                                </center>
-                              </div>}
+                        {" "}
+                        <center>
+                          <h3 className=" font-mont font-bold text-2xl pt-5">
+                            My Cart
+                          </h3>
+                        </center>
+                        <hr className=" text-gray-300 my-5" />
+                      </>
+                    )}
+                    {cartAll.length !== 0 ? (
+                      <>
+                        <div className=" px-2 py-4">
+                          {cartAll.map((item, i) => (
+                            <>
+                              <div
+                                className=" flex items-center pb-4 gap-4 border-b-2 border-gray-300 mt-4 relative"
+                                key={i}
+                              >
+                                <div className=" w-25 h-25 rounded-sm bg-gray-500 relative">
+                                  <Image
+                                    src={item.thumbnail}
+                                    width={100}
+                                    height={100}
+                                    alt={item.title}
+                                  />
+                                </div>
+                                <div>
+                                  <h3 className=" font-pop font-medium text-2xl text-black">
+                                    {item.title}
+                                  </h3>
+                                  <p className=" font-pop font-normal text-lg text-hover-social">
+                                    {item.price * item.quantity}
+                                  </p>
+                                  <div className="quantity flex items-center mt-2">
+                                    {item.quantity > 1 ? (
+                                      <div className="minus plus w-8 h-8 rounded-sm bg-gray-400 text-white">
+                                        <center
+                                          className="my-2"
+                                          onClick={() =>
+                                            dispatch(
+                                              decreaseQuantity({ id: item.id })
+                                            )
+                                          }
+                                        >
+                                          <FaMinus className="text-base" />
+                                        </center>
+                                      </div>
+                                    ) : (
+                                      <div className="minus plus w-8 h-8 rounded-sm bg-gray-400 text-white">
+                                        <center className="my-2" aria-disabled>
+                                          <FaMinus className="text-base" />
+                                        </center>
+                                      </div>
+                                    )}
 
+                                    <span className=" font-pop font-bold mx-2">
+                                      {item.quantity}
+                                    </span>
 
-                              <span className=" font-pop font-bold mx-2">
-                          {item.quantity}
-                              </span>
-                        
-                              <div className="plus w-8 h-8 rounded-sm bg-hover-social text-white" >
-                                <center className="my-2"  onClick={()=>dispatch(increaseQuantity({ id: item.id })) }>
-                                  <FaPlus className="text-base"  />
-                                </center>
+                                    <div className="plus w-8 h-8 rounded-sm bg-hover-social text-white">
+                                      <center
+                                        className="my-2"
+                                        onClick={() =>
+                                          dispatch(
+                                            increaseQuantity({ id: item.id })
+                                          )
+                                        }
+                                      >
+                                        <FaPlus className="text-base" />
+                                      </center>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  className=" cursor-pointer  absolute top-1/2 -translate-y-1/2 right-0"
+                                  onClick={() => handleRemoveFromCart(item.id)}
+                                >
+                                  <RxCross2 className=" text-4xl text-hover-social mr-0" />
+                                </div>
                               </div>
-                            </div>
+                            </>
+                          ))}
+                        </div>
+                        <div className=" p-8">
+                          <center className=" font-pop font-medium text-2xl text-old-gray">
+                            Summery
+                          </center>
+                          <div className=" flex justify-between my-4">
+                            <h4 className=" font-pop font-medium text-lg text-old-gray">
+                              Total
+                            </h4>
+                            <p className=" font-pop font-medium text-lg text-hover-social">
+                              ${totalPrice.toFixed(2)}
+                            </p>
                           </div>
-                          <div className=" cursor-pointer  absolute top-1/2 -translate-y-1/2 right-0" onClick={()=>handleRemoveFromCart(item.id)}>
-                            <RxCross2 className=" text-4xl text-hover-social mr-0" />
-                          </div>
+                          <button className=" my-4 bloc w-full text-center py-4 bg-hover-social rounded-2xl text-white font-pop font-normal text-lg">
+                            Checkout
+                          </button>
+                          <center>
+                            <button
+                              onClick={() => setIscartopen(false)}
+                              className="inline-block my-4 font-pop font-normal text-lg text-hover-social hover:text-old-gray"
+                            >
+                              Continue Shopping
+                            </button>
+                          </center>{" "}
                         </div>
                       </>
-                    ))}
-                  </div>
-                  <div className=" p-8">
-                    <center className=" font-pop font-medium text-2xl text-old-gray">
-                      Summery
-                    </center>
-                    <div className=" flex justify-between my-4">
-                      <h4 className=" font-pop font-medium text-lg text-old-gray">
-                        Total
-                      </h4>
-                      <p className=" font-pop font-medium text-lg text-hover-social">
-                      ${totalPrice.toFixed(2)}
-                      </p>
-                    </div>
-                    <button className=" my-4 bloc w-full text-center py-4 bg-hover-social rounded-2xl text-white font-pop font-normal text-lg">
-                      Checkout
-                    </button>
-                    <center>
-                      <button
-                      onClick={()=> setIscartopen(false)}
-                        className="inline-block my-4 font-pop font-normal text-lg text-hover-social hover:text-old-gray"
-                      >
-                        Continue Shopping
-                      </button>
-                    </center>{" "}
-                  </div></> : <p>You have no items in your shopping bag.</p>
-                }
+                    ) : (
+                      <p>You have no items in your shopping bag.</p>
+                    )}
                   </Outsideclick>
-               
                 </div>
               )}
             </div>
