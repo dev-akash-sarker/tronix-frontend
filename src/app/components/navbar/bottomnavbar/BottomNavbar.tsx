@@ -36,6 +36,7 @@ const BottomNavbar: React.FC = () => {
   const [isopen, setIsopen] = useState<boolean>(false);
   const [ismenu, setIsmenu] = useState<boolean>(false);
   const [products, setProducts] = useState<Product[]>([]);
+    const [hasMounted, setHasMounted] = useState<boolean>(false);
   const [query, setQuery] = useState<string>("");
   const [iscartopen, setIscartopen] = useState<boolean>(false);
 
@@ -102,6 +103,11 @@ const BottomNavbar: React.FC = () => {
   const totalPrice = cartAll.reduce((sum, item) => {
     return sum + item.price * item.quantity;
   }, 0);
+
+
+   useEffect(() => {
+    setHasMounted(true)
+  }, [])
   return (
     <>
       <div className="my-8 relative">
@@ -212,7 +218,7 @@ const BottomNavbar: React.FC = () => {
                   alt="shopping"
                   className="w-7 h-7 md:w-10 md:h-10"
                 />
-                {cartLength !== 0 && (
+                {hasMounted && cartLength !== 0 && (
                   <div className=" bg-hover-social w-6 md:w-8 h-6 md:h-8 text-[10px] font-semibold flex justify-center items-center rounded-full text-white absolute -top-[12px] -right-[12px] md:-top-[15px] md:-right-[17px]">
                     {cartLength}
                   </div>
@@ -238,7 +244,7 @@ const BottomNavbar: React.FC = () => {
                   <Outsideclick isOpen={iscartopen} onClose={handleCloseCart}>
                     {cartAll.length !== 0 && (
                       <>
-                        {" "}
+                     
                         <center>
                           <h3 className=" font-mont font-bold text-2xl pt-5">
                             My Cart

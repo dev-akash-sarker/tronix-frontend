@@ -103,4 +103,8 @@ body {
 /* star based css */
 
 /* checkbox */
+.checkoutpage input {
+  margin-top: 16px;
+  margin-bottom: 16px;
 
+}

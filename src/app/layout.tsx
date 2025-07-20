@@ -35,6 +35,11 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Tronix | Buy Now",
   description: "Our motto is giving you the best service",
+    icons: {
+    icon: "/favicon.ico",                      // for regular browser tab icon
+    shortcut: "/favicon.ico",                  // for pinned tabs/bookmarks
+    apple: "/apple-touch-icon.png",            // for Apple devices
+  },
 };
 
 export default function RootLayout({
