@@ -1,6 +1,7 @@
 "use client";
 
 import { addcarts } from "@/service/RTK/features/add-cart/add_cart_Slice";
+import { RootState } from "@/service/RTK/store";
 // import { slugify } from "@/app/utility/slugify";
 // import { slugify } from "@/app/utility/slugify";
 import axios from "axios";
@@ -55,8 +56,8 @@ const TopRatedProducts: React.FC = () => {
     // redux start
   // const mycart = useSelector((state) => console.log(state));
   const dispatch = useDispatch();
-  const allproductcart = useSelector((state) => state.cart.carts);
-  const cartIDS = allproductcart.map((item) => item.id);
+  const allproductcart = useSelector((state: RootState) => state.cart.carts);
+  const cartIDS = allproductcart.map((item: any) => item.id);
   // console.log( "akash",mycart);
   // redux end
   const handleHeartClick = (productId: number) => {
@@ -157,12 +158,12 @@ const TopRatedProducts: React.FC = () => {
                   </div>
                   <div className=" flex justify-center items-center gap-7 mt-4">
                   {cartIDS.includes(product.id) ? (
-                      <button
+                      <Link href={'/cart'}
                        
                         className=" text-sm py-3 px-4 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all"
                       >
                         Go to Cart
-                      </button>
+                      </Link>
                     ) : (
                     <button onClick={() => dispatch(addcarts(product))} className=" text-sm py-3 px-4 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all">
                       Add to Cart

@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { RxCaretRight } from "react-icons/rx";
-import { useForm, SubmitHandler} from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/service/RTK/store";
 // enum GenderEnum {
 //   female = "female",
 //   male = "male",
@@ -23,17 +25,30 @@ interface IForminput {
 }
 
 const MyCheckout: React.FC = () => {
-    const [active, setActive] = useState<string>("");
+  const [active, setActive] = useState<string>("");
+  const cartAll = useSelector((state: RootState) => state.cart.carts);
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IForminput>();
 
-  const { register, handleSubmit ,  formState: { errors } } = useForm<IForminput>();
-  
   const onSubmit: SubmitHandler<IForminput> = (data) => console.log(data);
-    const buttons = [
+  const buttons = [
     { label: "Credit Card", value: "credit" },
     { label: "Bank Transfer", value: "bank" },
     { label: "Paypal", value: "paypal" },
   ];
+
+  let shipment = 15;
+  let tax = 10;
+const subTotal = cartAll.reduce((sum, item)=> {
+  return sum + item.price * item.quantity
+}, 0)
+  const totalPrice = cartAll.reduce((sum, item) => {
+    return (sum + item.price * item.quantity) + shipment + tax;
+  }, 0);
   return (
     <div>
       {/* navigation */}
@@ -95,172 +110,220 @@ const MyCheckout: React.FC = () => {
             </h3>
             <hr className=" my-8 text-hover-social" />
             <div className="flex flex-wrap">
-    {/* First Name */}
-    <div className="w-1/2 mb-4">
-      <label className="font-pop font-normal text-lg text-dark-black">
-        First Name
-      </label>
-      <input
-        placeholder="Enter Your First Name"
-        className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
-        {...register("firstName", {
-          required: "First Name is required",
-          maxLength: { value: 20, message: "Max length is 20 characters" },
-        })}
-      />
-      {errors.firstName && (
-        <p className="text-red-500 text-sm">{errors.firstName.message}</p>
-      )}
-    </div>
+              {/* First Name */}
+              <div className="w-1/2 mb-4">
+                <label className="font-pop font-normal text-lg text-dark-black">
+                  First Name
+                </label>
+                <input
+                  placeholder="Enter Your First Name"
+                  className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+                  {...register("firstName", {
+                    required: "First Name is required",
+                    maxLength: {
+                      value: 20,
+                      message: "Max length is 20 characters",
+                    },
+                  })}
+                />
+                {errors.firstName && (
+                  <p className="text-red-500 text-sm">
+                    {errors.firstName.message}
+                  </p>
+                )}
+              </div>
 
-    {/* Last Name */}
-    <div className="w-1/2 mb-4">
-      <label className="font-pop font-normal text-lg text-dark-black">
-        Last Name
-      </label>
-      <input
-        placeholder="Enter Your Last Name"
-        className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
-        {...register("lastName", {
-          required: "Last Name is required",
-          maxLength: { value: 20, message: "Max length is 20 characters" },
-        })}
-      />
-      {errors.lastName && (
-        <p className="text-red-500 text-sm">{errors.lastName.message}</p>
-      )}
-    </div>
+              {/* Last Name */}
+              <div className="w-1/2 mb-4">
+                <label className="font-pop font-normal text-lg text-dark-black">
+                  Last Name
+                </label>
+                <input
+                  placeholder="Enter Your Last Name"
+                  className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+                  {...register("lastName", {
+                    required: "Last Name is required",
+                    maxLength: {
+                      value: 20,
+                      message: "Max length is 20 characters",
+                    },
+                  })}
+                />
+                {errors.lastName && (
+                  <p className="text-red-500 text-sm">
+                    {errors.lastName.message}
+                  </p>
+                )}
+              </div>
 
-    {/* Email */}
-    <div className="w-1/2 mb-4">
-      <label className="font-pop font-normal text-lg text-dark-black">Email</label>
-      <input
-        placeholder="Enter Your Email"
-        className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
-        {...register("email", {
-          required: "Email is required",
-          pattern: {
-            value: /^\S+@\S+$/i,
-            message: "Invalid email format",
-          },
-        })}
-      />
-      {errors.email && (
-        <p className="text-red-500 text-sm">{errors.email.message}</p>
-      )}
-    </div>
+              {/* Email */}
+              <div className="w-1/2 mb-4">
+                <label className="font-pop font-normal text-lg text-dark-black">
+                  Email
+                </label>
+                <input
+                  placeholder="Enter Your Email"
+                  className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^\S+@\S+$/i,
+                      message: "Invalid email format",
+                    },
+                  })}
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm">{errors.email.message}</p>
+                )}
+              </div>
 
-    {/* Address */}
-    <div className="w-1/2 mb-4">
-      <label className="font-pop font-normal text-lg text-dark-black">Address</label>
-      <input
-        placeholder="Enter Your Address"
-        className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
-        {...register("address", {
-          required: "Address is required",
-        })}
-      />
-      {errors.address && (
-        <p className="text-red-500 text-sm">{errors.address.message}</p>
-      )}
-    </div>
+              {/* Address */}
+              <div className="w-1/2 mb-4">
+                <label className="font-pop font-normal text-lg text-dark-black">
+                  Address
+                </label>
+                <input
+                  placeholder="Enter Your Address"
+                  className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+                  {...register("address", {
+                    required: "Address is required",
+                  })}
+                />
+                {errors.address && (
+                  <p className="text-red-500 text-sm">
+                    {errors.address.message}
+                  </p>
+                )}
+              </div>
 
-    {/* Contact */}
-    <div className="w-1/2 mb-4">
-      <label className="font-pop font-normal text-lg text-dark-black">Contact</label>
-      <input
-        placeholder="Enter Your Contact"
-        className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
-        {...register("contact", {
-          required: "Contact is required",
-          pattern: {
-            value: /^[0-9]+$/,
-            message: "Contact must be a number",
-          },
-        })}
-      />
-      {errors.contact && (
-        <p className="text-red-500 text-sm">{errors.contact.message}</p>
-      )}
-    </div>
+              {/* Contact */}
+              <div className="w-1/2 mb-4">
+                <label className="font-pop font-normal text-lg text-dark-black">
+                  Contact
+                </label>
+                <input
+                  placeholder="Enter Your Contact"
+                  className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+                  {...register("contact", {
+                    required: "Contact is required",
+                    pattern: {
+                      value: /^[0-9]+$/,
+                      message: "Contact must be a number",
+                    },
+                  })}
+                />
+                {errors.contact && (
+                  <p className="text-red-500 text-sm">
+                    {errors.contact.message}
+                  </p>
+                )}
+              </div>
 
-    {/* Country */}
-    <div className="w-1/2 mb-4">
-      <label className="font-pop font-normal text-lg text-dark-black">Country</label>
-      <input
-        placeholder="Enter Your Country"
-        className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
-        {...register("country", {
-          required: "Country is required",
-        })}
-      />
-      {errors.country && (
-        <p className="text-red-500 text-sm">{errors.country.message}</p>
-      )}
-    </div>
+              {/* Country */}
+              <div className="w-1/2 mb-4">
+                <label className="font-pop font-normal text-lg text-dark-black">
+                  Country
+                </label>
+                <input
+                  placeholder="Enter Your Country"
+                  className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+                  {...register("country", {
+                    required: "Country is required",
+                  })}
+                />
+                {errors.country && (
+                  <p className="text-red-500 text-sm">
+                    {errors.country.message}
+                  </p>
+                )}
+              </div>
 
-    {/* City */}
-    <div className="w-1/2 mb-4">
-      <label className="font-pop font-normal text-lg text-dark-black">City</label>
-      <input
-        placeholder="Enter Your City"
-        className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
-        {...register("city", {
-          required: "City is required",
-        })}
-      />
-      {errors.city && (
-        <p className="text-red-500 text-sm">{errors.city.message}</p>
-      )}
-    </div>
+              {/* City */}
+              <div className="w-1/2 mb-4">
+                <label className="font-pop font-normal text-lg text-dark-black">
+                  City
+                </label>
+                <input
+                  placeholder="Enter Your City"
+                  className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+                  {...register("city", {
+                    required: "City is required",
+                  })}
+                />
+                {errors.city && (
+                  <p className="text-red-500 text-sm">{errors.city.message}</p>
+                )}
+              </div>
 
-    {/* ZipCode */}
-<div className="w-1/2 mb-4">
-  <label className="font-pop font-normal text-lg text-dark-black">Zip Code</label>
-  <input
-    placeholder="Enter Your Zip Code"
-    className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
-    {...register("zipCode", {
-      required: "Zip Code is required",
-      pattern: {
-        value: /^[0-9]{4,6}$/,
-        message: "Enter valid Zip Code",
-      },
-    })}
-  />
-  {errors.zipCode && (
-    <p className="text-red-500 text-sm">{errors.zipCode.message}</p>
-  )}
-</div>
+              {/* ZipCode */}
+              <div className="w-1/2 mb-4">
+                <label className="font-pop font-normal text-lg text-dark-black">
+                  Zip Code
+                </label>
+                <input
+                  placeholder="Enter Your Zip Code"
+                  className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+                  {...register("zipCode", {
+                    required: "Zip Code is required",
+                    pattern: {
+                      value: /^[0-9]{4,6}$/,
+                      message: "Enter valid Zip Code",
+                    },
+                  })}
+                />
+                {errors.zipCode && (
+                  <p className="text-red-500 text-sm">
+                    {errors.zipCode.message}
+                  </p>
+                )}
+              </div>
 
-    {/* Note */}
-    <div className="w-1/2 mb-4">
-      <label className="font-pop font-normal text-lg text-dark-black">Note</label>
-      <textarea
-        placeholder="Additional Note"
-        className="w-[195%] mt-6 py-3 border border-dark-black rounded-lg h-[45px] outline-none indent-4"
-        {...register("note")}
-      />
-    </div>
-  </div>
+              {/* Note */}
+              <div className="w-1/2 mb-4">
+                <label className="font-pop font-normal text-lg text-dark-black">
+                  Note
+                </label>
+                <textarea
+                  placeholder="Additional Note"
+                  className="w-[195%] mt-6 py-3 border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+                  {...register("note")}
+                />
+              </div>
+            </div>
           </div>
           <div className="w-5/12 py-8 pl-[27px] pr-[26px] border border-dark-black rounded-lg">
             <div>
               <h4 className=" font-pop font-semibold text-2xl text-dark-black mb-6">
                 Your Order Summary
               </h4>
-
-              <div className="  font-pop font-medium text-lg text-dark-black flex justify-between py-6 last:pb-0">
+              {cartAll.length !== 0 ? (
+                
+            <div>
+              {cartAll.map((item , i)=> (
+                 <div key={i} className="  font-pop font-medium text-lg text-dark-black flex justify-between py-6 last:pb-0">
+                  <div className=" flex gap-x-6">
+                    <p className="w-[37.17px] text-right">{item.quantity}x</p>
+                    <p className=" font-normal">{item.title}</p>
+                  </div>
+                  <p>${item.price}</p>
+                </div>
+              ))}
+                 
+            </div>
+              ) : (
+               ""
+              )}
+              {/* <div className="  font-pop font-medium text-lg text-dark-black flex justify-between py-6 last:pb-0">
                 <div className=" flex gap-x-6">
                   <p className="w-[37.17px] text-right">521x</p>
                   <p className=" font-normal">USB Speaker Portable</p>
                 </div>
                 <p>$100.00</p>
-              </div>
+              </div> */}
               <hr className="my-8 text-dark-black" />
               <div className="font-pop font-medium text-lg text-dark-black flex items-center justify-between py-4">
                 <p>Subtotal</p>
-                <p className=" text-right">$3000.00</p>
+                <p className=" text-right">${subTotal}</p>
               </div>
               <div className="font-pop font-medium text-lg text-dark-black flex items-center justify-between py-4">
                 <p>Shipping</p>
@@ -274,7 +337,7 @@ const MyCheckout: React.FC = () => {
               <div className="font-pop font-medium text-lg text-dark-black flex items-center justify-between py-4">
                 <p>Total</p>
                 <p className=" text-right text-2xl text-hover-social">
-                  $325.00
+                  ${totalPrice}
                 </p>
               </div>
               <hr className="my-8 text-dark-black" />
@@ -283,20 +346,29 @@ const MyCheckout: React.FC = () => {
                   Payment
                 </h4>
                 <div className=" flex items-center justify-between">
-                     {buttons.map((btn) => (
-        <button
-          key={btn.value}
-          onClick={() => setActive(btn.value)}
-          className={`py-[10px] px-[9px] last:px-[16px] font-pop font-normal text-lg border border-dark-black rounded-lg transition-colors duration-200
-            ${active === btn.value ? "bg-dark-black text-white" : "bg-white text-dark-black"}
+                  {buttons.map((btn) => (
+                    <button
+                      key={btn.value}
+                      onClick={() => setActive(btn.value)}
+                      className={`py-[10px] px-[9px] last:px-[16px] font-pop font-normal text-lg border border-dark-black rounded-lg transition-colors duration-200
+            ${
+              active === btn.value
+                ? "bg-dark-black text-white"
+                : "bg-white text-dark-black"
+            }
           `}
-        >
-          {btn.label}
-        </button>
-      ))}
+                    >
+                      {btn.label}
+                    </button>
+                  ))}
                 </div>
-                <button className="w-full bg-hover-social rounded-lg py-[18.5px] text-white mt-6" type="submit">Checkout</button>
-          {/* <input type="submit"  /> */}
+                <button
+                  className="w-full bg-hover-social rounded-lg py-[18.5px] text-white mt-6"
+                  type="submit"
+                >
+                  Checkout
+                </button>
+                {/* <input type="submit"  /> */}
               </div>
             </div>
           </div>

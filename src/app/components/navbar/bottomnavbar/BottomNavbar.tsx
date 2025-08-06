@@ -7,8 +7,7 @@ import { useEffect, useState } from "react";
 import { CiMenuBurger } from "react-icons/ci";
 import { IoClose } from "react-icons/io5";
 import { slugify } from "@/app/utility/slugify";
-import { TbBasketCancel } from "react-icons/tb";
-import { BsCrosshair, BsPlus } from "react-icons/bs";
+
 import { IoMdClose } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { FaMinus, FaPlus } from "react-icons/fa";
@@ -18,6 +17,7 @@ import {
   increaseQuantity,
   removecarts,
 } from "@/service/RTK/features/add-cart/add_cart_Slice";
+import { RootState } from "@/service/RTK/store";
 interface Category {
   id: number;
   name: string;
@@ -49,8 +49,8 @@ const BottomNavbar: React.FC = () => {
 
   // redux start
 
-  const cartLength = useSelector((state) => state.cart.carts.length);
-  const cartAll = useSelector((state) => state.cart.carts);
+  const cartLength = useSelector((state: RootState) => state.cart.carts.length);
+  const cartAll = useSelector((state: RootState) => state.cart.carts);
 
   const dispatch = useDispatch();
   const handleRemoveFromCart = (itemId: number) => {
@@ -338,9 +338,9 @@ const BottomNavbar: React.FC = () => {
                               ${totalPrice.toFixed(2)}
                             </p>
                           </div>
-                          <button className=" my-4 bloc w-full text-center py-4 bg-hover-social rounded-2xl text-white font-pop font-normal text-lg">
+                          <Link href={'/cart/checkout'} className=" w-full  my-4 block w-full text-center py-4 bg-hover-social rounded-2xl text-white font-pop font-normal text-lg">
                             Checkout
-                          </button>
+                          </Link>
                           <center>
                             <button
                               onClick={() => setIscartopen(false)}

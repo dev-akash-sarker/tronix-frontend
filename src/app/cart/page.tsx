@@ -43,8 +43,8 @@ const MyCart: React.FC = () => {
     setIsChecked(!isChecked);
   };
 
-  const cartLength = useTypedSelector((state) => state.cart.carts.length);
-  const cartAll = useTypedSelector((state) => state.cart.carts);
+  const cartLength = useTypedSelector((state: RootState) => state.cart.carts.length);
+  const cartAll = useTypedSelector((state: RootState) => state.cart.carts);
 
   const dispatch = useAppDispatch();
 

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BsEnvelope, BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
-import { IoIosCall } from "react-icons/io";
+import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
+
 
 const Footer: React.FC = () => {
   return (
