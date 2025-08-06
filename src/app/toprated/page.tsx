@@ -1,6 +1,7 @@
 "use client";
 
 import { addcarts } from "@/service/RTK/features/add-cart/add_cart_Slice";
+import { RootState } from "@/service/RTK/store";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -53,7 +54,7 @@ const TopRatedView: React.FC = () => {
 
   // redux start
   // const mycart = useSelector((state) => console.log("myworld", state.cart.carts.some()));
-  const allproductcart = useSelector((state) => state.cart.carts);
+  const allproductcart = useSelector((state: RootState) => state.cart.carts);
   const cartIDS = allproductcart.map((item) => item.id);
   console.log(cartIDS.includes(4));
   const dispatch = useDispatch();

@@ -11,7 +11,7 @@ export const QuantitySlice = createSlice({
     name: "quantites",
     initialState: initialState,
     reducers: {
-        increase_quantity: (state, action){
+        increase_quantity: (state, action)=>{
          const existingItem = state.quantity.find
         },
       
