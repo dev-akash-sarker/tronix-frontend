@@ -15,7 +15,6 @@ import { FaMinus, FaPlus } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import {
   decreaseQuantity,
-  increase_quantity,
   increaseQuantity,
   removecarts,
 } from "@/service/RTK/features/add-cart/add_cart_Slice";
