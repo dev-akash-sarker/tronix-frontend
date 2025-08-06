@@ -6,13 +6,14 @@ import {
   setAllSelected,
   toggleSelected,
 } from "@/service/RTK/features/add-cart/add_cart_Slice";
+import { AppDispatch } from "@/service/RTK/store";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { RxCaretRight, RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
-import type { AppDispatch, RootState } from "@/store"; // Adjust path to your store
+
 
 // Define types
 interface CartItem {

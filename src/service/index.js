@@ -1,11 +1,9 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux";
 
 export const ReduxComponent = () => {
-    const dispatch = useDispatch();
-    const mycarts = useSelector((state)=> state)
-    console.log(mycarts)
+  const dispatch = useDispatch();
+  const mycarts = useSelector((state) => state);
+  console.log(mycarts);
 
-return {
-    
-}
-}
+  return {};
+};

@@ -12,6 +12,7 @@ import { Rating } from "@smastrom/react-rating";
 import { IoHeartSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { addcarts } from "@/service/RTK/features/add-cart/add_cart_Slice";
+import { RootState } from "@/service/RTK/store";
 
 type Props = {
   params: Promise<{ categoryname: string; productId: number }>;
@@ -49,7 +50,7 @@ export default function ProductPage({ params }: Props) {
     const [favorites, setFavorites] = useState<number[]>([]);
   // const mycart = useSelector((state) => console.log(state));
   const dispatch = useDispatch();
-  const allproductcart = useSelector((state) => state.cart.carts);
+  const allproductcart = useSelector((state: RootState) => state.cart.carts);
   const cartIDS = allproductcart.map((item) => item.id);
   // console.log( "akash",mycart);
   // redux end
