@@ -4,7 +4,6 @@ import {
   increaseQuantity,
   removecarts,
   setAllSelected,
-  toggleAllSelected,
   toggleSelected,
 } from "@/service/RTK/features/add-cart/add_cart_Slice";
 import Image from "next/image";
