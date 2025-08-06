@@ -7,7 +7,7 @@ import NewArrivel from "./components/newArrivel/NewArrivel";
 import PromotionCampaign from "./components/promotions/Promotions";
 import FeaturedProduct from "./components/featured/Featured";
 import TopRatedProducts from "./components/topRatedProduct/TopRatedProducts";
-import NewsLetter from "./components/newsletter/Newsletter";
+
 
 export default function Home() {
   return (

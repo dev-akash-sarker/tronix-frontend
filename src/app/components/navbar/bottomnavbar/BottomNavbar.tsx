@@ -167,9 +167,9 @@ const BottomNavbar: React.FC = () => {
                           <IoMdClose />
                         </button>
                       </div>
-                      {filteredProducts.map((product) => (
+                      {filteredProducts.map((product , i) => (
                         <div className=" flex gap-x-2 items-center justify-between">
-                          <div className=" flex gap-x-2 items-center">
+                          <div key={i} className=" flex gap-x-2 items-center">
                             <Link
                               href={`/category/${product.category}/${product.id}`}
                             >

@@ -57,7 +57,7 @@ const TopRatedProducts: React.FC = () => {
   // const mycart = useSelector((state) => console.log(state));
   const dispatch = useDispatch();
   const allproductcart = useSelector((state: RootState) => state.cart.carts);
-  const cartIDS = allproductcart.map((item: any) => item.id);
+  const cartIDS = allproductcart.map((item) => item.id);
   // console.log( "akash",mycart);
   // redux end
   const handleHeartClick = (productId: number) => {

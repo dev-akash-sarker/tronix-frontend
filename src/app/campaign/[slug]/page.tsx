@@ -3,7 +3,7 @@
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 type TimeLeft = {
   years: number;

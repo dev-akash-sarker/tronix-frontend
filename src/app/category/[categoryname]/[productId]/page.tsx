@@ -4,16 +4,14 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { BsStar, BsStarFill } from "react-icons/bs";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { RxCaretRight } from "react-icons/rx";
-import styles from "../styles/Home.module.css";
 import { Rating } from "@smastrom/react-rating";
 import { IoHeartSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { addcarts } from "@/service/RTK/features/add-cart/add_cart_Slice";
 import { RootState } from "@/service/RTK/store";
-
+// import styles from "../styles/Home.module.css";
 type Props = {
   params: Promise<{ categoryname: string; productId: number }>;
 };
@@ -47,7 +45,7 @@ export default function ProductPage({ params }: Props) {
   const [isDescription, setIsDescription] = useState<boolean | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
   const [rating, setRating] = useState<number>(1);
-    const [favorites, setFavorites] = useState<number[]>([]);
+
   // const mycart = useSelector((state) => console.log(state));
   const dispatch = useDispatch();
   const allproductcart = useSelector((state: RootState) => state.cart.carts);

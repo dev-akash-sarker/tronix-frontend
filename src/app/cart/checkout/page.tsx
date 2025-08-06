@@ -41,8 +41,8 @@ const MyCheckout: React.FC = () => {
     { label: "Paypal", value: "paypal" },
   ];
 
-  let shipment = 15;
-  let tax = 10;
+  const shipment = 15;
+  const tax = 10;
 const subTotal = cartAll.reduce((sum, item)=> {
   return sum + item.price * item.quantity
 }, 0)

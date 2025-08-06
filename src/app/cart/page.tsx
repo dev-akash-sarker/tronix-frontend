@@ -14,7 +14,6 @@ import { FaMinus, FaPlus } from "react-icons/fa";
 import { RxCaretRight, RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 
-
 // Define types
 interface CartItem {
   id: number;
@@ -37,13 +36,6 @@ const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 const useAppDispatch = () => useDispatch<AppDispatch>();
 
 const MyCart: React.FC = () => {
-  const [isChecked, setIsChecked] = useState<boolean>(false);
-
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-  };
-
-  const cartLength = useTypedSelector((state: RootState) => state.cart.carts.length);
   const cartAll = useTypedSelector((state: RootState) => state.cart.carts);
 
   const dispatch = useAppDispatch();
@@ -86,9 +78,7 @@ const MyCart: React.FC = () => {
         </ul>
       </div>
       {/* Header */}
-      <h3 className="font-mont font-bold text-5xl mt-5 text-center">
-        My Cart
-      </h3>
+      <h3 className="font-mont font-bold text-5xl mt-5 text-center">My Cart</h3>
       <div className="w-[804px] mx-auto flex my-[72px] justify-between items-center">
         <div className="flex items-center gap-x-6">
           <div className="w-14 h-14 rounded-full border border-hover-social flex justify-center items-center font-pop font-medium text-2xl text-hover-social">
