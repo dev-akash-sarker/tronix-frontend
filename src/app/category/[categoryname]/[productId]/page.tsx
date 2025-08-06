@@ -135,28 +135,27 @@ export default function ProductPage({ params }: Props) {
                   </Link>
                 </h4>
 
-                <h2 className="text-2xl">{product.title}</h2>
+                <h2 className=" text-lg lg:text-2xl">{product.title}</h2>
 
                 {/* Rating, Review, Sold */}
-            <div className=" flex justify-between">
-                 <div className="flex items-center gap-4">
-                  <p className="font-bold text-xl">
+            <div className=" flex gap-x-4">
+                <p className="font-bold text-xl">
                     {product.rating.toFixed(1)}
                   </p>
-                  <div className="text-rating text-xl">
+                    <div className="text-rating text-xl">
                     {"★".repeat(Math.floor(product.rating))}
                     {"☆".repeat(5 - Math.floor(product.rating))}
                   </div>
-                  <p className="text-lg text-social font-mont font-normal">
+                   <p className="text-lg text-social font-mont font-normal">
                     Review ({product.reviews?.length || 0})
                   </p>
                   <p className="text-lg text-social font-mont font-normal border-l pl-4 border-gray-300">
                     Sold 199
                   </p>
-                </div>
+                 
                 <div className=" flex justify-start items-center gap-2">
                   <IoHeartSharp className=" inline-block text-hover-social"/>
-                  <p className=" font-pop font-normal text-lg">Add to Wishlist</p>
+                  <p className=" hidden md:block font-pop font-normal text-lg">Add to Wishlist</p>
                 </div>
             </div>
 
@@ -237,13 +236,14 @@ export default function ProductPage({ params }: Props) {
                       </button>
                     </div>
                   </div>
-                  <div className="flex gap-x-4">
+                  <div className="flex items-end gap-x-4">
                        {cartIDS.includes(product.id) ? (
                                          <button
                                           
                                            className=" text-sm py-3 px-4 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all"
                                          >
-                                           Go to Cart
+                                          <Link href="/cart">Go to Cart</Link>
+                                           
                                          </button>
                                        ) : (
                                        <button onClick={handleAddToCart} className=" text-sm py-3 px-4 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all">
@@ -255,8 +255,8 @@ export default function ProductPage({ params }: Props) {
               </div>
             </div>
 
-            <div className=" flex gap-x-[140px] items-start">
-              <div className=" w-2/5">
+            <div className=" flex lg:gap-x-[140px] items-start flex-wrap lg:flex-nowrap mt-4 lg:mt-0">
+              <div className=" w-full lg:w-2/5">
                 <ul className=" flex gap-x-4 font-pop text-2xl font-medium">
                   <li
                     onClick={() => clickReview()}
@@ -321,7 +321,7 @@ export default function ProductPage({ params }: Props) {
                   </div>
                 </div>
               </div>
-              <div className=" w-3/5">
+              <div className=" w-full lg:w-3/5">
                 <div className=" font-pop text-[18px] font-bold text-dark-black my-4">
                   Add Your Review
                 </div>

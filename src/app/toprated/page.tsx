@@ -155,7 +155,7 @@ const TopRatedView: React.FC = () => {
                        
                         className=" text-sm py-3 px-4 border cursor pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all"
                       >
-                        Go to Cart
+               <Link href="www.google.com">Go to Cart</Link>
                       </button>
                     ) : (
                       <button

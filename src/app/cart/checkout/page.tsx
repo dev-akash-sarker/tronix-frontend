@@ -215,23 +215,23 @@ const MyCheckout: React.FC = () => {
     </div>
 
     {/* ZipCode */}
-    <div className="w-1/2 mb-4">
-      <label className="font-pop font-normal text-lg text-dark-black">Zip Code</label>
-      <input
-        placeholder="Enter Your Zip Code"
-        className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
-        {...register("zipcode", {
-          required: "Zip Code is required",
-          pattern: {
-            value: /^[0-9]{4,6}$/,
-            message: "Enter valid Zip Code",
-          },
-        })}
-      />
-      {errors.zipcode && (
-        <p className="text-red-500 text-sm">{errors.zipcode.message}</p>
-      )}
-    </div>
+<div className="w-1/2 mb-4">
+  <label className="font-pop font-normal text-lg text-dark-black">Zip Code</label>
+  <input
+    placeholder="Enter Your Zip Code"
+    className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+    {...register("zipCode", {
+      required: "Zip Code is required",
+      pattern: {
+        value: /^[0-9]{4,6}$/,
+        message: "Enter valid Zip Code",
+      },
+    })}
+  />
+  {errors.zipCode && (
+    <p className="text-red-500 text-sm">{errors.zipCode.message}</p>
+  )}
+</div>
 
     {/* Note */}
     <div className="w-1/2 mb-4">
