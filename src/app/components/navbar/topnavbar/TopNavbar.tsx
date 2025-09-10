@@ -68,11 +68,15 @@ const TopNavbar: React.FC<TopNavbarProps> = () => {
                   suport@abc.com
                 </Link>
               </li>
-              <li className="py-3 px-4 md:p-0 bg-gray-600 md:bg-transparent  flex items-center gap-2 xl:gap-4">
+              <li className=" group relative py-3 px-4 md:p-0 bg-gray-600 md:bg-transparent  flex items-center gap-2 xl:gap-4">
                 <CiUser className="text-hover-social lg:text-xl xl:text-2xl" />
                 <Link href={"#"} className="text-white md:text-black ">
                   Account
                 </Link>
+                <ul className=" absolute hidden group-hover:block w-[130px] top-6 right-0 z-30 border-hover-social rounded-sm">
+                  <li className=" py-2 px-4 bg-amber-100 hover:bg-hover-social hover:text-white font-medium">Log In</li>
+                  <li className="py-2 px-4 bg-amber-200 hover:bg-hover-social hover:text-white font-medium">Mywishlist</li>
+                </ul>
               </li>
             </ul>
           </nav>
