@@ -22,23 +22,25 @@ interface IForminput {
   city: string;
   zipCode: string;
   note: string;
+  paymentMethod: string;
 }
 
 const MyCheckout: React.FC = () => {
   const [active, setActive] = useState<string>("");
   const cartAll = useSelector((state: RootState) => state.cart.carts);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IForminput>();
-
+const {
+  register,
+  handleSubmit,
+  watch,
+  setValue,
+  formState: { errors },
+} = useForm<IForminput>();
+const actives = watch("paymentMethod");
   const onSubmit: SubmitHandler<IForminput> = (data) => console.log(data);
   const buttons = [
     { label: "Credit Card", value: "credit" },
-    { label: "Bank Transfer", value: "bank" },
-    { label: "Paypal", value: "paypal" },
+    { label: "Cash on delivery", value: "Cash on delivery" },
   ];
 
   const shipment = 15;
@@ -49,6 +51,10 @@ const subTotal = cartAll.reduce((sum, item)=> {
   const totalPrice = cartAll.reduce((sum, item) => {
     return (sum + item.price * item.quantity) + shipment + tax;
   }, 0);
+
+  const handlepaymentmethod = () => {
+
+  }
   return (
     <div>
       {/* navigation */}
@@ -287,6 +293,7 @@ const subTotal = cartAll.reduce((sum, item)=> {
                   placeholder="Additional Note"
                   className="w-[195%] mt-6 py-3 border border-dark-black rounded-lg h-[45px] outline-none indent-4"
                   {...register("note")}
+               
                 />
               </div>
             </div>
@@ -345,11 +352,13 @@ const subTotal = cartAll.reduce((sum, item)=> {
                 <h4 className=" font-pop font-semibold text-2xl text-dark-black mb-8">
                   Payment
                 </h4>
-                <div className=" flex items-center justify-between">
+                <div className=" flex items-center justify-start gap-2">
                   {buttons.map((btn) => (
+                    
                     <button
                       key={btn.value}
-                      onClick={() => setActive(btn.value)}
+                    onChange={()=> setActive(btn.value)}
+                      onClick={() => {setValue("paymentMethod", btn.value); setActive(btn.value);}}
                       className={`py-[10px] px-[9px] last:px-[16px] font-pop font-normal text-lg border border-dark-black rounded-lg transition-colors duration-200
             ${
               active === btn.value
@@ -357,6 +366,7 @@ const subTotal = cartAll.reduce((sum, item)=> {
                 : "bg-white text-dark-black"
             }
           `}
+           
                     >
                       {btn.label}
                     </button>
