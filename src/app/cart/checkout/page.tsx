@@ -25,19 +25,125 @@ interface IForminput {
   paymentMethod: string;
 }
 
+interface Buyer {
+  firstName: string;
+  lastName: string;
+  email: string;
+  contact: string;
+  address: string;
+  city: string;
+  country: string;
+  zipCode: string;
+  note: string | null; // Or "" if empty strings are used
+}
+
+interface OrderItem {
+  productId: string | number; // Adjust based on your item.id type
+  title: string;
+  quantity: number;
+  price: number | string; // Often string for currency precision
+}
+
+interface Order {
+  item: OrderItem[]; // Array of items from cartAll
+  subtotal: string; // toFixed() returns string
+  shipping: number;
+  tax: number;
+  total: string;
+}
+
+interface Payment {
+  method: string;
+  status: string;
+}
+
+interface ApiResponse {
+  // If the API wraps your data or adds extras like id/timestamps
+  id?: string; // Optional if returned
+  buyer: Buyer;
+  order: Order;
+  payment: Payment;
+  message?: string; // e.g., success message
+  orderID?: string;
+  // Add any other top-level fields here, like errors: { code: number, details: string }
+}
+
 const MyCheckout: React.FC = () => {
   const [active, setActive] = useState<string>("");
   const cartAll = useSelector((state: RootState) => state.cart.carts);
 
-const {
-  register,
-  handleSubmit,
-  watch,
-  setValue,
-  formState: { errors },
-} = useForm<IForminput>();
-const actives = watch("paymentMethod");
-  const onSubmit: SubmitHandler<IForminput> = (data) => console.log(data);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<IForminput>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const actives = watch("paymentMethod");
+  const onSubmit: SubmitHandler<IForminput> = async (data) => {
+       const alldata = {
+        buyer: {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          contact: data.contact,
+          address: data.address,
+          city: data.city,
+          country: data.country,
+          zipCode: data.zipCode,
+          note: data.note === " " ? " " : data.note,
+        },
+        order: {
+          items: cartAll.map((item) => {
+            // Return a plain object for each cart item (flat array)
+            return {
+              productId: item.id,
+              title: item.title,
+              quantity: item.quantity,
+              price: item.price,
+              thumbnail: item.thumbnail,
+            };
+          }),
+          subtotal: subTotal.toFixed(),
+          shipping: 15.0,
+          tax: 10.0,
+          total: totalPrice.toFixed(),
+        },
+        payment: {
+          method: data.paymentMethod,
+          status: "pending",
+        },
+      };
+    try {
+   
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/checkout`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(alldata),
+        }
+      );
+
+      const data: ApiResponse = await res.json();
+
+      if (res.ok) {
+        alert(`✅ ${data.message} Order ID: ${data.orderID}`);
+        // or navigate to a success page
+        // router.push(`/order-success?orderId=${data.orderId}`);
+      } else {
+        alert(`❌ Failed: ${data.message || "Unknown error"}`);
+      }
+
+      console.log("all datas", alldata);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const buttons = [
     { label: "Credit Card", value: "credit" },
     { label: "Cash on delivery", value: "Cash on delivery" },
@@ -45,16 +151,13 @@ const actives = watch("paymentMethod");
 
   const shipment = 15;
   const tax = 10;
-const subTotal = cartAll.reduce((sum, item)=> {
-  return sum + item.price * item.quantity
-}, 0)
+  const subTotal = cartAll.reduce((sum, item) => {
+    return sum + item.price * item.quantity;
+  }, 0);
   const totalPrice = cartAll.reduce((sum, item) => {
-    return (sum + item.price * item.quantity) + shipment + tax;
+    return sum + item.price * item.quantity + shipment + tax;
   }, 0);
 
-  const handlepaymentmethod = () => {
-
-  }
   return (
     <div>
       {/* navigation */}
@@ -293,7 +396,6 @@ const subTotal = cartAll.reduce((sum, item)=> {
                   placeholder="Additional Note"
                   className="w-[195%] mt-6 py-3 border border-dark-black rounded-lg h-[45px] outline-none indent-4"
                   {...register("note")}
-               
                 />
               </div>
             </div>
@@ -304,21 +406,24 @@ const subTotal = cartAll.reduce((sum, item)=> {
                 Your Order Summary
               </h4>
               {cartAll.length !== 0 ? (
-                
-            <div>
-              {cartAll.map((item , i)=> (
-                 <div key={i} className="  font-pop font-medium text-lg text-dark-black flex justify-between py-6 last:pb-0">
-                  <div className=" flex gap-x-6">
-                    <p className="w-[37.17px] text-right">{item.quantity}x</p>
-                    <p className=" font-normal">{item.title}</p>
-                  </div>
-                  <p>${item.price}</p>
+                <div>
+                  {cartAll.map((item, i) => (
+                    <div
+                      key={i}
+                      className="  font-pop font-medium text-lg text-dark-black flex justify-between py-6 last:pb-0"
+                    >
+                      <div className=" flex gap-x-6">
+                        <p className="w-[37.17px] text-right">
+                          {item.quantity}x
+                        </p>
+                        <p className=" font-normal">{item.title}</p>
+                      </div>
+                      <p>${item.price}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-                 
-            </div>
               ) : (
-               ""
+                ""
               )}
               {/* <div className="  font-pop font-medium text-lg text-dark-black flex justify-between py-6 last:pb-0">
                 <div className=" flex gap-x-6">
@@ -330,7 +435,7 @@ const subTotal = cartAll.reduce((sum, item)=> {
               <hr className="my-8 text-dark-black" />
               <div className="font-pop font-medium text-lg text-dark-black flex items-center justify-between py-4">
                 <p>Subtotal</p>
-                <p className=" text-right">${subTotal}</p>
+                <p className=" text-right">${subTotal.toFixed()}</p>
               </div>
               <div className="font-pop font-medium text-lg text-dark-black flex items-center justify-between py-4">
                 <p>Shipping</p>
@@ -344,7 +449,7 @@ const subTotal = cartAll.reduce((sum, item)=> {
               <div className="font-pop font-medium text-lg text-dark-black flex items-center justify-between py-4">
                 <p>Total</p>
                 <p className=" text-right text-2xl text-hover-social">
-                  ${totalPrice}
+                  ${totalPrice.toFixed()}
                 </p>
               </div>
               <hr className="my-8 text-dark-black" />
@@ -354,11 +459,14 @@ const subTotal = cartAll.reduce((sum, item)=> {
                 </h4>
                 <div className=" flex items-center justify-start gap-2">
                   {buttons.map((btn) => (
-                    
                     <button
                       key={btn.value}
-                    onChange={()=> setActive(btn.value)}
-                      onClick={() => {setValue("paymentMethod", btn.value); setActive(btn.value);}}
+                      type="button"
+                      onChange={() => setActive(btn.value)}
+                      onClick={() => {
+                        setValue("paymentMethod", btn.value);
+                        setActive(btn.value);
+                      }}
                       className={`py-[10px] px-[9px] last:px-[16px] font-pop font-normal text-lg border border-dark-black rounded-lg transition-colors duration-200
             ${
               active === btn.value
@@ -366,7 +474,6 @@ const subTotal = cartAll.reduce((sum, item)=> {
                 : "bg-white text-dark-black"
             }
           `}
-           
                     >
                       {btn.label}
                     </button>
