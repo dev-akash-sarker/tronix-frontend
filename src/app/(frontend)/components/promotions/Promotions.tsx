@@ -4,7 +4,7 @@ import "./style.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
-import { slugify } from "../../utility/slugify";
+import { slugify } from "@/app/(frontend)/utility/slugify";
 type TimeLeft = {
   years: number;
   months: number;
