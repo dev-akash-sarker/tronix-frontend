@@ -54,10 +54,10 @@ export interface Review {
   reviewerEmail: string;
 }
 
-interface finalFeature {
-  featureName: string;
-  products: any;
-}
+// interface finalFeature {
+//   featureName: string;
+//   products: any;
+// }
 
 export interface Meta {
   createdAt: string;
@@ -100,7 +100,7 @@ const FeaturedProduct: React.FC = () => {
           products: productDetails,
         };
 
-        setFeatures([finalFeature]);
+        setFeatures([finalFeature] as Feature[]);
       } catch (error) {
         console.error("Failed to fetch featured products:", error);
       }
