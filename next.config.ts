@@ -1,29 +1,32 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
     remotePatterns: [
-      {
-        protocol: "https", // e.g. https or http
-        hostname: "swiperjs.com", // The domain name
-        port: "", // Optional (usually empty for default ports)
-        pathname: "/**", // Allow all paths
-      },
-      {
-        protocol: "https",
-        hostname: "cdn.dummyjson.com",
-        pathname: "/**",
-      },
-      {
-        protocol: 'https',
-        hostname: 'cdn.dummyjson.com',
-        pathname: '/product-images/**',
-      },
+      { protocol: "https", hostname: "swiperjs.com", pathname: "/**" },
+      { protocol: "https", hostname: "cdn.dummyjson.com", pathname: "/**" },
+      { protocol: "https", hostname: "res.cloudinary.com", pathname: "/**" },
+      { protocol: "https", hostname: "cdn.dummyjson.com", pathname: "/product-images/**" },
     ],
   },
   eslint: {
-    ignoreDuringBuilds: true, // Disables ESLint during `next build`
+    ignoreDuringBuilds: true,
+  },
+
+  webpack: (config, { dev }) => {
+    if (!dev) {
+      // Override console.log in production only
+      config.plugins.push({
+        apply: (compiler) => {
+          compiler.hooks.done.tap("DisableConsoleLog", () => {
+            if (typeof window !== "undefined") {
+              window.console.log = () => {};
+            }
+          });
+        },
+      });
+    }
+    return config;
   },
 };
 
