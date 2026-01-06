@@ -17,6 +17,13 @@ interface Product {
   title: string;
 }
 
+interface PromotionFormValues {
+  title: string;
+  description: string;
+  discountPercentage: number;
+  products: unknown[]; // Replace 'any' with your actual product type if possible
+  dateRange?: [Date, Date]; // Adjust based on your date picker's output
+}
 export default function AddPromotionPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
@@ -30,28 +37,33 @@ export default function AddPromotionPage() {
       .catch(() => message.error("Failed to load products"));
   }, []);
 
-  const onFinish = async (values: any) => {
-    const [startDate, endDate] = values.dateRange || [];
+  const onFinish = async (values: unknown) => {
+  // Cast 'values' to your interface
+  const formValues = values as PromotionFormValues;
+
+  // Destructure from the casted object
+  const [startDate, endDate] = formValues.dateRange || [];
 
     try {
       setLoading(true);
       await axios.post(
         "http://localhost:8000/api/v1/promotion/createpromotion",
         {
-          title: values.title,
-          description: values.description,
-          discountPercentage: values.discountPercentage,
-          startDate: startDate?.toISOString(),
-          endDate: endDate?.toISOString(),
-          products: values.products,
+        title: formValues.title,
+        description: formValues.description,
+        discountPercentage: formValues.discountPercentage,
+        // Use optional chaining for safe method calls
+        startDate: startDate?.toISOString(),
+        endDate: endDate?.toISOString(),
+        products: formValues.products,
         }
       );
       message.success("Promotion created successfully!");
       form.resetFields();
-    } catch (error: any) {
-      message.error(
-        error.response?.data?.message || "Error creating promotion"
-      );
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        message.error("Error creating promotion");
+      }
     } finally {
       setLoading(false);
     }
