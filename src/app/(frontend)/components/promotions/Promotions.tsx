@@ -4,7 +4,6 @@ import "./style.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
-import { slugify } from "@/app/(frontend)/utility/slugify";
 type TimeLeft = {
   years: number;
   months: number;
@@ -72,6 +71,15 @@ export interface Meta {
 const PromotionCampaign: React.FC = () => {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
+
+  function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9 -]/g, "") // remove invalid chars
+    .replace(/\s+/g, "-") // collapse whitespace and replace by -
+    .replace(/-+/g, "-"); // collapse dashes
+}
 
   useEffect(() => {
     const fetchCampaigns = async () => {
