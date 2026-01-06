@@ -1,34 +1,25 @@
 import type { NextConfig } from "next";
+import path from "path";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
     remotePatterns: [
-      {
-        protocol: "https", // e.g. https or http
-        hostname: "swiperjs.com", // The domain name
-        port: "", // Optional (usually empty for default ports)
-        pathname: "/**", // Allow all paths
-      },
-      {
-        protocol: "https",
-        hostname: "cdn.dummyjson.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-        pathname: "/**",
-      },
-      {
-        protocol: 'https',
-        hostname: 'cdn.dummyjson.com',
-        pathname: '/product-images/**',
-      },
+      { protocol: "https", hostname: "swiperjs.com", pathname: "/**" },
+      { protocol: "https", hostname: "cdn.dummyjson.com", pathname: "/**" },
+      { protocol: "https", hostname: "res.cloudinary.com", pathname: "/**" },
+      { protocol: 'https', hostname: 'cdn.dummyjson.com', pathname: '/product-images/**' },
     ],
   },
   eslint: {
-    ignoreDuringBuilds: true, // Disables ESLint during `next build`
+    ignoreDuringBuilds: true,
+  },
+  // ⭐ Add this Webpack configuration to force the alias resolution
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "@": path.resolve(__dirname, "src"),
+    };
+    return config;
   },
 };
 
