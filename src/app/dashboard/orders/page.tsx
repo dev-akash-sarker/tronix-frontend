@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import { Table, Tag, Avatar, Rate, Select, Card, Typography, Space } from 'antd';
 import { ColumnsType } from 'antd/es/table'; // Import ColumnsType for strong typing
