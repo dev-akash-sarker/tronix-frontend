@@ -20,7 +20,7 @@ type FieldType = {
   tags?: string[];
   brand?: string;
   sku?: string;
-  images?: any[];
+  images?: UploadFile[];
 };
 
 export default function EditPage() {
@@ -38,7 +38,10 @@ export default function EditPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMsg, setAlertMsg] = useState<string>("");
 
-  const normFile = (e: any) => (Array.isArray(e) ? e : e?.fileList);
+const normFile = (e: { fileList?: UploadFile[] } | UploadFile[]): UploadFile[] => {
+  if (Array.isArray(e)) return e;
+  return e.fileList ?? [];
+};
 
   // fetch product
   useEffect(() => {
@@ -92,7 +95,7 @@ export default function EditPage() {
     };
 
     fetchProduct();
-  }, [productId]);
+  }, [productId, form]);
 
   // fetch top-level categories
   useEffect(() => {
@@ -127,18 +130,18 @@ export default function EditPage() {
     };
 
     fetchSubcategories();
-  }, [selectedCategory]);
+  }, [selectedCategory, form, initialSubcat]);
 
   // custom preview
-  const handlePreview = async (file: any) => {
-    if (file.url) {
-      window.open(file.url, "_blank");
-    } else if (file.originFileObj) {
-      const url = URL.createObjectURL(file.originFileObj);
-      window.open(url, "_blank");
-      setTimeout(() => URL.revokeObjectURL(url), 10000);
-    }
-  };
+const handlePreview = async (file: UploadFile) => {
+  if (file.url) {
+    window.open(file.url, "_blank");
+  } else if (file.originFileObj) {
+    const url = URL.createObjectURL(file.originFileObj as Blob);
+    window.open(url, "_blank");
+    setTimeout(() => URL.revokeObjectURL(url), 10000);
+  }
+};
 
   // submit handler
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
@@ -160,9 +163,13 @@ export default function EditPage() {
       formData.append("sku", values.sku ?? "");
       formData.append("brand", values.brand ?? "");
 
-      if (addedFiles.length) {
-        addedFiles.forEach((file) => formData.append("images", file));
-      }
+    if (addedFiles.length) {
+      addedFiles.forEach((file) => {
+        if (file.originFileObj) {
+          formData.append("images", file.originFileObj);
+        }
+      });
+    }
 
       if (removedUrls.length) {
         formData.append("removedUrls", JSON.stringify(removedUrls));
