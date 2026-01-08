@@ -46,7 +46,9 @@ export default function EditPage() {
 
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/api/v1/product/${productId}`);
+        const res = await fetch(
+          `http://localhost:8000/api/v1/product/${productId}`
+        );
         const data = await res.json();
 
         if (!res.ok) {
@@ -63,7 +65,9 @@ export default function EditPage() {
           subcategoryname: data.subcategoryname,
           price: data.price != null ? String(data.price) : undefined,
           discountPercentage:
-            data.discountPercentage != null ? String(data.discountPercentage) : undefined,
+            data.discountPercentage != null
+              ? String(data.discountPercentage)
+              : undefined,
           stock: data.stock != null ? String(data.stock) : undefined,
           sku: data.sku,
           brand: data.brand,
@@ -148,7 +152,10 @@ export default function EditPage() {
       formData.append("subCategoryId", values.subcategoryId ?? "");
       formData.append("subcategoryname", values.subcategoryname ?? "");
       formData.append("price", String(values.price ?? ""));
-      formData.append("discountPercentage", String(values.discountPercentage ?? ""));
+      formData.append(
+        "discountPercentage",
+        String(values.discountPercentage ?? "")
+      );
       formData.append("stock", String(values.stock ?? ""));
       formData.append("sku", values.sku ?? "");
       formData.append("brand", values.brand ?? "");
@@ -161,12 +168,15 @@ export default function EditPage() {
         formData.append("removedUrls", JSON.stringify(removedUrls));
       }
 
-      console.log("akash sarker", productId)
+      console.log("akash sarker", productId);
 
-      const res = await fetch(`http://localhost:8000/api/v1/product/update/${productId}`, {
-        method: "PUT",
-        body: formData,
-      });
+      const res = await fetch(
+        `http://localhost:8000/api/v1/product/update/${productId}`,
+        {
+          method: "PUT",
+          body: formData,
+        }
+      );
 
       const data = await res.json();
       if (res.ok) {
@@ -187,7 +197,9 @@ export default function EditPage() {
 
   return (
     <>
-      {alertMsg && <Alert message={alertMsg} type="success" showIcon closable />}
+      {alertMsg && (
+        <Alert message={alertMsg} type="success" showIcon closable />
+      )}
       <div className="mt-10">
         <Form
           name="editProduct"
@@ -198,7 +210,11 @@ export default function EditPage() {
           onFinish={onFinish}
           autoComplete="off"
         >
-          <Form.Item label="Category" name="categoryId" rules={[{ required: true }]}>
+          <Form.Item
+            label="Category"
+            name="categoryId"
+            rules={[{ required: true }]}
+          >
             <Select
               onChange={(value) => {
                 setSelectedCategory(value);
@@ -217,7 +233,9 @@ export default function EditPage() {
           <Form.Item label="Subcategory" name="subcategoryId">
             <Select
               disabled={!subcategories.length}
-              placeholder={subcategories.length ? "Select subcategory" : "No subcategories"}
+              placeholder={
+                subcategories.length ? "Select subcategory" : "No subcategories"
+              }
             >
               {subcategories.map((sub) => (
                 <Select.Option key={sub._id} value={sub._id}>
@@ -227,11 +245,19 @@ export default function EditPage() {
             </Select>
           </Form.Item>
 
-          <Form.Item<FieldType> label="Title" name="title" rules={[{ required: true }]}>
+          <Form.Item<FieldType>
+            label="Title"
+            name="title"
+            rules={[{ required: true }]}
+          >
             <Input />
           </Form.Item>
 
-          <Form.Item<FieldType> label="Price" name="price" rules={[{ required: true }]}>
+          <Form.Item<FieldType>
+            label="Price"
+            name="price"
+            rules={[{ required: true }]}
+          >
             <Input />
           </Form.Item>
 
@@ -243,23 +269,44 @@ export default function EditPage() {
             <Input />
           </Form.Item>
 
-          <Form.Item<FieldType> label="Description" name="description" rules={[{ required: true }]}>
+          <Form.Item<FieldType>
+            label="Description"
+            name="description"
+            rules={[{ required: true }]}
+          >
             <TextArea />
           </Form.Item>
 
-          <Form.Item<FieldType> label="Stock" name="stock" rules={[{ required: true }]}>
+          <Form.Item<FieldType>
+            label="Stock"
+            name="stock"
+            rules={[{ required: true }]}
+          >
             <Input />
           </Form.Item>
 
-          <Form.Item<FieldType> label="Sku" name="sku" rules={[{ required: true }]}>
+          <Form.Item<FieldType>
+            label="Sku"
+            name="sku"
+            rules={[{ required: true }]}
+          >
             <Input />
           </Form.Item>
 
-          <Form.Item<FieldType> label="Brand" name="brand" rules={[{ required: true }]}>
+          <Form.Item<FieldType>
+            label="Brand"
+            name="brand"
+            rules={[{ required: true }]}
+          >
             <Input />
           </Form.Item>
 
-          <Form.Item label="Upload" name="images" valuePropName="fileList" getValueFromEvent={normFile}>
+          <Form.Item
+            label="Upload"
+            name="images"
+            valuePropName="fileList"
+            getValueFromEvent={normFile}
+          >
             <Upload
               listType="picture-card"
               onPreview={handlePreview}
@@ -268,7 +315,9 @@ export default function EditPage() {
                 return false;
               }}
               onRemove={(file) => {
-                if (typeof file.url === "string") setRemovedUrls((prev) => [...prev, file.url]);
+                if (typeof file.url === "string") {
+                  setRemovedUrls((prev) => [...prev, ...(file.url ? [file.url] : [])]); // fixed
+                }
                 setAddedFiles((prev) => prev.filter((f) => f.uid !== file.uid));
                 return true;
               }}
