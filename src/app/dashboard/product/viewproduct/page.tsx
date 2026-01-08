@@ -28,7 +28,7 @@ const Viewproduct: React.FC = () => {
     const fetchUsers = async () => {
       try {
         const res = await fetch(
-          "http://localhost:8000/api/v1/product/viewproducts"
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/viewproducts`
         );
         const data = await res.json();
         console.log(data)
@@ -65,7 +65,7 @@ const Viewproduct: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       const res = await fetch(
-        `http://localhost:8000/api/v1/product/deleteproduct/${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/deleteproduct/${id}`,
         {
           method: "DELETE",
         }

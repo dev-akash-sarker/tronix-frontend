@@ -70,7 +70,7 @@ export default function ProductPage({ params }: Props) {
     const fetchProduct = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8000/api/v1/product/${productId}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/${productId}`
         );
         setProduct(res.data);
       } catch (error) {
