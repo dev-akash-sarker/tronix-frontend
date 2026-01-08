@@ -1,6 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import type { FormProps } from "antd";
+import type { FormProps, UploadFile } from "antd";
 import { Alert, Button, Form, Input, message, Select, Upload } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { PlusOutlined } from "@ant-design/icons";
@@ -28,7 +28,7 @@ export default function EditPage() {
   const [subcategories, setSubcategories] = useState<CategoryType[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [initialSubcat, setInitialSubcat] = useState<string | null>(null);
-  const [addedFiles, setAddedFiles] = useState<File[]>([]);
+  const [addedFiles, setAddedFiles] = useState<UploadFile[]>([]);
   const [removedUrls, setRemovedUrls] = useState<string[]>([]);
 
   const params = useParams();
@@ -316,7 +316,10 @@ export default function EditPage() {
               }}
               onRemove={(file) => {
                 if (typeof file.url === "string") {
-                  setRemovedUrls((prev) => [...prev, ...(file.url ? [file.url] : [])]); // fixed
+                  setRemovedUrls((prev) => [
+                    ...prev,
+                    ...(file.url ? [file.url] : []),
+                  ]); // fixed
                 }
                 setAddedFiles((prev) => prev.filter((f) => f.uid !== file.uid));
                 return true;
