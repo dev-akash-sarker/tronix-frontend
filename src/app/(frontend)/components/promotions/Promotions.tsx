@@ -71,8 +71,7 @@ export interface Meta {
 const PromotionCampaign: React.FC = () => {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
-  const a = 1 +2;
-  console.log(a)
+
   function slugify(text: string): string {
   return text
     .toLowerCase()
