@@ -53,7 +53,7 @@ const Viewnewarrivel: React.FC = () => {
   const [favorites, setFavorites] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const productsPerPage = 9;
-  
+
   function slugify(text: string): string {
   return text
     .toLowerCase()
@@ -76,7 +76,7 @@ const Viewnewarrivel: React.FC = () => {
   useEffect(() => {
     const fetchNewArrivel = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/v1/product/viewproducts");
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/viewproducts`);
         console.log("res",response.data)
         const products: NewArrivalType[] = response.data;
 

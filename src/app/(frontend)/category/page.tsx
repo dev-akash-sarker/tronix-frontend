@@ -79,10 +79,10 @@ const CategoryPage: React.FC = () => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get<Category[]>(
-          "http://localhost:8000/api/v1/category/allcategory"
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/category/allcategory`
         );
         setCategories(response.data);
-        const responsenew = await axios.get("http://localhost:8000/api/v1/product/viewproducts");
+        const responsenew = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/viewproducts`);
         const products: NewArrivalType[] = responsenew.data;
         setProducts(products);
       } catch (error) {
