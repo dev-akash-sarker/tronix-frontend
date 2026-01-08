@@ -18,7 +18,7 @@ export default function Login() {
 
     useEffect(()=>{
     const checkAdmin = async () => {
-      const res = await axios.get("http://localhost:8000/api/v1/check-admin");
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/check-admin`);
       console.log("res", res)
       if(!res.data.exists){
         router.push("/")
@@ -31,7 +31,7 @@ export default function Login() {
     setLoading(true);
     console.log("Success:", values);
     const response = await axios.post(
-      "http://localhost:8000/api/v1/admin/login",
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/admin/login`,
       {
         email: values.email,
         password: values.password,

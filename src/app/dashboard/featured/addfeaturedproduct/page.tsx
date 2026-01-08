@@ -33,7 +33,7 @@ export default function AddFeaturedProduct() {
     try {
       setLoading(true);
       await axios.post(
-        "http://localhost:8000/api/v1/featured/createfeatureproduct",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/featured/createfeatureproduct`,
         {
           products: values.products,
           discountPercentage: values.discountPercentage,

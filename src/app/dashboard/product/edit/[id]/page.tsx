@@ -99,7 +99,7 @@ const normFile = (e: { fileList?: UploadFile[] } | UploadFile[]): UploadFile[] =
 
   // fetch top-level categories
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/category/allcategory")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/category/allcategory`)
       .then((res) => res.json())
       .then(setCategories)
       .catch(console.error);
@@ -115,7 +115,7 @@ const normFile = (e: { fileList?: UploadFile[] } | UploadFile[]): UploadFile[] =
     const fetchSubcategories = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8000/api/v1/category/${selectedCategory}/subcategory`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/category/${selectedCategory}/subcategory`
         );
         const data = await res.json();
         setSubcategories(data || []);

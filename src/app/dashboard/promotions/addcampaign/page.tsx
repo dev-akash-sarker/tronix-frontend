@@ -32,7 +32,7 @@ export default function AddPromotionPage() {
   // Load all products
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/v1/product/viewproducts")
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/viewproducts`)
       .then((res) => setProducts(res.data))
       .catch(() => message.error("Failed to load products"));
   }, []);
@@ -47,7 +47,7 @@ export default function AddPromotionPage() {
     try {
       setLoading(true);
       await axios.post(
-        "http://localhost:8000/api/v1/promotion/createpromotion",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/promotion/createpromotion`,
         {
         title: formValues.title,
         description: formValues.description,

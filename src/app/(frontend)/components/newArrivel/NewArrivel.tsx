@@ -52,7 +52,7 @@ const NewArrivel: React.FC = () => {
       try {
         //http://localhost:8000/api/v1/product
         const response = await axios.get(
-          "http://localhost:8000/api/v1/product/viewproducts"
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/viewproducts`  
         );
         console.log(" wowwwwwwwwwwwwwwwwwwww", response);
         const products: NewArrivalType[] = response.data;

@@ -22,7 +22,7 @@ export default function ViewPromotions() {
     const fetchPromotions = async () => {
       setLoading(true);
       try {
-        const res = await axios.get("http://localhost:8000/api/v1/promotion/getpromotion");
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/promotion/getpromotion`);
         setPromotions(res.data);
       } catch (error) {
         message.error("Failed to load promotions");

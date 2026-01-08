@@ -81,7 +81,7 @@ const FeaturedProduct: React.FC = () => {
       try {
         // STEP 1: fetch featured IDs
         const res = await axios.get(
-          "http://localhost:8000/api/v1/featured/getfeatureproduct"
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/featured/getfeatureproduct`
         );
 
         console.log("FEATURED RESPONSE:", res.data);
@@ -96,7 +96,7 @@ const FeaturedProduct: React.FC = () => {
         const productDetails = await Promise.all(
           ids.map(async (id: string) => {
             const pRes = await axios.get(
-              `http://localhost:8000/api/v1/product/${id}`
+              `${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/${id}`
             );
             return pRes.data;
           })

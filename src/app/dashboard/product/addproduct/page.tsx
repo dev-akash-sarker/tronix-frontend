@@ -34,7 +34,7 @@ const Addproduct: React.FC = () => {
 
   // Fetch top-level categories
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/category/allcategory")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/category/allcategory`)
       .then((res) => res.json())
       .then(setCategories)
       .catch(console.error);
@@ -44,7 +44,7 @@ const Addproduct: React.FC = () => {
   useEffect(() => {
     if (!selectedCategory) return;
     fetch(
-      `http://localhost:8000/api/v1/category/${selectedCategory}/subcategory`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/category/${selectedCategory}/subcategory`
     )
       .then((res) => res.json())
       .then(setSubcategories)
@@ -83,7 +83,7 @@ const Addproduct: React.FC = () => {
       formData.append("sku", sku ?? "");
       formData.append("brand", brand ?? "");
       const res = await fetch(
-        "http://localhost:8000/api/v1/product/addproduct",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/addproduct`,
         {
           method: "POST",
           body: formData,
