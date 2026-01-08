@@ -16,7 +16,6 @@ import {
   removecarts,
 } from "@/service/RTK/features/add-cart/add_cart_Slice";
 import { RootState } from "@/service/RTK/store";
-import { slugify } from "@/app/(frontend)/utility/slugify";
 
 interface Category {
   id: number;
@@ -53,6 +52,16 @@ const BottomNavbar: React.FC = () => {
   const cartAll = useSelector((state: RootState) => state.cart.carts);
 
   const dispatch = useDispatch();
+
+  function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9 -]/g, "") // remove invalid chars
+    .replace(/\s+/g, "-") // collapse whitespace and replace by -
+    .replace(/-+/g, "-"); // collapse dashes
+}
+
   const handleRemoveFromCart = (itemId: string) => {
     dispatch(removecarts({ id: itemId }));
   };

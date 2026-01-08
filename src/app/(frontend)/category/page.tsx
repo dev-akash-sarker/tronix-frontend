@@ -4,7 +4,6 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { RxCaretRight } from "react-icons/rx";
-import { slugify } from "../utility/slugify";
 
 import Image from "next/image";
 import { FaHeart } from "react-icons/fa";
@@ -58,6 +57,16 @@ const CategoryPage: React.FC = () => {
   const [favorites, setFavorites] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const productsPerPage = 9;
+
+  function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9 -]/g, "") // remove invalid chars
+    .replace(/\s+/g, "-") // collapse whitespace and replace by -
+    .replace(/-+/g, "-"); // collapse dashes
+}
+
   const handleHeartClick = (productId: number) => {
     setFavorites(
       (prev) =>

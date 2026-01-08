@@ -5,7 +5,6 @@ import "./style.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
-import { slugify } from "../../utility/slugify";
 
 interface Feature {
   featureId: string;
@@ -67,6 +66,15 @@ export interface Meta {
 }
 const FeaturedProduct: React.FC = () => {
   const [features, setFeatures] = useState<Feature[]>([]);
+
+  function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9 -]/g, "") // remove invalid chars
+    .replace(/\s+/g, "-") // collapse whitespace and replace by -
+    .replace(/-+/g, "-"); // collapse dashes
+}
 
   useEffect(() => {
     const fetchFeatured = async () => {
