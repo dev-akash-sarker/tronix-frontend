@@ -80,7 +80,7 @@ const BottomNavbar: React.FC = () => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get<Category[]>(
-          "http://localhost:8000/api/v1/category/allcategory"
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/category/allcategory`
         );
         setCategories(response.data);
       } catch (error) {
