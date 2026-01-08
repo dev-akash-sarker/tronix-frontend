@@ -7,16 +7,14 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "swiperjs.com", pathname: "/**" },
       { protocol: "https", hostname: "cdn.dummyjson.com", pathname: "/**" },
       { protocol: "https", hostname: "res.cloudinary.com", pathname: "/**" },
-      { protocol: 'https', hostname: 'cdn.dummyjson.com', pathname: '/product-images/**' },
+      { protocol: "https", hostname: "cdn.dummyjson.com", pathname: "/product-images/**" },
     ],
   },
-  eslint: {
-    ignoreDuringBuilds: true,
+
+  typescript: {
+    ignoreBuildErrors: true, // optional, for Netlify
   },
-   typescript: {
-    ignoreBuildErrors: true
-  },
-  // ⭐ Add this Webpack configuration to force the alias resolution
+
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
