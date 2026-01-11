@@ -8,6 +8,7 @@ import Footer from "./components/footer/Footer";
 import "@smastrom/react-rating/style.css";
 import NewsLetter from "./components/newsletter/Newsletter";
 import ProviderStoreClient from "./features/ProvidorStoreClient.js"
+import QueryProvider from "./components/reacrquery/QueryProvider";
 
 // Fonts
 const geistSans = Geist({
@@ -57,6 +58,7 @@ export default function RootLayout({
           antialiased
         `}
       >
+        <QueryProvider>
         <ProviderStoreClient>
              <div className="w-full md:mx-0 lg:mx-auto">
             <div className="lg:mx-40 relative">
@@ -73,7 +75,7 @@ export default function RootLayout({
             </div>
           </div>
         </ProviderStoreClient>
-      
+      </QueryProvider>
       </div>
   );
 }

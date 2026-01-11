@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic"; // prevent caching
 
 export async function GET() {
   try {
-    const res = await fetch("http://localhost:8000/api/v1/check-admin", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/check-admin`, {
       headers: { "Content-Type": "application/json" },
     });
 
