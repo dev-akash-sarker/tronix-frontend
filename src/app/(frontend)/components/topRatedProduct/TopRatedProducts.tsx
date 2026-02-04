@@ -36,7 +36,12 @@ export interface ProductInterface {
   }[];
   returnPolicy: string;
   minimumOrderQuantity: number;
-  meta: { createdAt: string; updatedAt: string; barcode: string; qrCode: string };
+  meta: {
+    createdAt: string;
+    updatedAt: string;
+    barcode: string;
+    qrCode: string;
+  };
   images: string[];
   averageRating: number;
   thumbnail: string;
@@ -44,7 +49,7 @@ export interface ProductInterface {
 
 const fetchTopRatedProducts = async (): Promise<ProductInterface[]> => {
   const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/viewproducts`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/viewproducts`,
   );
 
   const products: ProductInterface[] = response.data ?? [];
@@ -53,13 +58,18 @@ const fetchTopRatedProducts = async (): Promise<ProductInterface[]> => {
   const ratedProducts = products.map((product) => {
     const reviews = product.reviews ?? [];
     const reviewCount = reviews.length;
-    const totalReviewSum = reviews.reduce((sum, review) => sum + review.rating, 0);
+    const totalReviewSum = reviews.reduce(
+      (sum, review) => sum + review.rating,
+      0,
+    );
     const averageRating = reviewCount > 0 ? totalReviewSum / reviewCount : 0;
     return { ...product, averageRating };
   });
 
   // Sort by average rating and take top 3
-  return ratedProducts.sort((a, b) => b.averageRating - a.averageRating).slice(0, 3);
+  return ratedProducts
+    .sort((a, b) => b.averageRating - a.averageRating)
+    .slice(0, 3);
 };
 
 const TopRatedProducts: React.FC = () => {
@@ -69,14 +79,20 @@ const TopRatedProducts: React.FC = () => {
 
   const [favorites, setFavorites] = useState<number[]>([]);
 
-  const { data: toprated, isLoading, isError } = useQuery({
+  const {
+    data: toprated,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["topRatedProducts"],
     queryFn: fetchTopRatedProducts,
   });
 
   const handleHeartClick = (productId: number) => {
     setFavorites((prev) =>
-      prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId]
+      prev.includes(productId)
+        ? prev.filter((id) => id !== productId)
+        : [...prev, productId],
     );
   };
 
@@ -86,7 +102,9 @@ const TopRatedProducts: React.FC = () => {
   return (
     <div>
       <div className="flex justify-between mt-20">
-        <h3 className="font-mont text-4xl font-bold mb-4">Top Rated Products</h3>
+        <h3 className="font-mont text-4xl font-bold mb-4">
+          Top Rated Products
+        </h3>
         <Link
           href={`/toprated`}
           className="font-pop font-normal text-2xl text-hover-social hover:underline"
@@ -95,15 +113,18 @@ const TopRatedProducts: React.FC = () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {toprated?.map((product , index) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {toprated?.map((product, index) => (
           <div className="border border-gray-300 rounded-md" key={index}>
-            <div className="m-4 w-auto h-[313px] rounded-md bg-gray-400 overflow-hidden">
+            <div className="m-4 w-auto h-78.25 rounded-md bg-gray-400 overflow-hidden relative">
+              {/* Added relative */}
               <Image
                 src={product.thumbnail}
-                width={313}
-                height={313}
-                className="w-full h-full"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 313px"
+                priority
+                fetchPriority="high"
+                className="object-cover" // This ensures the image covers the area without stretching
                 alt={product.title}
               />
             </div>
@@ -119,7 +140,9 @@ const TopRatedProducts: React.FC = () => {
 
               <div className="flex items-center justify-center gap-4 mt-4">
                 <div className="text-rating text-xl">★</div>
-                <p className="font-bold text-xl">{product.averageRating.toFixed(1)}</p>
+                <p className="font-bold text-xl">
+                  {product.averageRating.toFixed(1)}
+                </p>
                 <p className="text-lg text-social font-mont font-normal border-l pl-4 border-gray-300">
                   Sold 199
                 </p>
@@ -129,20 +152,24 @@ const TopRatedProducts: React.FC = () => {
                 {cartIDS.includes(product.id) ? (
                   <Link
                     href={"/cart"}
-                    className="text-sm py-3 px-4 border cursor-pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all"
+                    className="text-sm py-3 px-4 border cursor-pointer border-hover-social rounded-lg hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all"
                   >
                     Go to Cart
                   </Link>
                 ) : (
                   <button
                     onClick={() => dispatch(addcarts(product))}
-                    className="text-sm py-3 px-4 border cursor-pointer border-hover-social rounded-[8px] hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all"
+                    aria-label="add to cart"
+                    className="text-sm py-3 px-4 border cursor-pointer border-hover-social rounded-lg hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all"
                   >
                     Add to Cart
                   </button>
                 )}
 
-                <button onClick={() => handleHeartClick(product.id)}>
+                <button
+                  onClick={() => handleHeartClick(product.id)}
+                  aria-label="Add to favorites"
+                >
                   <FaHeart
                     className={
                       favorites.includes(product.id)

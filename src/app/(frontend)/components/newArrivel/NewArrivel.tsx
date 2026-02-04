@@ -52,21 +52,20 @@ const NewArrivel: React.FC = () => {
       try {
         //http://localhost:8000/api/v1/product
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/viewproducts`  
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/viewproducts`,
         );
-        console.log(" wowwwwwwwwwwwwwwwwwwww", response);
         const products: NewArrivalType[] = response.data;
 
         // ✅ Filter products that have a createdAt field (optional safety)
         const validProducts = products.filter(
-          (product) => product.meta?.createdAt
+          (product) => product.meta?.createdAt,
         );
 
         // ✅ Sort by most recent createdAt
         const sortedByDate = validProducts.sort(
           (a, b) =>
             new Date(b.meta.createdAt).getTime() -
-            new Date(a.meta.createdAt).getTime()
+            new Date(a.meta.createdAt).getTime(),
         );
 
         // ✅ Take top 4
@@ -105,13 +104,16 @@ const NewArrivel: React.FC = () => {
                 <Image
                   src={item.images[0]}
                   fill
+                  priority
+                  fetchPriority="high"
+                  sizes="(max-width: 768px) 47vw, (max-width: 1200px) 33vw, 400px"
                   className=" w-full aspect-square"
                   alt={item.title}
                 />
-                <div className="w-[185px] h-[255px] overflow-hidden">
+                <div className="w-46.25 h-63.75 overflow-hidden">
                   <div className="absolute inset-0 bg-black/25"></div>
                 </div>
-                <div className=" absolute z-20 top-5 left-5 xl:w-[40px] xl:h-[40px] rounded-full bg-hover-social text-white font-pop text-[12px] flex justify-center items-center">
+                <div className=" absolute z-20 top-5 left-5 xl:w-10 xl:h-10 rounded-full bg-new-hover-social text-white font-pop text-[12px] flex justify-center items-center">
                   New
                 </div>
               </div>
@@ -127,7 +129,9 @@ const NewArrivel: React.FC = () => {
                 <p className=" text-xl font-bold">$ {item.price}</p>
                 <div className=" flex ">
                   {item.rating === 0 ? (
-                    <div className=" font-normal text-social flex items-center pr-4 border-r border-gray-300 gap-2">No review yet</div>
+                    <div className=" font-normal text-social flex items-center pr-4 border-r border-gray-300 gap-2">
+                      No review yet
+                    </div>
                   ) : (
                     <div className=" font-normal text-social flex items-center pr-4 border-r border-gray-300 gap-2">
                       {1 > item.rating ? (
@@ -141,7 +145,9 @@ const NewArrivel: React.FC = () => {
                     </div>
                   )}
 
-                  <div className=" font-normal pl-4 text-social">sold {item.sold ? item.sold : 0}</div>
+                  <div className=" font-normal pl-4 text-social">
+                    sold {item.sold ? item.sold : 0}
+                  </div>
                 </div>
               </div>
             </div>

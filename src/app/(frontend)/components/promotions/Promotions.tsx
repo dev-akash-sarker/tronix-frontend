@@ -334,7 +334,7 @@ const PromotionCampaign: React.FC = () => {
                       ? product.Offerdiscount + " %"
                       : product.Offerdiscount + " Off"}
                   </div>
-                  <div className="bg-white w-[312px] mx-auto">
+                  <div className="bg-white w-78 mx-auto">
                     <h4 className=" text-center text-2xl font-pop font-normal mt-8 mb-2">
                       <Link
                         href={`/category/${product.category}/${product.id}`}

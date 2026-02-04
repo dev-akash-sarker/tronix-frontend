@@ -17,7 +17,7 @@ type MenuItem = Required<MenuProps>["items"][number];
 
 const items: MenuItem[] = [
   {
-    key: "sub9",
+    key: "sub0",
     label: "Orders",
     icon: <AppstoreOutlined />,
     children: [
@@ -34,6 +34,15 @@ const items: MenuItem[] = [
   },
   {
     key: "sub2",
+    label: "Banner",
+    icon: <MailOutlined />,
+    children: [
+      { key: "/dashboard/banner/addbanner", label: "Add Banner" },
+      { key: "/dashboard/banner/viewbanner", label: "View Banner" },
+    ],
+  },
+  {
+    key: "sub3",
     label: "Products",
     icon: <MailOutlined />,
     children: [
@@ -42,7 +51,7 @@ const items: MenuItem[] = [
     ],
   },
   {
-    key: "sub3",
+    key: "sub4",
     label: "Category",
     icon: <AppstoreOutlined />,
     children: [
@@ -53,7 +62,7 @@ const items: MenuItem[] = [
     ],
   },
   {
-    key: "sub4",
+    key: "sub5",
     label: "Promotions",
     icon: <AppstoreOutlined />,
     children: [
@@ -62,7 +71,7 @@ const items: MenuItem[] = [
     ],
   },
   {
-    key: "sub5",
+    key: "sub6",
     label: "Featured",
     icon: <AppstoreOutlined />,
     children: [
@@ -71,7 +80,7 @@ const items: MenuItem[] = [
     ],
   },
   {
-    key: "sub10",
+    key: "sub7",
     label: "Finance",
     icon: <AppstoreOutlined />,
     children: [
@@ -80,7 +89,7 @@ const items: MenuItem[] = [
     ],
   },
   {
-    key: "sub6",
+    key: "sub8",
     label: "Payment Gateway",
     icon: <AppstoreOutlined />,
     children: [
@@ -90,7 +99,7 @@ const items: MenuItem[] = [
     ],
   },
   {
-    key: "sub8",
+    key: "sub9",
     label: "Delivery Gateway",
     icon: <AppstoreOutlined />,
     children: [
@@ -100,7 +109,7 @@ const items: MenuItem[] = [
     ],
   },
   {
-    key: "sub11",
+    key: "sub10",
     label: "Refund & Returns",
     icon: <AppstoreOutlined />,
     children: [

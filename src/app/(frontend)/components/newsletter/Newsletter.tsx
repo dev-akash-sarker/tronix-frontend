@@ -17,8 +17,8 @@ const NewsLetter: React.FC = () => {
           </div>
         </div>
         <div>
-            <input type="text" placeholder="Enter your email" className=" w-[320px] md:w-[360px] px-8 pt-6 pb-[25px] outline-none bg-white rounded-[8px]" />
-            <button className=" px-[32.5px] py-[16.5px] bg-dark-black text-white -ml-[105px] rounded-[8px] mt-4">Join</button>
+            <input type="text" placeholder="Enter your email" className=" w-[320px] md:w-90 px-8 pt-6 pb-6.25 outline-none bg-white rounded-lg" />
+            <button className=" px-[32.5px] py-[16.5px] bg-dark-black text-white -ml-26.25 rounded-lg mt-4">Join</button>
         </div>
       </div>
     </>

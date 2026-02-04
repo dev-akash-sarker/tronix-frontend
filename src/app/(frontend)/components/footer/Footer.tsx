@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
       <div>
         <div className=" flex justify-center items-start flex-col md:flex-row md:justify-start py-[45px] flex-wrap">
           <div className="w-1/3 lg:w-1/2">
-            <div className="relative w-[112px] h-[54px] mb-4">
+            <div className="relative w-28 h-13.5 mb-4">
               <Image
                 src="/tronix.png"
                 alt="tronix"
@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
                 className="object-contain"
               />
             </div>
-            <p className="w-[381px] text-base xl:text-[18px] font-pop font-normal my-4 text-dark-black">
+            <p className="w-95.25 text-base xl:text-[18px] font-pop font-normal my-4 text-dark-black">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor.
             </p>

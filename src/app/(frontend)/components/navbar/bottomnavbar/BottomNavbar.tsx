@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useState } from "react";
 import { CiMenuBurger } from "react-icons/ci";
@@ -34,7 +34,7 @@ interface Product {
 
 const fetchCategories = async (): Promise<Category[]> => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/category/allcategory`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/category/allcategory`,
   );
   if (!res.ok) throw new Error("Failed to fetch categories");
   return res.json();
@@ -42,11 +42,10 @@ const fetchCategories = async (): Promise<Category[]> => {
 
 const fetchProducts = async (): Promise<Product[]> => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/viewproducts`
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/viewproducts`,
   );
   if (!res.ok) throw new Error("Failed to fetch products");
   const data = await res.json();
-  console.log("Fetched Products:", data);
   return data ?? [];
 };
 
@@ -55,10 +54,15 @@ const BottomNavbar: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart.carts);
   const cartLength = cart.length;
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
@@ -69,20 +73,19 @@ const BottomNavbar: React.FC = () => {
     queryKey: ["products"],
     queryFn: fetchProducts,
   });
-console.log("All Products in Navbar:", searchQuery);
   // Safe search filter
-const filteredProducts =
-  searchQuery.trim().length >= 3
-    ? products.filter(
-        (product) =>
-          product.title &&
-          product.title.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : [];
+  const filteredProducts =
+    searchQuery.trim().length >= 3
+      ? products.filter(
+          (product) =>
+            product.title &&
+            product.title.toLowerCase().includes(searchQuery.toLowerCase()),
+        )
+      : [];
 
   const totalPrice = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
-    0
+    0,
   );
 
   const slugify = (text: string) =>
@@ -101,15 +104,20 @@ const filteredProducts =
     <div className="my-8 relative">
       {/* Top Bar */}
       <div className="flex justify-between items-center">
-        <button className="block md:hidden" onClick={() => setIsMenuOpen(true)}>
+        <button
+          className="block md:hidden"
+          onClick={() => setIsMenuOpen(true)}
+          aria-label="open menu icon"
+        >
           <CiMenuBurger fontSize={35} />
         </button>
 
-        <Link href="/" className="w-[112px] h-[54px] relative">
+        <Link href="/" className="w-28 h-13.5 relative">
           <Image
-            src="/Tronix.png"
+            src="/tronix.png"
             alt="logo"
             fill
+            priority
             sizes="112px"
             className="object-contain"
           />
@@ -125,7 +133,10 @@ const filteredProducts =
               className="md:w-xs py-3 indent-6 rounded-tl-md rounded-bl-md bg-input-background outline-none focus:bg-gray-200"
               placeholder="search here"
             />
-            <button className="bg-hover-social py-2 px-4 -ml-2 rounded-tr-md rounded-br-md relative">
+            <button
+              className="bg-hover-social py-2 px-4 -ml-2 rounded-tr-md rounded-br-md relative"
+              aria-label="search icon"
+            >
               <Image
                 src="/Search.svg"
                 width={24}
@@ -136,10 +147,11 @@ const filteredProducts =
 
             {/* Desktop search results */}
             {searchQuery.trim().length >= 3 && (
-              <div className="absolute w-full bg-gray-200 max-h-[400px] z-20 top-14 rounded-md px-2 overflow-y-scroll">
+              <div className="absolute w-full bg-gray-200 max-h-100 z-20 top-14 rounded-md px-2 overflow-y-scroll">
                 <div className="py-2 text-right">
                   <button
                     onClick={() => setSearchQuery("")}
+                    aria-label="search"
                     className="hover:text-hover-social transition-all"
                   >
                     <IoMdClose />
@@ -152,7 +164,6 @@ const filteredProducts =
                       href={`/category/${product.categoryname}/${product._id}`}
                       className="flex gap-x-2 items-center justify-start py-2"
                     >
-                    
                       <div className="w-10 h-10 rounded-md bg-gray-500 relative overflow-hidden">
                         <Image
                           src={product.thumbnail}
@@ -180,6 +191,7 @@ const filteredProducts =
           <div className="block md:hidden">
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
+              aria-label="search icon"
               className="py-2 px-4 -ml-2 rounded-tr-md rounded-br-md"
             >
               <Image
@@ -194,6 +206,7 @@ const filteredProducts =
           {/* Cart */}
           <button
             onClick={() => setIsCartOpen(true)}
+            aria-label="Open your cart"
             className="relative cursor-pointer"
           >
             <Image
@@ -203,8 +216,8 @@ const filteredProducts =
               alt="cart"
               className="w-7 h-7 md:w-10 md:h-10"
             />
-            {cartLength > 0 && (
-              <div className="bg-hover-social w-6 h-6 md:w-8 md:h-8 text-[10px] font-semibold flex justify-center items-center rounded-full text-white absolute -top-[12px] -right-[12px] md:-top-[15px] md:-right-[17px]">
+            {isMounted && cartLength > 0 && (
+              <div className="bg-hover-social w-6 h-6 md:w-8 md:h-8 text-[10px] font-semibold flex justify-center items-center rounded-full text-white absolute -top-3 -right-3 md:-top-3.75 md:-right-4.25">
                 {cartLength}
               </div>
             )}
@@ -226,7 +239,10 @@ const filteredProducts =
             className="w-full py-3 indent-6 rounded-tl-md rounded-bl-md bg-input-background outline-none focus:bg-gray-200"
             placeholder="search here"
           />
-          <button className="bg-hover-social py-2 px-4 -ml-2 rounded-tr-md rounded-br-md">
+          <button
+            className="bg-hover-social py-2 px-4 -ml-2 rounded-tr-md rounded-br-md"
+            aria-label="search button"
+          >
             <Image src="/Search.svg" width={24} height={24} alt="searchicon" />
           </button>
         </div>
@@ -324,7 +340,7 @@ const filteredProducts =
 
       {/* Cart Dropdown */}
       {isCartOpen && (
-        <div className="absolute w-[500px] h-[600px] z-50 overflow-y-scroll bg-white shadow-2xl top-20 right-0">
+        <div className="absolute w-125 h-150 z-50 overflow-y-scroll bg-white shadow-2xl top-20 right-0">
           <Outsideclick
             isOpen={isCartOpen}
             onClose={() => setIsCartOpen(false)}
@@ -359,9 +375,10 @@ const filteredProducts =
                         <div className="flex items-center mt-2 gap-2">
                           <button
                             className="w-8 h-8 bg-gray-400 text-white rounded-sm"
+                            aria-label="Minus product from product cart"
                             onClick={() =>
                               dispatch(
-                                decreaseQuantity({ id: item.id.toString() })
+                                decreaseQuantity({ id: item.id.toString() }),
                               )
                             }
                             disabled={item.quantity === 1}
@@ -373,9 +390,10 @@ const filteredProducts =
                           </span>
                           <button
                             className="w-8 h-8 bg-hover-social text-white rounded-sm"
+                            aria-label="Increase product from product cart"
                             onClick={() =>
                               dispatch(
-                                increaseQuantity({ id: item.id.toString() })
+                                increaseQuantity({ id: item.id.toString() }),
                               )
                             }
                           >
@@ -414,6 +432,7 @@ const filteredProducts =
                   <center>
                     <button
                       onClick={() => setIsCartOpen(false)}
+                      aria-label="Continue shopping button"
                       className="my-4 font-pop text-lg text-hover-social hover:text-old-gray"
                     >
                       Continue Shopping

@@ -8,7 +8,7 @@ const Hero: React.FC = () => {
 {
   //grid grid-cols-[60%_40%] h-[220px] md:h-[350px] lg:h-[400px] xl:h-[450px] gap-4 m-3 -z-10
 }
-      <div className="grid grid-cols-[100%] h-[220px] md:h-[350px] lg:h-[400px] xl:h-[450px] gap-4 m-3 -z-10">
+      <div className="grid grid-cols-[100%] h-55 md:h-87.5 lg:h-100 xl:h-112.5 gap-4 m-3 -z-10">
         <div className=" col-span-1 row-span-2 rounded-3xl Hero-css overflow-hidden">
           <HeroSlider
             spaceBetween={20}

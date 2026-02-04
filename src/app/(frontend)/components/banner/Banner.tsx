@@ -22,11 +22,11 @@ const Banner: React.FC<BannerInterface> = ({
         alt="banner"
         className=" absolute top-0 left-0 -z-10 rounded-4xl"
       />
-      <div className=" py-[100px] rounded-4xl bannerimage z-20">
+      <div className=" py-25 rounded-4xl bannerimage z-20">
         <h4 className=" font-mont font-bold text-2xl md:text-4xl xl:text-5xl text-white text-center">
           {title}
         </h4>
-        <p className="w-full mx-2 md:w-[501px] md:mx-auto font-pop font-normal text-sm xl:text-lg text-social text-center mt-4 mb-10">
+        <p className="w-full mx-2 md:w-125.25 md:mx-auto font-pop font-normal text-sm xl:text-lg text-social text-center mt-4 mb-10">
           {subtitle}
         </p>
         <div className=" text-center">

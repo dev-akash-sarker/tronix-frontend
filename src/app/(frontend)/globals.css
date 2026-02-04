@@ -1,20 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  --social-color: #a7a7a7;
+  --social-color: #6b6b6b;
   --background: #ffffff;
   --foreground: #171717;
-  --active-social-color: #f46b5b;
+  --active-social-color: #d14d3f;
+  --new-word-color: #b5392b;
   --input-background: rgb(208, 208, 210, 0.25);
   --rating-color: #ffd687;
   --text-custom-xl: 56px;
   --purple-color: #bb6bd9;
   --dark-black: #383838;
-  --old-gray: #615E5B;
+  --old-gray: #615e5b;
   --old-white: #fafafa;
-  --stroke-one: #D0D0D2;
-
+  --stroke-one: #d0d0d2;
 }
+
+/* 
+  --social-color: #a7a7a7;
+
+*/
 
 @theme inline {
   --color-stroke-one: var(--stroke-one);
@@ -25,6 +30,7 @@
   --color-rating: var(--rating-color);
   --color-dark-black: var(--dark-black);
   --color-hover-social: var(--active-social-color);
+  --color-new-hover-social: var(--new-word-color);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-input-background: var(--input-background);
@@ -87,7 +93,7 @@ body {
 }
 
 .footernav li {
-  transition: all linear .2s;
+  transition: all linear 0.2s;
 }
 
 .footernav li:hover {
@@ -106,5 +112,4 @@ body {
 .checkoutpage input {
   margin-top: 16px;
   margin-bottom: 16px;
-
 }

@@ -74,19 +74,19 @@ const PromotionCampaign: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
 
   function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9 -]/g, "") // remove invalid chars
-    .replace(/\s+/g, "-") // collapse whitespace and replace by -
-    .replace(/-+/g, "-"); // collapse dashes
-}
+    return text
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9 -]/g, "") // remove invalid chars
+      .replace(/\s+/g, "-") // collapse whitespace and replace by -
+      .replace(/-+/g, "-"); // collapse dashes
+  }
 
   useEffect(() => {
     const fetchCampaigns = async () => {
       try {
         const response = await axios.get<Campaign[]>(
-          "http://localhost:3000/api/campaign"
+          "http://localhost:3000/api/campaign",
         );
         setCampaigns(response.data);
         if (response.data.length > 0) {
@@ -121,7 +121,7 @@ const PromotionCampaign: React.FC = () => {
 
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor(
-        (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
       );
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
@@ -327,6 +327,8 @@ const PromotionCampaign: React.FC = () => {
                     src={product.images[0]}
                     width="100"
                     height="100"
+                    priority
+                    fetchPriority="high"
                     className=" w-full aspect-square"
                     alt="ok"
                   />
@@ -335,7 +337,7 @@ const PromotionCampaign: React.FC = () => {
                       ? product.Offerdiscount + " %"
                       : product.Offerdiscount + " Off"}
                   </div>
-                  <div className="bg-white w-[312px] mx-auto">
+                  <div className="bg-white w-78 mx-auto">
                     <h4 className=" text-center text-2xl font-pop font-normal mt-8 mb-2">
                       {product.title}
                     </h4>

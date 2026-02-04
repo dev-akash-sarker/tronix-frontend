@@ -13,6 +13,12 @@
 # testing
 /coverage
 
+# docker
+/.dockerignore
+.dockerignore
+/Dockerfile
+Dockerfile
+
 # next.js
 /.next/
 /out/

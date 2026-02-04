@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "cdn.dummyjson.com", pathname: "/product-images/**" },
     ],
   },
+  experimental: {
+    optimizeCss: true,
+  },
 
   typescript: {
     ignoreBuildErrors: true, // optional, for Netlify
