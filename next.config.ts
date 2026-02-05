@@ -7,13 +7,18 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "swiperjs.com", pathname: "/**" },
       { protocol: "https", hostname: "cdn.dummyjson.com", pathname: "/**" },
       { protocol: "https", hostname: "res.cloudinary.com", pathname: "/**" },
-      { protocol: "https", hostname: "cdn.dummyjson.com", pathname: "/product-images/**" },
+      {
+        protocol: "https",
+        hostname: "cdn.dummyjson.com",
+        pathname: "/product-images/**",
+      },
     ],
   },
   experimental: {
+    inlineCss: true,
     optimizeCss: true,
   },
-
+  productionBrowserSourceMaps: false,
   typescript: {
     ignoreBuildErrors: true, // optional, for Netlify
   },
