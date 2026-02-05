@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
   return (
     <>
       <div>
-        <div className=" flex justify-center items-start flex-col md:flex-row md:justify-start py-[45px] flex-wrap">
+        <div className=" flex justify-center items-start flex-col md:flex-row md:justify-start py-11.25 flex-wrap">
           <div className="w-1/3 lg:w-1/2">
             <div className="relative w-28 h-13.5 mb-4">
               <Image
@@ -98,17 +98,17 @@ const Footer: React.FC = () => {
             </h5>
             <nav>
               <ul className=" flex flex-row gap-4 mt-4">
-                <li className=" font-pop font-normal text-base xl:text-[18px] bg-hover-social  hover:bg-social transition-all text-white p-[11.33px] rounded-[8px]">
+                <li className=" font-pop font-normal text-base xl:text-[18px] bg-hover-social  hover:bg-social transition-all text-white p-[11.33px] rounded-lg">
                   <Link href={"#"}>
                     <BsInstagram />
                   </Link>
                 </li>
-                <li className=" font-pop font-normal text-base xl:text-[18px] bg-hover-social hover:bg-social transition-all  text-white p-[11.33px] rounded-[8px]">
+                <li className=" font-pop font-normal text-base xl:text-[18px] bg-hover-social hover:bg-social transition-all  text-white p-[11.33px] rounded-lg">
                   <Link href={"#"}>
                     <BsTwitter />
                   </Link>
                 </li>
-                <li className=" font-pop font-normal text-base xl:text-[18px] bg-hover-social hover:bg-social transition-all  text-white p-[11.33px] rounded-[8px]">
+                <li className=" font-pop font-normal text-base xl:text-[18px] bg-hover-social hover:bg-social transition-all  text-white p-[11.33px] rounded-lg">
                   <Link href={"#"}>
                     <BsFacebook />
                   </Link>
