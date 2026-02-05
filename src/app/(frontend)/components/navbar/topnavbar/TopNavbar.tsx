@@ -69,7 +69,7 @@ const TopNavbar: React.FC<TopNavbarProps> = () => {
 
         <div className=" w-full mt-2 md:w-auto md:mt-0">
           {/* Contacts Informations and Account */}
-          <nav>
+          <nav className="hidden md:block">
             <ul className="flex flex-col  md:flex-row md:items-center md:gap-x-4 xl:gap-x-8 transition-all">
               <li className=" py-3 px-4 md:p-0 bg-gray-600 md:bg-transparent flex items-center gap-2 xl:gap-4">
                 <IoIosCall className="text-hover-social lg:text-xl xl:text-2xl" />

@@ -102,12 +102,12 @@ const TopRatedProducts: React.FC = () => {
   return (
     <div>
       <div className="flex justify-between mt-20">
-        <h3 className="font-mont text-4xl font-bold mb-4">
+        <h3 className="font-mont text-lg lg:text-4xl font-bold mb-4">
           Top Rated Products
         </h3>
         <Link
           href={`/toprated`}
-          className="font-pop font-normal text-2xl text-hover-social hover:underline"
+          className="font-pop font-normal text-lg lg:text-2xl text-hover-social hover:underline"
         >
           View All
         </Link>

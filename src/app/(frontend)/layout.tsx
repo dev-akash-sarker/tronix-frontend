@@ -61,12 +61,12 @@ export default function RootLayout({
         <QueryProvider>
         <ProviderStoreClient>
              <div className="w-full md:mx-0 lg:mx-auto">
-            <div className="lg:mx-40 relative">
+            <div className="lg:mx-40 lg:relative">
               <TopNavbar />
               <hr className="text-gray-300" />
               <BottomNavbar />
               {children}
-              <div className="lg:-mx-40 bg-hover-social mt-10 lg:mt-20">
+              <div className="lg:-mx-40 bg-[#F96858] mt-10 lg:mt-20">
                 <div className="lg:mx-40 py-17.25">
                   <NewsLetter />
                 </div>

@@ -6,8 +6,8 @@ const Footer: React.FC = () => {
   return (
     <>
       <div>
-        <div className=" flex justify-center items-start flex-col md:flex-row md:justify-start py-11.25 flex-wrap">
-          <div className="w-1/3 lg:w-1/2">
+        <div className=" flex justify-center items-start flex-col md:flex-row md:justify-start mx-10 py-11.25 flex-wrap">
+          <div className="w-full md:w-1/2 lg:w-1/2">
             <div className="relative w-28 h-13.5 mb-4">
               <Image
                 src="/tronix.png"
@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
             </p>
 
             <div className=" flex justify-start items-center gap-2">
-              <span className="inline-block relative w-[19.93px] h-[19.87px] mb-4">
+              <span className="inline-block relative w-[19.93px] h-[19.87px] min-[320px]:mb-0 mb-4">
                 <Image
                   src={"/phone.png"}
                   alt="tronix"
@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
               </span>
               <p className="text-dark-black">+1234567890</p>
             </div>
-            <div className=" flex justify-start items-center gap-2 mt-4">
+            <div className=" flex justify-start items-center gap-2 md:mt-4 min-[375px]:mt-0">
               <span className=" inline-block w-5 h-4 relative">
                 <Image
                   src={"/inbox.png"}
@@ -47,12 +47,12 @@ const Footer: React.FC = () => {
               <p className=" text-dark-black ">lovia@support.com</p>
             </div>
           </div>
-          <div className=" w-1/3 lg:w-1/6">
-            <h5 className=" font-mont font-bold text-xl xs:text-2xl text-dark-black">
+          <div className="w-full md:w-1/2 lg:w-1/6">
+            <h5 className=" font-mont font-bold text-xl xs:text-2xl text-dark-black mt-6 md:mt-0">
               Company
             </h5>
             <nav>
-              <ul className=" flex flex-col gap-8 mt-4 footernav">
+              <ul className=" flex flex-col gap-4 md:gap-8 mt-2 footernav">
                 <li className=" font-pop font-normal text-base xl:text-[18px] text-dark-black">
                   <Link href={"/about"}>About</Link>
                 </li>
@@ -71,12 +71,12 @@ const Footer: React.FC = () => {
               </ul>
             </nav>
           </div>
-          <div className=" w-1/3 lg:w-1/6">
-            <h5 className=" font-mont font-bold text-xl xs:text-2xl text-dark-black">
+          <div className="w-full md:w-1/2 lg:w-1/6">
+            <h5 className=" font-mont font-bold text-xl xs:text-2xl text-dark-black mt-6 md:mt-0">
               Information
             </h5>
             <nav>
-              <ul className=" flex flex-col gap-8 mt-4 footernav">
+              <ul className=" flex flex-col gap-4 md:gap-8 mt-4 footernav">
                 <li className=" font-pop font-normal text-base xl:text-[18px] text-dark-black">
                   <Link href={"#"}>Help Center</Link>
                 </li>
@@ -92,8 +92,8 @@ const Footer: React.FC = () => {
               </ul>
             </nav>
           </div>
-          <div className=" w-1/3 lg:w-1/6">
-            <h5 className=" font-mont font-bold text-xl xs:text-2xl text-dark-black">
+          <div className="w-full md:w-1/2 lg:w-1/6">
+            <h5 className=" font-mont font-bold text-xl xs:text-2xl text-dark-black mt-6 md:mt-0">
               Follow Us
             </h5>
             <nav>

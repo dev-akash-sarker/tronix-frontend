@@ -84,7 +84,7 @@ const NewArrivel: React.FC = () => {
     <>
       <div>
         <div className=" flex justify-between">
-          <h3 className=" font-mont md:text-2xl lg:text-3xl xl:text-4xl font-bold">
+          <h3 className=" font-mont text-lg md:text-2xl lg:text-3xl xl:text-4xl font-bold">
             New Arrivel
           </h3>
           <Link
@@ -94,7 +94,7 @@ const NewArrivel: React.FC = () => {
             View All
           </Link>
         </div>
-        <div className="products flex flex-wrap lg:flex-nowrap gap-y-8 mt-10 overflow-hidden">
+        <div className="products flex flex-wrap lg:flex-nowrap gap-y-8 mt-4 lg:mt-10 overflow-hidden">
           {newarrivel.map((item) => (
             <div
               className="w-full md:w-1/2 lg:w-1/3 flex gap-x-4 customnewarrivelwidth"

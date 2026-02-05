@@ -101,7 +101,7 @@ const BottomNavbar: React.FC = () => {
   };
 
   return (
-    <div className="my-8 relative">
+    <div className="my-2 md:my-4 lg:my-8 lg:relative">
       {/* Top Bar */}
       <div className="flex justify-between items-center">
         <button
@@ -303,40 +303,62 @@ const BottomNavbar: React.FC = () => {
       </nav>
 
       {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="absolute top-0 left-0 bg-black w-3/4 sm:w-1/2 h-full z-50 text-white">
-          <Outsideclick
-            isOpen={isMenuOpen}
-            onClose={() => setIsMenuOpen(false)}
-          >
-            <nav className="my-8 block">
-              <ul className="flex flex-col gap-y-8 py-2 px-8">
-                <li>
-                  <Link href="/" className="hover:text-hover-social">
-                    Home
-                  </Link>
-                </li>
-                {categories.map((category) => (
-                  <li key={category.id}>
-                    <Link
-                      href={`/category/${slugify(category.name)}`}
-                      className="hover:text-hover-social"
-                    >
-                      {category.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <div
-                className="absolute -top-5 right-5 cursor-pointer"
+{isMenuOpen && (
+  <div
+    className={`
+      fixed inset-0 z-[9999] bg-black/95 text-white
+      transition-opacity duration-300
+      ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}
+    `}
+  >
+    {/* Click outside closes menu – covers whole screen */}
+    <div 
+      className="absolute inset-0 z-10" 
+      onClick={() => setIsMenuOpen(false)}
+      aria-hidden="true"
+    />
+
+    {/* Actual menu content – centered or top-aligned */}
+    <div className="relative z-20 h-full flex flex-col items-center justify-center px-6">
+      
+      {/* Close button – top right */}
+      <button
+        className="absolute top-5 right-5 text-4xl text-white focus:outline-none"
+        onClick={() => setIsMenuOpen(false)}
+        aria-label="Close menu"
+      >
+        <IoClose />
+      </button>
+
+      {/* Menu links */}
+      <nav className="w-full max-w-md">
+        <ul className="flex flex-col gap-10 text-2xl md:text-3xl font-medium text-center">
+          <li>
+            <Link 
+              href="/" 
+              className="hover:text-amber-400 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Home
+            </Link>
+          </li>
+
+          {categories.map((category) => (
+            <li key={category.id}>
+              <Link
+                href={`/category/${slugify(category.name)}`}
+                className="hover:text-amber-400 transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                <IoClose fontSize={25} />
-              </div>
-            </nav>
-          </Outsideclick>
-        </div>
-      )}
+                {category.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </div>
+)}
 
       {/* Cart Dropdown */}
       {isCartOpen && (
