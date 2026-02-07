@@ -14,7 +14,7 @@ export interface ProductInterface {
   id: number;
   title: string;
   description: string;
-  category: string;
+  categoryname: string;
   price: number;
   discountPercentage: number;
   rating: number;
@@ -53,7 +53,6 @@ const fetchTopRatedProducts = async (): Promise<ProductInterface[]> => {
   );
 
   const products: ProductInterface[] = response.data ?? [];
-  console.log("hello",products)
 
   // Add average rating
   const ratedProducts = products.map((product) => {
@@ -77,8 +76,9 @@ const TopRatedProducts: React.FC = () => {
   const dispatch = useDispatch();
   const allproductcart = useSelector((state: RootState) => state.cart.carts);
   const cartIDS = allproductcart.map((item) => item.id);
+  console.log("cartids", cartIDS);
 
-  const [favorites, setFavorites] = useState<number[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
 
   const {
     data: toprated,
@@ -89,7 +89,7 @@ const TopRatedProducts: React.FC = () => {
     queryFn: fetchTopRatedProducts,
   });
 
-  const handleHeartClick = (productId: number) => {
+  const handleHeartClick = (productId: string) => {
     setFavorites((prev) =>
       prev.includes(productId)
         ? prev.filter((id) => id !== productId)
@@ -97,7 +97,62 @@ const TopRatedProducts: React.FC = () => {
     );
   };
 
-  if (isLoading) return <p>Loading top rated products...</p>;
+  if (isLoading)
+    return (
+      <div>
+        <div className="flex justify-between mt-20">
+          <h3 className="font-mont text-lg lg:text-4xl font-bold mb-4">
+            Top Rated Products
+          </h3>
+          <Link
+            href={`/toprated`}
+            className="font-pop font-normal text-lg lg:text-2xl text-hover-social hover:underline"
+          >
+            View All
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="border border-gray-300 rounded-md">
+            <div className="m-4 w-auto h-78.25 rounded-md bg-gray-400 flex items-center justify-center">
+              {/* Optional: Add an icon or text in the center */}
+              <span className="text-gray-600 font-medium">
+                No Image Available
+              </span>
+            </div>
+            <div className="text-center my-4">
+              <p className="text-2xl font-pop font-normal">
+                <Link href={"#"}>Full sleev shirt</Link>
+              </p>
+              <p className="text-2xl text-hover-social font-bold font-pop">
+                $5000
+              </p>
+
+              <div className="flex items-center justify-center gap-4 mt-4">
+                <div className="text-rating text-xl">★</div>
+                <p className="font-bold text-xl">5</p>
+                <p className="text-lg text-social font-mont font-normal border-l pl-4 border-gray-300">
+                  Sold 199
+                </p>
+              </div>
+
+              <div className="flex justify-center items-center gap-7 mt-4">
+                <button
+                  aria-label="add to cart"
+                  className="text-sm py-3 px-4 border cursor-pointer border-hover-social rounded-lg hover:bg-transparent bg-hover-social hover:text-black text-white font-bold transition-all"
+                >
+                  Add to Cart
+                </button>
+
+                <button aria-label="Add to favorites">
+                  <FaHeart className="w-[23.17px] text-social" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   if (isError) return <p>Failed to load products.</p>;
 
   return (
@@ -115,8 +170,8 @@ const TopRatedProducts: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {toprated?.map((product, index) => (
-          <div className="border border-gray-300 rounded-md" key={index}>
+        {toprated?.map((product) => (
+          <div className="border border-gray-300 rounded-md" key={product.id}>
             <div className="m-4 w-auto h-78.25 rounded-md bg-gray-400 overflow-hidden relative">
               {/* Added relative */}
               <Image
@@ -131,7 +186,7 @@ const TopRatedProducts: React.FC = () => {
             </div>
             <div className="text-center my-4">
               <p className="text-2xl font-pop font-normal">
-                <Link href={`/category/${product.category}/${product.id}`}>
+                <Link href={`/category/${product.categoryname}/${product.id}`}>
                   {product.title.slice(0, 20)}...
                 </Link>
               </p>
