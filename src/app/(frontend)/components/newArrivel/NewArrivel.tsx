@@ -95,10 +95,10 @@ const NewArrivel: React.FC = () => {
           </Link>
         </div>
         <div className="products flex flex-wrap lg:flex-nowrap gap-y-8 mt-4 lg:mt-10 overflow-hidden">
-          {newarrivel.map((item) => (
+          {newarrivel.map((item, index) => (
             <div
               className="w-full md:w-1/2 lg:w-1/3 flex gap-x-4 customnewarrivelwidth"
-              key={item._id}
+              key={index}
             >
               <div className=" relative w-[46.875%]">
                 <Image

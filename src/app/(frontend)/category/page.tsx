@@ -7,6 +7,7 @@ import { RxCaretRight } from "react-icons/rx";
 
 import Image from "next/image";
 import { FaHeart } from "react-icons/fa";
+import { useParams } from "next/navigation";
 
 export interface NewArrivalType {
   id: number;
@@ -57,6 +58,9 @@ const CategoryPage: React.FC = () => {
   const [favorites, setFavorites] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const productsPerPage = 9;
+
+  const params = useParams();
+  console.log(params)
 
   function slugify(text: string): string {
   return text

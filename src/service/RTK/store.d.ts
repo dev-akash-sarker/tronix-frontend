@@ -2,7 +2,7 @@
 import { Store } from "@reduxjs/toolkit";
 
 export interface CartItem {
-  _id: any;
+  _id: string;
   id: number;
   thumbnail: string;
   title: string;

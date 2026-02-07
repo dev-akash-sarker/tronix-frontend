@@ -6,7 +6,6 @@ import React from "react";
 import {
   AppstoreOutlined,
   MailOutlined,
-  SettingOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu , Col , Row } from "antd";
@@ -103,15 +102,15 @@ const items: MenuItem[] = [
 
 export default function Sidebar({ children }: { children: React.ReactNode }) {
   const router = useRouter()
-  // useEffect(() => {
-  //   const checkAuth = () => {
-  //     const token = Cookies.get("token");
-  //     if (!token) {
-  //       window.location.href = "/admin/login";
-  //     }
-  //   };
-  //   checkAuth();
-  // }, []);
+  useEffect(() => {
+    const checkAuth = () => {
+      const token = Cookies.get("token");
+      if (!token) {
+        window.location.href = "/admin/login";
+      }
+    };
+    checkAuth();
+  }, []);
 
   const onClick: MenuProps["onClick"] = (e) => {
     console.log("click ", e);

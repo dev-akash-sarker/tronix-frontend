@@ -96,7 +96,8 @@ const BottomNavbar: React.FC = () => {
       .replace(/\s+/g, "-")
       .replace(/-+/g, "-");
 
-  const handleRemoveFromCart = (id: string) => {
+  const handleRemoveFromCart = (id: string | number) => {
+    console.log("remove cart:", id);
     dispatch(removecarts({ id }));
   };
 
@@ -303,66 +304,65 @@ const BottomNavbar: React.FC = () => {
       </nav>
 
       {/* Mobile Menu */}
-{isMenuOpen && (
-  <div
-    className={`
-      fixed inset-0 z-[9999] bg-black/95 text-white
+      {isMenuOpen && (
+        <div
+          className={`
+      fixed inset-0 z-9999 bg-black/95 text-white
       transition-opacity duration-300
-      ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}
+      ${isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
     `}
-  >
-    {/* Click outside closes menu – covers whole screen */}
-    <div 
-      className="absolute inset-0 z-10" 
-      onClick={() => setIsMenuOpen(false)}
-      aria-hidden="true"
-    />
+        >
+          {/* Click outside closes menu – covers whole screen */}
+          <div
+            className="absolute inset-0 z-10"
+            onClick={() => setIsMenuOpen(false)}
+            aria-hidden="true"
+          />
 
-    {/* Actual menu content – centered or top-aligned */}
-    <div className="relative z-20 h-full flex flex-col items-center justify-center px-6">
-      
-      {/* Close button – top right */}
-      <button
-        className="absolute top-5 right-5 text-4xl text-white focus:outline-none"
-        onClick={() => setIsMenuOpen(false)}
-        aria-label="Close menu"
-      >
-        <IoClose />
-      </button>
-
-      {/* Menu links */}
-      <nav className="w-full max-w-md">
-        <ul className="flex flex-col gap-10 text-2xl md:text-3xl font-medium text-center">
-          <li>
-            <Link 
-              href="/" 
-              className="hover:text-amber-400 transition-colors"
+          {/* Actual menu content – centered or top-aligned */}
+          <div className="relative z-20 h-full flex flex-col items-center justify-center px-6">
+            {/* Close button – top right */}
+            <button
+              className="absolute top-5 right-5 text-4xl text-white focus:outline-none"
               onClick={() => setIsMenuOpen(false)}
+              aria-label="Close menu"
             >
-              Home
-            </Link>
-          </li>
+              <IoClose />
+            </button>
 
-          {categories.map((category) => (
-            <li key={category.id}>
-              <Link
-                href={`/category/${slugify(category.name)}`}
-                className="hover:text-amber-400 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {category.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </div>
-  </div>
-)}
+            {/* Menu links */}
+            <nav className="w-full max-w-md">
+              <ul className="flex flex-col gap-10 text-2xl md:text-3xl font-medium text-center">
+                <li>
+                  <Link
+                    href="/"
+                    className="hover:text-amber-400 transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Home
+                  </Link>
+                </li>
+
+                {categories.map((category) => (
+                  <li key={category.id}>
+                    <Link
+                      href={`/category/${slugify(category.name)}`}
+                      className="hover:text-amber-400 transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {category.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        </div>
+      )}
 
       {/* Cart Dropdown */}
       {isCartOpen && (
-        <div className="absolute w-125 h-150 z-50 overflow-y-scroll bg-white shadow-2xl top-20 right-0">
+        <div className="absolute w-125 h-100 z-50 overflow-y-scroll bg-white shadow-2xl top-20 right-0">
           <Outsideclick
             isOpen={isCartOpen}
             onClose={() => setIsCartOpen(false)}
@@ -372,12 +372,12 @@ const BottomNavbar: React.FC = () => {
                 <center>
                   <h3 className="font-mont font-bold text-2xl pt-5">My Cart</h3>
                 </center>
-                <hr className="text-gray-300 my-5" />
+
                 <div className="px-2 py-4">
                   {cart.map((item) => (
                     <div
                       key={item.id}
-                      className="flex items-center pb-4 gap-4 border-b-2 border-gray-300 mt-4 relative"
+                      className="flex items-center pb-4 gap-4 border-b-2 last:border-b-0 border-gray-300 mt-4 relative"
                     >
                       <div className="w-25 h-25 rounded-sm bg-gray-500 overflow-hidden relative">
                         <Image
@@ -400,7 +400,9 @@ const BottomNavbar: React.FC = () => {
                             aria-label="Minus product from product cart"
                             onClick={() =>
                               dispatch(
-                                decreaseQuantity({ id: item.id.toString() }),
+                                decreaseQuantity({
+                                  id: item.id as string | number,
+                                }),
                               )
                             }
                             disabled={item.quantity === 1}
@@ -415,7 +417,9 @@ const BottomNavbar: React.FC = () => {
                             aria-label="Increase product from product cart"
                             onClick={() =>
                               dispatch(
-                                increaseQuantity({ id: item.id.toString() }),
+                                increaseQuantity({
+                                  id: item.id as string | number,
+                                }),
                               )
                             }
                           >
@@ -425,7 +429,7 @@ const BottomNavbar: React.FC = () => {
                       </div>
                       <div
                         className="absolute top-1/2 -translate-y-1/2 right-0 cursor-pointer"
-                        onClick={() => handleRemoveFromCart(item.id.toString())}
+                        onClick={() => handleRemoveFromCart(item.id)}
                       >
                         <RxCross2 className="text-4xl text-hover-social" />
                       </div>
@@ -463,7 +467,23 @@ const BottomNavbar: React.FC = () => {
                 </div>
               </>
             ) : (
-              <p className="p-4">You have no items in your shopping bag.</p>
+              <div className="w-full h-full">
+                <center>
+                  <h3 className="font-mont font-bold text-2xl pt-5">My Cart</h3>
+                </center>
+                <p className="p-4 flex justify-center items-center">
+                  Your cart is empty
+                </p>
+                <center className="mt-10">
+                  <button
+                    onClick={() => setIsCartOpen(false)}
+                    aria-label="Continue shopping button"
+                    className="my-4 font-pop text-lg text-hover-social hover:text-old-gray border-2 py-4 px-6"
+                  >
+                    Continue Shopping
+                  </button>
+                </center>
+              </div>
             )}
           </Outsideclick>
         </div>

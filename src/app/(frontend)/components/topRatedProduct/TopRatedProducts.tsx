@@ -53,6 +53,7 @@ const fetchTopRatedProducts = async (): Promise<ProductInterface[]> => {
   );
 
   const products: ProductInterface[] = response.data ?? [];
+  console.log("hello",products)
 
   // Add average rating
   const ratedProducts = products.map((product) => {
