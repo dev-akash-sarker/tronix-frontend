@@ -181,7 +181,6 @@ if (result?.url) {
           body: JSON.stringify(buyerRegistration),
         }
       );
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       // const data: ApiResponse = await res.json();
 
   await newres.json();
@@ -243,7 +242,7 @@ if (result?.url) {
         <h3 className=" font-mont font-bold text-5xl mt-5 text-center">
           Checkout
         </h3>
-        <div className=" w-[804px] mx-auto flex my-[72px] justify-between items-center">
+        <div className=" w-201 mx-auto flex my-18 justify-between items-center">
           <div className=" flex items-center gap-x-6">
             <div className=" w-14 h-14 rounded-full border border-hover-social flex justify-center items-center font-pop font-medium text-2xl text-hover-social">
               1
@@ -252,7 +251,7 @@ if (result?.url) {
               My Cart
             </h3>
           </div>
-          <div className="w-[304px] h-[2px] bg-dark-black"></div>
+          <div className="w-76 h-0.5 bg-dark-black"></div>
           <div className=" flex items-center gap-x-6">
             <div className=" w-14 h-14 rounded-full border border-hover-social flex justify-center items-center font-pop font-medium text-2xl text-hover-social">
               2
@@ -279,7 +278,7 @@ if (result?.url) {
                   </label>
                   <input
                     placeholder="Enter Your First Name"
-                    className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+                    className="w-[95%] border border-dark-black rounded-lg h-11.25 outline-none indent-4"
                     {...register("firstName", {
                       required: "First Name is required",
                       maxLength: {
@@ -302,7 +301,7 @@ if (result?.url) {
                   </label>
                   <input
                     placeholder="Enter Your Last Name"
-                    className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+                    className="w-[95%] border border-dark-black rounded-lg h-11.25 outline-none indent-4"
                     {...register("lastName", {
                       required: "Last Name is required",
                       maxLength: {
@@ -325,7 +324,7 @@ if (result?.url) {
                   </label>
                   <input
                     placeholder="Enter Your Email"
-                    className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+                    className="w-[95%] border border-dark-black rounded-lg h-11.25 outline-none indent-4"
                     {...register("email", {
                       required: "Email is required",
                       pattern: {
@@ -348,7 +347,7 @@ if (result?.url) {
                   </label>
                   <input
                     placeholder="Enter Your Address"
-                    className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+                    className="w-[95%] border border-dark-black rounded-lg h-11.25 outline-none indent-4"
                     {...register("address", {
                       required: "Address is required",
                     })}
@@ -367,7 +366,7 @@ if (result?.url) {
                   </label>
                   <input
                     placeholder="Enter Your Contact"
-                    className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+                    className="w-[95%] border border-dark-black rounded-lg h-11.25 outline-none indent-4"
                     {...register("contact", {
                       required: "Contact is required",
                       pattern: {
@@ -390,7 +389,7 @@ if (result?.url) {
                   </label>
                   <input
                     placeholder="Enter Your Country"
-                    className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+                    className="w-[95%] border border-dark-black rounded-lg h-11.25 outline-none indent-4"
                     {...register("country", {
                       required: "Country is required",
                     })}
@@ -409,7 +408,7 @@ if (result?.url) {
                   </label>
                   <input
                     placeholder="Enter Your City"
-                    className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+                    className="w-[95%] border border-dark-black rounded-lg h-11.25 outline-none indent-4"
                     {...register("city", {
                       required: "City is required",
                     })}
@@ -428,7 +427,7 @@ if (result?.url) {
                   </label>
                   <input
                     placeholder="Enter Your Zip Code"
-                    className="w-[95%] border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+                    className="w-[95%] border border-dark-black rounded-lg h-11.25 outline-none indent-4"
                     {...register("zipCode", {
                       required: "Zip Code is required",
                       pattern: {
@@ -451,13 +450,13 @@ if (result?.url) {
                   </label>
                   <textarea
                     placeholder="Additional Note"
-                    className="w-[195%] mt-6 py-3 border border-dark-black rounded-lg h-[45px] outline-none indent-4"
+                    className="w-[195%] mt-6 py-3 border border-dark-black rounded-lg h-11.25 outline-none indent-4"
                     {...register("note")}
                   />
                 </div>
               </div>
             </div>
-            <div className="w-5/12 py-8 pl-[27px] pr-[26px] border border-dark-black rounded-lg">
+            <div className="w-5/12 py-8 pl-6.75 pr-6.5 border border-dark-black rounded-lg">
               <div>
                 <h4 className=" font-pop font-semibold text-2xl text-dark-black mb-6">
                   Your Order Summary
@@ -524,7 +523,7 @@ if (result?.url) {
                           setValue("paymentMethod", btn.value);
                           setActive(btn.value);
                         }}
-                        className={`py-[10px] px-[9px] last:px-[16px] font-pop font-normal text-lg border border-dark-black rounded-lg transition-colors duration-200
+                        className={`py-2.5 px-2.25 last:px-4 font-pop font-normal text-lg border border-dark-black rounded-lg transition-colors duration-200
             ${
               active === btn.value
                 ? "bg-dark-black text-white"
@@ -554,7 +553,7 @@ if (result?.url) {
       </div>
       {orderSuccess && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-8 w-[420px] text-center">
+          <div className="bg-white rounded-xl p-8 w-105 text-center">
             <h3 className="text-2xl font-semibold text-green-600 mb-4">
               ✅ Order placed successfully
             </h3>

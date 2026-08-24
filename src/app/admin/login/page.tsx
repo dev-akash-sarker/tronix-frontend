@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -38,6 +39,7 @@ export default function Login() {
   // Redirect if already logged in
   useEffect(() => {
     const token = Cookies.get("token");
+    console.log("Token from cookies:", token);
     if (token) {
       router.replace("/dashboard");
     }

@@ -34,6 +34,7 @@ const Viewproduct: React.FC = () => {
         console.log(data)
 
         // 👇 assuming your API returns array of users like [{id, name, age, address}]
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const formattedData = data.map((products: any, index: number) => ({
           key: products._id || index.toString(),
           title: products.title,
@@ -102,7 +103,9 @@ const Viewproduct: React.FC = () => {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      render: (text) => <a>{text}</a>,
+      render: (text) => (
+        <span title={String(text)}>{String(text).slice(0, 50)}</span>
+      ),
     },
     {
       title: "Category-name",

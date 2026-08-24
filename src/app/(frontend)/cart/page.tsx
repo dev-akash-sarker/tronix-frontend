@@ -13,7 +13,7 @@ import { FaMinus, FaPlus } from "react-icons/fa";
 import { RxCaretRight, RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 
-// Define types
+// Types
 interface CartItem {
   id: number;
   thumbnail: string;
@@ -36,7 +36,6 @@ const useAppDispatch = () => useDispatch<AppDispatch>();
 
 const MyCart: React.FC = () => {
   const cartAll = useTypedSelector((state: RootState) => state.cart.carts);
-
   const dispatch = useAppDispatch();
 
   const handleRemoveFromCart = (itemId: number) => {
@@ -48,169 +47,174 @@ const MyCart: React.FC = () => {
   };
 
   const totalPrice = cartAll.reduce((sum, item) => {
-    if (item.selected) {
-      return sum + item.price * item.quantity;
-    }
+    if (item.selected) return sum + item.price * item.quantity;
     return sum;
   }, 0);
 
   const allSelected = cartAll.every((item) => item.selected);
 
   return (
-    <div>
-      {/* navigation */}
+    <div className="pb-24 lg:pb-0">
+      {/* Breadcrumb */}
       <div className="mt-8">
         <ul className="flex items-center gap-4 font-pop font-medium text-lg">
           <li>
-            <Link className="text-old-gray hover:text-hover-social" href={"/"}>
+            <Link className="text-old-gray hover:text-hover-social" href="/">
               Home
             </Link>
           </li>
           <li>
-            <RxCaretRight size={20} className="inline-block" />
+            <RxCaretRight size={20} />
           </li>
           <li>
-            <Link className="text-hover-social" href={"/cart"}>
+            <Link className="text-hover-social" href="/cart">
               My Cart
             </Link>
           </li>
         </ul>
       </div>
-      {/* Header */}
-      <h3 className="font-mont font-bold text-5xl mt-5 text-center">My Cart</h3>
-      <div className="w-[804px] mx-auto flex my-[72px] justify-between items-center">
+
+      {/* Title */}
+      <h3 className="font-mont font-bold text-3xl sm:text-5xl mt-5 text-center">
+        My Cart
+      </h3>
+
+      {/* Steps */}
+      <div className="max-w-[804px] mx-auto flex flex-col sm:flex-row my-[40px] lg:my-[72px] justify-between items-center gap-6">
         <div className="flex items-center gap-x-6">
-          <div className="w-14 h-14 rounded-full border border-hover-social flex justify-center items-center font-pop font-medium text-2xl text-hover-social">
+          <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-full border border-hover-social flex justify-center items-center font-pop font-medium text-xl lg:text-2xl text-hover-social">
             1
           </div>
-          <h3 className="font-pop font-medium text-2xl text-hover-social">
+          <h3 className="font-pop font-medium text-xl lg:text-2xl text-hover-social">
             My Cart
           </h3>
         </div>
-        <div className="w-[304px] h-[2px] bg-dark-black"></div>
+
+        <div className="hidden sm:block w-[304px] h-[2px] bg-dark-black"></div>
+
         <div className="flex items-center gap-x-6">
-          <div className="w-14 h-14 rounded-full border border-social flex justify-center items-center font-pop font-medium text-2xl text-social">
+          <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-full border border-social flex justify-center items-center font-pop font-medium text-xl lg:text-2xl text-social">
             2
           </div>
-          <h3 className="font-pop font-medium text-2xl text-social">
+          <h3 className="font-pop font-medium text-xl lg:text-2xl text-social">
             Checkout
           </h3>
         </div>
       </div>
-      {/* cart items */}
-      <div className="flex justify-between gap-8">
-        <div className="w-7/12">
+
+      {/* MAIN LAYOUT */}
+      <div className="flex flex-col lg:flex-row justify-between gap-8">
+        {/* CART LIST */}
+        <div className="w-full lg:w-7/12">
           <div className="flex items-center gap-x-4">
             <input
               type="checkbox"
-              id="select-all"
               checked={allSelected}
               onChange={() => dispatch(setAllSelected(!allSelected))}
               className="w-6 h-6 accent-amber-600"
             />
-            <label
-              htmlFor="select-all"
-              onClick={() => dispatch(setAllSelected(true))}
-              className="font-pop font-medium text-lg text-gray-400 tracking-wide"
-            >
+            <label className="font-pop font-medium text-lg text-gray-400">
               Select All
             </label>
           </div>
-          <hr className="mt-9 text-hover-social" />
-          <div>
-            {cartAll.length !== 0 ? (
-              <>
-                <div className="pr-2 py-4">
-                  {cartAll.map((item, i) => (
-                    <div
-                      className="flex pb-4 gap-4 border-b-2 border-gray-300 last:border-transparent mt-4 relative"
-                      key={i}
-                    >
-                      <input
-                        type="checkbox"
-                        id={`cart-item-${i}`}
-                        checked={item.selected}
-                        onClick={() => handleClick(i)}
-                        className="w-6 h-6 accent-amber-600"
-                      />
-                      <div className="w-44 h-44 rounded-sm bg-gray-500 relative overflow-hidden">
-                        <Image
-                          src={item.thumbnail || "/fallback-image.jpg"}
-                          width={180}
-                          height={180}
-                          alt={item.title}
-                        />
-                      </div>
-                      <div className="flex flex-col justify-around">
-                        <h3 className="font-pop font-medium text-2xl text-black">
-                          {item.title}
-                        </h3>
-                        <p className="font-pop font-normal text-lg text-hover-social">
-                          ${(item.price * item.quantity).toFixed(2)}
-                        </p>
-                        <div className="quantity flex items-center mt-2">
-                          {item.quantity > 1 ? (
-                            <div
-                              className="minus plus w-8 h-8 rounded-sm bg-gray-400 text-white"
-                              onClick={() =>
-                                dispatch(decreaseQuantity({ id: item.id }))
-                              }
-                            >
-                              <center className="my-2">
-                                <FaMinus className="text-base" />
-                              </center>
-                            </div>
-                          ) : (
-                            <div className="minus plus w-8 h-8 rounded-sm bg-gray-400 text-white">
-                              <center className="my-2" aria-disabled>
-                                <FaMinus className="text-base" />
-                              </center>
-                            </div>
-                          )}
-                          <span className="font-pop font-bold mx-2">
-                            {item.quantity}
-                          </span>
-                          <div
-                            className="plus w-8 h-8 rounded-sm bg-hover-social text-white"
-                            onClick={() =>
-                              dispatch(increaseQuantity({ id: item.id }))
-                            }
-                          >
-                            <center className="my-2">
-                              <FaPlus className="text-base" />
-                            </center>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        className="cursor-pointer absolute top-1/2 -translate-y-1/2 right-0"
-                        onClick={() => handleRemoveFromCart(item.id)}
+
+          <hr className="mt-9" />
+
+          {cartAll.length !== 0 ? (
+            <div className="pr-2 py-4">
+              {cartAll.map((item, i) => (
+                <div
+                  key={i}
+                  className="flex flex-col sm:flex-row pb-4 gap-4 border-b-2 border-gray-300 last:border-transparent mt-4 relative"
+                >
+                  {/* Checkbox */}
+                  <input
+                    type="checkbox"
+                    checked={item.selected}
+                    onClick={() => handleClick(i)}
+                    className="w-6 h-6 accent-amber-600"
+                  />
+
+                  {/* Image */}
+                  <div className="w-full sm:w-44 h-44 bg-gray-200 rounded-sm overflow-hidden">
+                    <Image
+                      src={item.thumbnail || "/fallback-image.jpg"}
+                      width={180}
+                      height={180}
+                      alt={item.title}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+
+                  {/* Info */}
+                  <div className="flex flex-col justify-between flex-1">
+                    <h3 className="font-pop font-medium text-xl lg:text-2xl">
+                      {item.title}
+                    </h3>
+
+                    <p className="font-pop text-lg text-hover-social">
+                      ${(item.price * item.quantity).toFixed(2)}
+                    </p>
+
+                    {/* Quantity */}
+                    <div className="flex items-center mt-2 gap-2">
+                      <button
+                        className="w-8 h-8 rounded-sm bg-gray-400 text-white flex items-center justify-center"
+                        onClick={() =>
+                          item.quantity > 1 &&
+                          dispatch(decreaseQuantity({ id: item.id }))
+                        }
                       >
-                        <RxCross2 className="text-4xl text-hover-social mr-0" />
-                      </div>
+                        <FaMinus />
+                      </button>
+
+                      <span className="font-pop font-bold">{item.quantity}</span>
+
+                      <button
+                        className="w-8 h-8 rounded-sm bg-hover-social text-white flex items-center justify-center"
+                        onClick={() =>
+                          dispatch(increaseQuantity({ id: item.id }))
+                        }
+                      >
+                        <FaPlus />
+                      </button>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Remove Button */}
+                  <div
+                    className="sm:absolute sm:top-1/2 sm:right-0 sm:-translate-y-1/2 self-end sm:self-auto mt-2 cursor-pointer"
+                    onClick={() => handleRemoveFromCart(item.id)}
+                  >
+                    <RxCross2 className="text-3xl text-hover-social" />
+                  </div>
                 </div>
-              </>
-            ) : (
-              <p>You have no items in your shopping bag.</p>
-            )}
-          </div>
-        </div>
-        <div className="w-5/12">
-          <div className="flex items-center justify-between border border-hover-social rounded-2xl px-6 py-6 mb-6 mt-14">
-            <div className="w-14 h-14 rounded-2xl bg-hover-social text-white flex items-center justify-center">
-              <Image src={"/ticket.svg"} width={29} height={21} alt="ticket" />
+              ))}
             </div>
-            <h3 className="font-pop font-medium text-2xl text-dark-black">
+          ) : (
+            <p>No items in cart.</p>
+          )}
+        </div>
+
+        {/* SUMMARY */}
+        <div className="w-full lg:w-5/12">
+          {/* Coupon */}
+          <div className="flex flex-col sm:flex-row items-center justify-between border border-hover-social rounded-2xl px-6 py-6 mb-6 mt-4 lg:mt-14 gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-hover-social text-white flex items-center justify-center">
+              <Image src="/ticket.svg" width={29} height={21} alt="ticket" />
+            </div>
+            <h3 className="font-pop font-medium text-xl lg:text-2xl">
               Have a coupon code?
             </h3>
-            <RxCaretRight size={30} className="inline-block" />
+            <RxCaretRight size={30} />
           </div>
-          <div className="p-8 border border-hover-social rounded-2xl">
-            <center className="font-pop font-medium text-2xl text-old-gray">
+
+          {/* Summary Card */}
+          <div className="p-6 sm:p-8 border border-hover-social rounded-2xl">
+            <p className="font-pop font-medium text-xl text-old-gray text-center">
               Summary
-            </center>
+            </p>
+
             <div className="flex justify-between my-4">
               <h4 className="font-pop font-medium text-lg text-old-gray">
                 Total
@@ -219,25 +223,27 @@ const MyCart: React.FC = () => {
                 ${totalPrice.toFixed(2)}
               </p>
             </div>
+
             {cartAll.some((item) => item.selected) ? (
               <Link
                 href="/cart/checkout"
-                className="block my-4 w-full text-center py-4 bg-hover-social rounded-2xl text-white font-pop font-normal text-lg"
+                className="block my-4 w-full text-center py-4 bg-hover-social rounded-2xl text-white font-pop text-lg"
               >
                 Checkout
               </Link>
             ) : (
               <button
                 disabled
-                className="my-4 w-full text-center py-4 bg-gray-400 rounded-2xl text-white font-pop font-normal text-lg"
+                className="my-4 w-full py-4 bg-gray-400 rounded-2xl text-white font-pop text-lg"
               >
                 Checkout
               </button>
             )}
+
             <center>
               <Link
                 href="/"
-                className="inline-block my-4 font-pop font-normal text-lg text-hover-social hover:text-old-gray"
+                className="inline-block my-4 font-pop text-lg text-hover-social"
               >
                 Continue Shopping
               </Link>
@@ -245,6 +251,21 @@ const MyCart: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* 🔥 MOBILE STICKY CHECKOUT BAR */}
+      {cartAll.some((item) => item.selected) && (
+        <div className="fixed lg:hidden bottom-0 left-0 w-full bg-white border-t p-3 flex justify-between items-center z-50">
+          <span className="font-bold text-lg">
+            ${totalPrice.toFixed(2)}
+          </span>
+          <Link
+            href="/cart/checkout"
+            className="bg-hover-social text-white px-6 py-3 rounded-lg"
+          >
+            Checkout
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

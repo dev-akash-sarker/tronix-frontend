@@ -1,11 +1,24 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useEffect, useState } from "react";
 import type { FormProps } from "antd";
 import { Alert, Button, Form, Input, message, Select, Upload } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { PlusOutlined } from "@ant-design/icons";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 
-type CategoryType = { _id: string; name: string };
+type SubcategoryType = {
+  _id: string;
+  name: string;
+};
+
+type CategoryType = {
+  _id: string;
+  name: string;
+  subcategories: SubcategoryType[];
+};
+
 type FieldType = {
   title?: string;
   description?: string;
@@ -24,11 +37,10 @@ type FieldType = {
 
 const Addproduct: React.FC = () => {
   const [categories, setCategories] = useState<CategoryType[]>([]);
-  const [subcategories, setSubcategories] = useState<CategoryType[]>([]);
+  const [subcategories, setSubcategories] = useState<SubcategoryType[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [fileList, setFileList] = useState<any[]>([]);
   const [productId, setProductId] = useState<string>("");
-  const [alrmessage, setAlrMessage] = useState<string>("");
 
   const [form] = Form.useForm();
 
@@ -39,17 +51,6 @@ const Addproduct: React.FC = () => {
       .then(setCategories)
       .catch(console.error);
   }, []);
-
-  // Fetch subcategories whenever category changes
-  useEffect(() => {
-    if (!selectedCategory) return;
-    fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/category/${selectedCategory}/subcategory`
-    )
-      .then((res) => res.json())
-      .then(setSubcategories)
-      .catch(console.error);
-  }, [selectedCategory]);
 
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     try {
@@ -63,14 +64,15 @@ const Addproduct: React.FC = () => {
         stock,
         sku,
         brand,
-        images,
       } = values;
 
       const formData = new FormData();
 
-      // Append images
-      images?.forEach((file: any) => {
-        if (file.originFileObj) formData.append("images", file.originFileObj);
+      // Append images from fileList state
+      fileList.forEach((file: any) => {
+        if (file.originFileObj) {
+          formData.append("images", file.originFileObj);
+        }
       });
 
       formData.append("title", title ?? "");
@@ -82,24 +84,47 @@ const Addproduct: React.FC = () => {
       formData.append("stock", stock ?? "");
       formData.append("sku", sku ?? "");
       formData.append("brand", brand ?? "");
+
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/addproduct`,
         {
           method: "POST",
           body: formData,
-        }
+        },
       );
+
       const data = await res.json();
 
       if (res.ok && data?.product?._id) {
-        setProductId(data.product._id); // ✅ save product id
-        setAlrMessage("Product uploaded successfully ✅");
+        setProductId(data.product._id);
+
         message.success("Product uploaded successfully ✅");
+        toast.success("Product uploaded successfully", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
         form.resetFields();
-        setFileList([]); // clear upload list
+        setFileList([]);
       } else {
-        setAlrMessage("Failed to upload product ❌");
         message.error("Failed to upload product ❌");
+        toast.error("Failed to add product", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
       }
     } catch (err) {
       console.error("Error adding product:", err);
@@ -108,7 +133,7 @@ const Addproduct: React.FC = () => {
   };
 
   const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
-    errorInfo
+    errorInfo,
   ) => {
     console.log("Failed:", errorInfo);
   };
@@ -119,9 +144,19 @@ const Addproduct: React.FC = () => {
 
   return (
     <>
-      {alrmessage && (
-        <Alert message={alrmessage} type="success" showIcon closable />
-      )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
       <div className="mt-10">
         <Form
           name="basic"
@@ -140,7 +175,19 @@ const Addproduct: React.FC = () => {
             name="category"
             rules={[{ required: true }]}
           >
-            <Select onChange={(value) => setSelectedCategory(value)}>
+            <Select
+              placeholder="Select Category"
+              onChange={(value) => {
+                setSelectedCategory(value);
+
+                const selectedCat = categories.find((cat) => cat._id === value);
+
+                setSubcategories(selectedCat?.subcategories || []);
+
+                // Clear previously selected subcategory
+                form.setFieldValue("subcategory", undefined);
+              }}
+            >
               {categories.map((cat) => (
                 <Select.Option key={cat._id} value={cat._id}>
                   {cat.name}
@@ -164,7 +211,9 @@ const Addproduct: React.FC = () => {
           <Form.Item
             label="Title"
             name="title"
-            rules={[{ required: true, message: "Please input your product name!" }]}
+            rules={[
+              { required: true, message: "Please input your product name!" },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -172,7 +221,9 @@ const Addproduct: React.FC = () => {
           <Form.Item
             label="Price"
             name="price"
-            rules={[{ required: true, message: "Please input your product price!" }]}
+            rules={[
+              { required: true, message: "Please input your product price!" },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -180,7 +231,12 @@ const Addproduct: React.FC = () => {
           <Form.Item
             label="Discounted Percentage"
             name="discountedPercentage"
-            rules={[{ required: true, message: "Please input your discounted Percentage!" }]}
+            rules={[
+              {
+                required: true,
+                message: "Please input your discounted Percentage!",
+              },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -188,7 +244,9 @@ const Addproduct: React.FC = () => {
           <Form.Item
             label="Description"
             name="description"
-            rules={[{ required: true, message: "Please input product description!" }]}
+            rules={[
+              { required: true, message: "Please input product description!" },
+            ]}
           >
             <TextArea />
           </Form.Item>
@@ -218,62 +276,18 @@ const Addproduct: React.FC = () => {
           </Form.Item>
 
           {/* Upload */}
-          <Form.Item label="Upload" name="images" valuePropName="fileList">
+          <Form.Item label="Upload" name="images">
             <Upload
               listType="picture-card"
               showUploadList={{ showPreviewIcon: true }}
               fileList={fileList}
               onPreview={handlePreview}
-              beforeUpload={() => false} // prevent auto-upload
+              beforeUpload={() => false}
               onChange={({ fileList: newList }) => {
-                setFileList(newList); // keep full list for preview
-                // store only minimal info in form to avoid circular refs
-                const simplifiedList = newList.map((f) => ({
-                  uid: f.uid,
-                  name: f.name,
-                  url: f.url || f.response?.url,
-                  originFileObj: f.originFileObj,
-                }));
-                form.setFieldValue("images", simplifiedList);
+                setFileList(newList);
               }}
               onRemove={(file) => {
-                const filtered = fileList.filter((f) => f.uid !== file.uid);
-                setFileList(filtered);
-                const simplifiedList = filtered.map((f) => ({
-                  uid: f.uid,
-                  name: f.name,
-                  url: f.url || f.response?.url,
-                  originFileObj: f.originFileObj,
-                }));
-                form.setFieldValue("images", simplifiedList);
-              }}
-              customRequest={async ({ file, onSuccess, onError }) => {
-                try {
-                  if (!productId) {
-                    return message.error("Product ID not set!");
-                  }
-                  const formData = new FormData();
-                  formData.append("file", file);
-                  formData.append("productId", productId);
-
-                  const res = await fetch(
-                    `http://localhost:8000/api/v1/product/image/id/${productId}`,
-                    { method: "POST", body: formData }
-                  );
-                  const data = await res.json();
-
-                  if (data.success) {
-                    message.success("Image uploaded ✅");
-                    onSuccess?.(data, file);
-                  } else {
-                    message.error("Upload failed ❌");
-                    onError?.(new Error("Upload failed"));
-                  }
-                } catch (err) {
-                  console.error(err);
-                  message.error("Error uploading ❌");
-                  onError?.(err as Error);
-                }
+                setFileList((prev) => prev.filter((f) => f.uid !== file.uid));
               }}
             >
               <div>
