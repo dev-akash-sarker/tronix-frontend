@@ -22,7 +22,7 @@ const Hero: React.FC = () => {
             pagination={{ clickable: true }}
           >
             <div className="bg-amber-300 w-full h-full rounded-3xl relative">
-              <Link href="#" className=" relative">
+              <Link href="#">
                 <Image
                   src="/slider/slider__moonsoon_copy_jpg.jpg"
                   fill
@@ -34,7 +34,7 @@ const Hero: React.FC = () => {
               </Link>
             </div>
             <div className="bg-amber-300 w-full h-full rounded-3xl relative">
-              <Link href="#" className=" relative">
+              <Link href="#">
                 <Image
                   src="/slider/one.jpg"
                   fill
@@ -54,7 +54,7 @@ const Hero: React.FC = () => {
               </div>
             </div>
             <div className="bg-amber-300 w-full h-full rounded-3xl relative">
-              <Link href="#" className=" relative">
+              <Link href="#">
                 <Image
                   src="/slider/samsung.png"
                   fill
@@ -76,7 +76,7 @@ const Hero: React.FC = () => {
               </div>
             </div>
             <div className="bg-amber-300 w-full h-full rounded-3xl relative">
-              <Link href="#" className=" relative">
+              <Link href="#">
                 <Image
                   src="/slider/laptop.avif"
                   fill
@@ -98,7 +98,7 @@ const Hero: React.FC = () => {
               </div>
             </div>
             <div className="bg-amber-300 w-full h-full rounded-3xl relative">
-              <Link href="#" className=" relative">
+              <Link href="#">
                 <Image
                   src="/slider/slider_jpg.jpg"
                   fill
@@ -112,6 +112,7 @@ const Hero: React.FC = () => {
             </div>
           </HeroSlider>
         </div>
+    
       </div>
     </>
   );
