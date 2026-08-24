@@ -5,9 +5,9 @@ import HeroSlider from "../../features/HeroSlider";
 const Hero: React.FC = () => {
   return (
     <>
-{
-  //grid grid-cols-[60%_40%] h-[220px] md:h-[350px] lg:h-[400px] xl:h-[450px] gap-4 m-3 -z-10
-}
+      {
+        //grid grid-cols-[60%_40%] h-[220px] md:h-[350px] lg:h-[400px] xl:h-[450px] gap-4 m-3 -z-10
+      }
       <div className="grid grid-cols-[100%] h-55 md:h-87.5 lg:h-100 xl:h-112.5 gap-4 m-3 -z-10">
         <div className=" col-span-1 row-span-2 rounded-3xl Hero-css overflow-hidden">
           <HeroSlider
@@ -21,38 +21,26 @@ const Hero: React.FC = () => {
             }}
             pagination={{ clickable: true }}
           >
-            <div className="bg-black w-full h-full rounded-3xl relative">
+            <div className="bg-amber-300 w-full h-full rounded-3xl relative">
               <Link href="#">
-                <video
-                  src="/slider/xlarge_2x.mp4"
-                  width={100}
-                  height={100}
-                  className="w-full h-full"
-                  autoPlay
-                  muted
-                  loop // optional, if you want it to repeat
-                  playsInline // good for mobile support
-                ></video>
+                <Image
+                  src="/slider/slider__moonsoon_copy_jpg.jpg"
+                  fill
+                  className="object-cover brightness-75"
+                  sizes="100vw"
+                  unoptimized
+                  alt="one"
+                />
               </Link>
-              <div className=" absolute top-1/2 -translate-y-1/2 left-10 hidden">
-                <h1 className=" sm:text-4xl md:text-4xl lg:text-5xl xl:text-c1 font-mont font-bold">
-                  Better Devices for Better Life
-                </h1>
-                <p className=" text-social font-normal, text-2xl">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor.
-                </p>
-              </div>
             </div>
             <div className="bg-amber-300 w-full h-full rounded-3xl relative">
               <Link href="#">
                 <Image
                   src="/slider/one.jpg"
-                  width={100}
-                  height={100}
-                  className="w-full h-full bg-cover brightness-75"
+                  fill
+                  className="object-cover brightness-75"
+                  sizes="100vw"
                   alt="one"
-                  // Photo by Jakub Zerdzicki: https://www.pexels.com/photo/fall-devices-18523431/
                 />
               </Link>
               <div className=" absolute top-1/2 -translate-y-1/2 left-2 md:left-10">
@@ -69,9 +57,10 @@ const Hero: React.FC = () => {
               <Link href="#">
                 <Image
                   src="/slider/samsung.png"
-                  width={100}
-                  height={100}
-                  className="w-full h-full bg-cover"
+                  fill
+                  preload
+                  className="object-cover brightness-75"
+                  sizes="100vw"
                   unoptimized
                   alt="one"
                 />
@@ -90,9 +79,10 @@ const Hero: React.FC = () => {
               <Link href="#">
                 <Image
                   src="/slider/laptop.avif"
-                  width={100}
-                  height={100}
-                  className="w-full h-full bg-cover blur-[2px]"
+                  fill
+                  preload
+                  className="object-cover brightness-75 blur-[2px]"
+                  sizes="100vw"
                   unoptimized
                   alt="one"
                 />
@@ -107,25 +97,21 @@ const Hero: React.FC = () => {
                 </p>
               </div>
             </div>
+            <div className="bg-amber-300 w-full h-full rounded-3xl relative">
+              <Link href="#">
+                <Image
+                  src="/slider/slider_jpg.jpg"
+                  fill
+                  preload
+                  className="object-cover brightness-75"
+                  sizes="100vw"
+                  unoptimized
+                  alt="one"
+                />
+              </Link>
+            </div>
           </HeroSlider>
         </div>
-{/* 
-        <div className="bg-red-300 relative rounded-3xl overflow-hidden bg-[url('/slider/pcgaming.jpg')] bg-cover bg-center h-full ">
-          <Link
-            href="#"
-            className="w-[100px] md:w-auto text-[8px] lg:text-base inline-block font-mont font-extrabold absolute top-1/2 left-1/2 -translate-1/2 bg-amber-300 py-2 px-[2px] md:px-4 md:py-3 lg:py-4 lg:px-5 text-center rounded-3xl "
-          >
-            PC Gaming Collection
-          </Link>
-        </div>
-        <div className="bg-red-300 relative rounded-3xl overflow-hidden bg-[url('/slider/camera.jpg')] bg-cover bg-center h-full ">
-          <Link
-            href="#"
-            className="w-[100px] md:w-auto text-[8px] lg:text-base inline-block font-mont font-extrabold absolute top-1/2 left-1/2 -translate-1/2 bg-black text-white py-2 px-[2px] md:px-4 md:py-3 lg:py-4 lg:px-5 text-center rounded-3xl "
-          >
-            Camera Collection
-          </Link>
-        </div> */}
       </div>
     </>
   );

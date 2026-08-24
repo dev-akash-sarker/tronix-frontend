@@ -19,6 +19,7 @@ const Banner: React.FC<BannerInterface> = ({
       <Image
         src="/banner/banner.jpg"
         fill
+        preload
         alt="banner"
         className=" absolute top-0 left-0 -z-10 rounded-4xl"
       />

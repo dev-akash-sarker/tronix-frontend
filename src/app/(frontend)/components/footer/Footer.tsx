@@ -12,6 +12,7 @@ const Footer: React.FC = () => {
               <Image
                 src="/tronix.png"
                 alt="tronix"
+                priority
                 fill
                 sizes="112px"
                 className="object-contain"

@@ -10,8 +10,8 @@ import TopRatedProducts from "./components/topRatedProduct/TopRatedProducts";
 
 export default function Home() {
   const isFeatured: boolean = false;
-  const isMiniBanner: boolean = false;
-  const isBrands: boolean = false;
+  const isMiniBanner: boolean = true;
+  const isBrands: boolean = true;
   return (
     <>
       <div className="my-2">
@@ -23,9 +23,7 @@ export default function Home() {
       <div>
         <PromotionCampaign />
       </div>
-      <div>
-        {isBrands && <Brands />}
-      </div>
+      <div>{isBrands && <Brands />}</div>
       <div>
         {isMiniBanner && (
           <Banner

@@ -139,7 +139,7 @@ const PromotionCampaign: React.FC = () => {
   };
 
   if (!timeLeft) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   // campaigns will have a separate database

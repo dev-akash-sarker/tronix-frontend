@@ -3,13 +3,13 @@ import { Geist, Geist_Mono, Montserrat, Poppins } from "next/font/google";
 
 import TopNavbar from "./components/navbar/topnavbar/TopNavbar";
 import BottomNavbar from "./components/navbar/bottomnavbar/BottomNavbar";
-import "./globals.css";
 import Footer from "./components/footer/Footer";
-import "@smastrom/react-rating/style.css";
-import NewsLetter from "./components/newsletter/Newsletter";
-import ProviderStoreClient from "./features/ProvidorStoreClient.js"
-import QueryProvider from "./components/reacrquery/QueryProvider";
 
+import NewsLetter from "./components/newsletter/Newsletter";
+import ProviderStoreClient from "./features/ProvidorStoreClient.js";
+import QueryProvider from "./components/reacrquery/QueryProvider";
+import "@smastrom/react-rating/style.css";
+import "./globals.css";
 // Fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,10 +36,10 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Tronix | Buy Now",
   description: "Our motto is giving you the best service",
-    icons: {
-    icon: "/favicon.ico",                      // for regular browser tab icon
-    shortcut: "/favicon.ico",                  // for pinned tabs/bookmarks
-    apple: "/apple-touch-icon.png",            // for Apple devices
+  icons: {
+    icon: "/favicon.ico", // for regular browser tab icon
+    shortcut: "/favicon.ico", // for pinned tabs/bookmarks
+    apple: "/apple-touch-icon.png", // for Apple devices
   },
 };
 
@@ -49,18 +49,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-  <div
-        className={`
+    <div
+      className={`
           ${geistSans.variable}
           ${geistMono.variable}
           ${montserrat.variable}
           ${poppins.variable}
           antialiased
         `}
-      >
-        <QueryProvider>
+    >
+      <QueryProvider>
         <ProviderStoreClient>
-             <div className="w-full md:mx-0 lg:mx-auto">
+          <div className="w-full md:mx-0 lg:mx-auto">
             <div className="lg:mx-40 lg:relative">
               <TopNavbar />
               <hr className="text-gray-300" />
@@ -76,6 +76,6 @@ export default function RootLayout({
           </div>
         </ProviderStoreClient>
       </QueryProvider>
-      </div>
+    </div>
   );
 }

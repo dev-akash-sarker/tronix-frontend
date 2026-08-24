@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Brands: React.FC = () => {
   return (
-    <div className=" my-40 w-full">
+    <div className=" my-30 w-full">
       <div className=" flex justify-center items-center gap-x-4 lg:gap-x-10 xl:gap-x-20">
         <Image
           src="/brands/SimSong.png"

@@ -118,9 +118,9 @@ const BottomNavbar: React.FC = () => {
             src="/tronix.png"
             alt="logo"
             fill
-            priority
             sizes="112px"
             className="object-contain"
+            preload
           />
         </Link>
 
@@ -143,6 +143,7 @@ const BottomNavbar: React.FC = () => {
                 width={24}
                 height={24}
                 alt="searchicon"
+                preload
               />
             </button>
 
