@@ -13,7 +13,7 @@ import axios from "axios";
 const { RangePicker } = DatePicker;
 
 interface Product {
-  _id: string;
+  id: string;
   title: string;
 }
 
@@ -33,41 +33,58 @@ export default function AddPromotionPage() {
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/viewproducts`)
-      .then((res) => setProducts(res.data))
+      .then((res) => {
+        console.log("API PRODUCTS:", res.data);
+
+        res.data.forEach((product: Product, index: number) => {
+          console.log(`Product ${index}:`, {
+            id: product.id,
+            title: product.title,
+          });
+        });
+
+        setProducts(res.data);
+      })
       .catch(() => message.error("Failed to load products"));
   }, []);
 
-  const onFinish = async (values: unknown) => {
-  // Cast 'values' to your interface
-  const formValues = values as PromotionFormValues;
+const onFinish = async (values: PromotionFormValues) => {
+  console.log("========== PROMOTION ==========");
+  console.log("FULL VALUES:", values);
+  console.log("PRODUCTS:", values.products);
+  console.log("PRODUCT 0:", values.products?.[0]);
+  console.log("PRODUCT TYPE:", typeof values.products?.[0]);
 
-  // Destructure from the casted object
-  const [startDate, endDate] = formValues.dateRange || [];
+  const [startDate, endDate] = values.dateRange || [];
 
-    try {
-      setLoading(true);
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/promotion/createpromotion`,
-        {
-        title: formValues.title,
-        description: formValues.description,
-        discountPercentage: formValues.discountPercentage,
-        // Use optional chaining for safe method calls
-        startDate: startDate?.toISOString(),
-        endDate: endDate?.toISOString(),
-        products: formValues.products,
-        }
-      );
-      message.success("Promotion created successfully!");
-      form.resetFields();
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        message.error("Error creating promotion");
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    setLoading(true);
+
+    const payload = {
+      title: values.title,
+      description: values.description,
+      discountPercentage: values.discountPercentage,
+      startDate: startDate?.toISOString(),
+      endDate: endDate?.toISOString(),
+      products: values.products,
+    };
+
+    console.log("PAYLOAD:", payload);
+
+    await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/promotion/createpromotion`,
+      payload
+    );
+
+    message.success("Promotion created successfully!");
+    form.resetFields();
+  } catch (error: any) {
+    console.error("ERROR:", error.response?.data || error);
+    message.error("Error creating promotion");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="p-6">
@@ -93,19 +110,30 @@ export default function AddPromotionPage() {
           <InputNumber min={1} max={90} />
         </Form.Item>
 
-        <Form.Item
-          name="products"
-          label="Select Products"
-          rules={[{ required: true, message: "Select products" }]}
-        >
-          <Select mode="multiple" placeholder="Choose products">
-            {products.map((p) => (
-              <Select.Option key={p._id} value={p._id}>
-                {p.title}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
+<Form.Item
+  name="products"
+  label="Select Products"
+  rules={[
+    {
+      required: true,
+      type: "array",
+      min: 1,
+      message: "Please select at least one product",
+    },
+  ]}
+>
+  <Select
+    mode="multiple"
+    placeholder="Choose products"
+    options={products.map((product) => ({
+      label: product.title,
+      value: product.id,
+    }))}
+    onChange={(value) => {
+      console.log("SELECT CHANGE:", value);
+    }}
+  />
+</Form.Item>
 
         <Form.Item
           name="dateRange"

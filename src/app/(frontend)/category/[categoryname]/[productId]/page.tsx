@@ -171,7 +171,7 @@ export default function ProductPage({ params }: Props) {
                 {/* Price */}
                 <div className="flex items-center gap-4 mt-4 mb-12">
                   <p className="font-bold text-4xl font-pop">
-                    ${product.price}
+                    Tk {product.price}
                   </p>
                   <p className="text-3xl font-pop font-normal text-social line-through">
                     {Math.round(

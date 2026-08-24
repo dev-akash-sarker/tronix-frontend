@@ -134,7 +134,7 @@ const TopRatedView: React.FC = () => {
                 </Link>
               </p>
               <p className="text-2xl text-hover-social font-bold font-pop">
-                ${product.price}
+                Tk{product.price}
               </p>
 
               <div className="flex items-center justify-center gap-4 mt-4">

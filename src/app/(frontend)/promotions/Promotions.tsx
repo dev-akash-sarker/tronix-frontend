@@ -343,7 +343,7 @@ const PromotionCampaign: React.FC = () => {
                     </h4>
                     <div className=" font-pop text-2xl flex justify-center items-center gap-x-2">
                       <span className=" line-through font-normal text-social">
-                        {product.price}
+                        Tk {product.price}
                       </span>
                       <span className=" font-bold text-hover-social">-</span>
                       <span className=" font-bold text-hover-social">

@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 
 export interface ProductInterface {
-  id: number;
+  id: string;
   title: string;
   description: string;
   categoryname: string;
@@ -191,7 +191,7 @@ const TopRatedProducts: React.FC = () => {
                 </Link>
               </p>
               <p className="text-2xl text-hover-social font-bold font-pop">
-                ${product.price}
+                Tk {product.price}
               </p>
 
               <div className="flex items-center justify-center gap-4 mt-4">

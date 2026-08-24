@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import "./style.css";
 export interface NewArrivalType {
-  _id: string;
+  id: string;
   title: string;
   description: string;
   categoryname: string;
@@ -122,11 +122,11 @@ const NewArrivel: React.FC = () => {
                   title={item.title}
                   className=" text-xl text-gray-500 font-bold"
                 >
-                  <Link href={`/category/${item.categoryname}/${item._id}`}>
+                  <Link href={`/category/${item.categoryname}/${item.id}`}>
                     {item.title.slice(0, 10)}..
                   </Link>
                 </h5>
-                <p className=" text-xl font-bold">$ {item.price}</p>
+                <p className=" text-xl font-bold">Tk {item.price}</p>
                 <div className=" flex ">
                   {item.rating === 0 ? (
                     <div className=" font-normal text-social flex items-center pr-4 border-r border-gray-300 gap-2">
