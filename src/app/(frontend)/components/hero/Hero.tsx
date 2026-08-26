@@ -5,9 +5,6 @@ import HeroSlider from "../../features/HeroSlider";
 const Hero: React.FC = () => {
   return (
     <>
-      {
-        //grid grid-cols-[60%_40%] h-[220px] md:h-[350px] lg:h-[400px] xl:h-[450px] gap-4 m-3 -z-10
-      }
       <div className="grid grid-cols-[100%] h-55 md:h-87.5 lg:h-100 xl:h-112.5 gap-4 m-3 -z-10">
         <div className=" col-span-1 row-span-2 rounded-3xl Hero-css overflow-hidden">
           <HeroSlider
@@ -21,7 +18,7 @@ const Hero: React.FC = () => {
             }}
             pagination={{ clickable: true }}
           >
-            <div className="bg-amber-300 w-full h-full rounded-3xl relative">
+            <div className="w-full h-full rounded-3xl relative">
               <Link href="#">
                 <Image
                   src="/slider/slider__moonsoon_copy_jpg.jpg"
@@ -33,7 +30,7 @@ const Hero: React.FC = () => {
                 />
               </Link>
             </div>
-            <div className="bg-amber-300 w-full h-full rounded-3xl relative">
+            <div className="w-full h-full rounded-3xl relative">
               <Link href="#">
                 <Image
                   src="/slider/one.jpg"
@@ -53,7 +50,7 @@ const Hero: React.FC = () => {
                 </p>
               </div>
             </div>
-            <div className="bg-amber-300 w-full h-full rounded-3xl relative">
+            <div className="w-full h-full rounded-3xl relative">
               <Link href="#">
                 <Image
                   src="/slider/samsung.png"
@@ -75,7 +72,7 @@ const Hero: React.FC = () => {
                 </p>
               </div>
             </div>
-            <div className="bg-amber-300 w-full h-full rounded-3xl relative">
+            <div className="w-full h-full rounded-3xl relative">
               <Link href="#">
                 <Image
                   src="/slider/laptop.avif"
@@ -97,7 +94,7 @@ const Hero: React.FC = () => {
                 </p>
               </div>
             </div>
-            <div className="bg-amber-300 w-full h-full rounded-3xl relative">
+            <div className="w-full h-full rounded-3xl relative">
               <Link href="#">
                 <Image
                   src="/slider/slider_jpg.jpg"

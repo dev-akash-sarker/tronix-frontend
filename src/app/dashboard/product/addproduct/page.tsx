@@ -25,6 +25,7 @@ type FieldType = {
   category?: string;
   subcategory: string;
   subcategoryId: string;
+  subcategoryname: string;
   price?: string;
   discountedPercentage?: string;
   rating: null;
@@ -59,6 +60,7 @@ const Addproduct: React.FC = () => {
         description,
         category,
         subcategory,
+        subcategoryname,
         price,
         discountedPercentage,
         stock,
@@ -79,6 +81,7 @@ const Addproduct: React.FC = () => {
       formData.append("description", description ?? "");
       formData.append("categoryId", category ?? "");
       formData.append("subCategoryId", subcategory ?? "");
+      formData.append("subcategoryname", subcategoryname ?? "")
       formData.append("price", price ?? "");
       formData.append("discountPercentage", discountedPercentage ?? "");
       formData.append("stock", stock ?? "");

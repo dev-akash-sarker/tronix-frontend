@@ -11,7 +11,7 @@ import {
 import axios from "axios";
 
 interface Product {
-  _id: string;
+  id: string;
   title: string;
 }
 
@@ -29,13 +29,14 @@ export default function AddFeaturedProduct() {
   }, []);
 
   const onFinish = async (values: any) => {
+console.log("letsee",values.products.map((product: any)=> product));
 
     try {
       setLoading(true);
       await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/v1/featured/createfeatureproduct`,
         {
-          products: values.products,
+          products: values.products.map((product: any)=> product),
           discountPercentage: values.discountPercentage,
         }
       );
@@ -49,6 +50,8 @@ export default function AddFeaturedProduct() {
       setLoading(false);
     }
   };
+
+  console.log("products", products)
 
   return (
     <div className="p-6">
@@ -69,7 +72,7 @@ export default function AddFeaturedProduct() {
         >
           <Select mode="multiple" placeholder="Choose products">
             {products.map((p) => (
-              <Select.Option key={p._id} value={p._id}>
+              <Select.Option key={p.id} value={p.id}>
                 {p.title}
               </Select.Option>
             ))}

@@ -24,19 +24,20 @@ const Viewproduct: React.FC = () => {
   const [products, setProducts] = useState<DataType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
+  console.log("hello world");
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/viewproducts`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/viewproducts`,
         );
         const data = await res.json();
-        console.log(data)
+        console.log(data);
 
         // 👇 assuming your API returns array of users like [{id, name, age, address}]
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const formattedData = data.map((products: any, index: number) => ({
-          key: products._id || index.toString(),
+          key: products.id || index.toString(),
           title: products.title,
           description: products.description,
           categoryId: products.categoryId,
@@ -69,10 +70,10 @@ const Viewproduct: React.FC = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/api/v1/product/deleteproduct/${id}`,
         {
           method: "DELETE",
-        }
+        },
       );
 
-      console.log("sssssssssss", id)
+      console.log("sssssssssss", id);
 
       if (res.ok) {
         message.success("User deleted successfully");
@@ -86,12 +87,16 @@ const Viewproduct: React.FC = () => {
     }
   };
 
+  console.log(    "helsssss",products)
+
   const columns: TableProps<DataType>["columns"] = [
-        {
+    {
       title: "Product Image",
       dataIndex: "images",
       key: "Images",
-      render: (text) => <Image src={text} width={100} height={100} alt={text}/>,
+      render: (text) => (
+        <Image src={text} width={100} height={100} alt={text} />
+      ),
     },
     {
       title: "Title",
@@ -156,13 +161,12 @@ const Viewproduct: React.FC = () => {
       render: (text) => <a>{text}</a>,
     },
 
-  
     {
       title: "Action",
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-           <a href={`/dashboard/product/edit/${record.key}`}>Edit</a>
+          <a href={`/dashboard/product/edit/${record.key}`}>Edit</a>
           <a onClick={() => handleDelete(record.key)}>Delete</a>
         </Space>
       ),

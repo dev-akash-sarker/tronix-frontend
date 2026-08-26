@@ -6,7 +6,15 @@ import TextArea from "antd/es/input/TextArea";
 import { PlusOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 
-type CategoryType = { _id: string; name: string };
+type SubcategoryType = {
+  _id: string;
+  name: string;
+};
+type CategoryType = {
+  _id: string;
+  name: string;
+  subcategories?: SubcategoryType[];
+};
 type FieldType = {
   title?: string;
   description?: string;
@@ -30,7 +38,6 @@ export default function EditPage() {
   const [initialSubcat, setInitialSubcat] = useState<string | null>(null);
   const [addedFiles, setAddedFiles] = useState<UploadFile[]>([]);
   const [removedUrls, setRemovedUrls] = useState<string[]>([]);
-
   const params = useParams();
   const productId = params.id as string;
 
@@ -38,10 +45,12 @@ export default function EditPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [alertMsg, setAlertMsg] = useState<string>("");
 
-const normFile = (e: { fileList?: UploadFile[] } | UploadFile[]): UploadFile[] => {
-  if (Array.isArray(e)) return e;
-  return e.fileList ?? [];
-};
+  const normFile = (
+    e: { fileList?: UploadFile[] } | UploadFile[],
+  ): UploadFile[] => {
+    if (Array.isArray(e)) return e;
+    return e.fileList ?? [];
+  };
 
   // fetch product
   useEffect(() => {
@@ -50,7 +59,7 @@ const normFile = (e: { fileList?: UploadFile[] } | UploadFile[]): UploadFile[] =
     const fetchProduct = async () => {
       try {
         const res = await fetch(
-          `http://localhost:8000/api/v1/product/${productId}`
+          `http://localhost:8000/api/v1/product/${productId}`,
         );
         const data = await res.json();
 
@@ -115,10 +124,10 @@ const normFile = (e: { fileList?: UploadFile[] } | UploadFile[]): UploadFile[] =
     const fetchSubcategories = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/category/${selectedCategory}/subcategory`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/category/viewsubcategory/${selectedCategory}`,
         );
         const data = await res.json();
-        setSubcategories(data || []);
+        setSubcategories(data.subcategories || []);
 
         if (initialSubcat) {
           form.setFieldsValue({ subcategoryId: initialSubcat });
@@ -133,15 +142,15 @@ const normFile = (e: { fileList?: UploadFile[] } | UploadFile[]): UploadFile[] =
   }, [selectedCategory, form, initialSubcat]);
 
   // custom preview
-const handlePreview = async (file: UploadFile) => {
-  if (file.url) {
-    window.open(file.url, "_blank");
-  } else if (file.originFileObj) {
-    const url = URL.createObjectURL(file.originFileObj as Blob);
-    window.open(url, "_blank");
-    setTimeout(() => URL.revokeObjectURL(url), 10000);
-  }
-};
+  const handlePreview = async (file: UploadFile) => {
+    if (file.url) {
+      window.open(file.url, "_blank");
+    } else if (file.originFileObj) {
+      const url = URL.createObjectURL(file.originFileObj as Blob);
+      window.open(url, "_blank");
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    }
+  };
 
   // submit handler
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
@@ -157,19 +166,19 @@ const handlePreview = async (file: UploadFile) => {
       formData.append("price", String(values.price ?? ""));
       formData.append(
         "discountPercentage",
-        String(values.discountPercentage ?? "")
+        String(values.discountPercentage ?? ""),
       );
       formData.append("stock", String(values.stock ?? ""));
       formData.append("sku", values.sku ?? "");
       formData.append("brand", values.brand ?? "");
 
-    if (addedFiles.length) {
-      addedFiles.forEach((file) => {
-        if (file.originFileObj) {
-          formData.append("images", file.originFileObj);
-        }
-      });
-    }
+      if (addedFiles.length) {
+        addedFiles.forEach((file) => {
+          if (file.originFileObj) {
+            formData.append("images", file.originFileObj);
+          }
+        });
+      }
 
       if (removedUrls.length) {
         formData.append("removedUrls", JSON.stringify(removedUrls));
@@ -182,7 +191,7 @@ const handlePreview = async (file: UploadFile) => {
         {
           method: "PUT",
           body: formData,
-        }
+        },
       );
 
       const data = await res.json();
@@ -201,6 +210,8 @@ const handlePreview = async (file: UploadFile) => {
       setLoading(false);
     }
   };
+
+  console.log("subcategories", subcategories);
 
   return (
     <>
@@ -237,15 +248,15 @@ const handlePreview = async (file: UploadFile) => {
             </Select>
           </Form.Item>
 
-          <Form.Item label="Subcategory" name="subcategoryId">
+          <Form.Item label="Subcategory" name="subcategoryname">
             <Select
-              disabled={!subcategories.length}
+              disabled={subcategories ? false : true}
               placeholder={
                 subcategories.length ? "Select subcategory" : "No subcategories"
               }
             >
               {subcategories.map((sub) => (
-                <Select.Option key={sub._id} value={sub._id}>
+                <Select.Option key={sub._id} value={sub.name}>
                   {sub.name}
                 </Select.Option>
               ))}

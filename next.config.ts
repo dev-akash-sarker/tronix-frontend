@@ -14,6 +14,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  compiler: {
+    removeConsole: false, // Auto-removes all console.* statements during npm run build
+  },
   experimental: {
     inlineCss: true,
     optimizeCss: true,
