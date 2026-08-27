@@ -24,6 +24,7 @@ const Hero: React.FC = () => {
                   src="/slider/slider__moonsoon_copy_jpg.jpg"
                   fill
                   className="object-cover brightness-75"
+                  loading="eager"
                   sizes="100vw"
                   unoptimized
                   alt="one"
@@ -36,6 +37,7 @@ const Hero: React.FC = () => {
                   src="/slider/one.jpg"
                   fill
                   className="object-cover brightness-75"
+                  loading="eager"
                   sizes="100vw"
                   alt="one"
                 />
@@ -57,6 +59,7 @@ const Hero: React.FC = () => {
                   fill
                   preload
                   className="object-cover brightness-75"
+                  loading="eager"
                   sizes="100vw"
                   unoptimized
                   alt="one"
@@ -80,6 +83,7 @@ const Hero: React.FC = () => {
                   preload
                   className="object-cover brightness-75 blur-[2px]"
                   sizes="100vw"
+                  loading="eager"
                   unoptimized
                   alt="one"
                 />
@@ -103,6 +107,7 @@ const Hero: React.FC = () => {
                   className="object-cover brightness-75"
                   sizes="100vw"
                   unoptimized
+                  loading="eager"
                   alt="one"
                 />
               </Link>

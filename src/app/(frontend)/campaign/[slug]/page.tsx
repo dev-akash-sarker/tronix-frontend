@@ -87,7 +87,7 @@ const CampaignPage: React.FC<CampaignPageProps> = ({ params }) => {
       (prev) =>
         prev.includes(productId)
           ? prev.filter((id) => id !== productId) // remove
-          : [...prev, productId] // add
+          : [...prev, productId], // add
     );
   };
   const { slug } = React.use(params);
@@ -96,6 +96,7 @@ const CampaignPage: React.FC<CampaignPageProps> = ({ params }) => {
     const fetchProduct = async () => {
       try {
         const res = await axios.get(`http://localhost:3000/api/campaign`);
+        console.log("campaign", res.data);
         setMycampaign(res.data);
       } catch (error) {
         console.error("Failed to fetch product:", error);
@@ -131,7 +132,7 @@ const CampaignPage: React.FC<CampaignPageProps> = ({ params }) => {
 
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor(
-          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
         );
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
@@ -157,7 +158,7 @@ const CampaignPage: React.FC<CampaignPageProps> = ({ params }) => {
 
   const removehypen: string = slug.replace(/-/g, " ");
   const matchingItem = mycampaign.find(
-    (campaign) => campaign.campaignName.toLowerCase().includes(removehypen)
+    (campaign) => campaign.campaignName.toLowerCase().includes(removehypen),
     // initializeTimeLeft(campaign.OfferEndTime);
   );
 
